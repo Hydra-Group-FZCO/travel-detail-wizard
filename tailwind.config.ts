@@ -7,7 +7,7 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: "1.5rem",
+      padding: "1.25rem",
       screens: {
         "2xl": "1280px",
       },
@@ -47,18 +47,11 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        ink: "hsl(var(--ink))",
-        prose: "hsl(var(--prose))",
-        surface: {
-          DEFAULT: "hsl(var(--surface))",
-          raised: "hsl(var(--surface-raised))",
+        "trust-bar": {
+          bg: "hsl(var(--trust-bar-bg))",
+          fg: "hsl(var(--trust-bar-fg))",
         },
-        "brand-blue": "hsl(var(--brand-blue))",
-        "success-green": "hsl(var(--success-green))",
-        disclaimer: {
-          bg: "hsl(var(--disclaimer-bg))",
-          fg: "hsl(var(--disclaimer-fg))",
-        },
+        success: "hsl(var(--success))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -71,18 +64,19 @@ export default {
         },
       },
       fontFamily: {
-        serif: ["'Instrument Serif'", "serif"],
         sans: ["'Inter'", "system-ui", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 4px)",
-        sm: "calc(var(--radius) - 6px)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+        xl: "calc(var(--radius) + 4px)",
+        "2xl": "calc(var(--radius) + 8px)",
       },
       boxShadow: {
-        "card": "var(--shadow-card)",
-        "elevated": "var(--shadow-md)",
-        "hover": "var(--shadow-lg)",
+        card: "0 2px 8px rgba(0,0,0,0.08)",
+        elevated: "0 4px 16px rgba(0,0,0,0.1)",
+        hover: "0 8px 30px rgba(0,0,0,0.12)",
       },
       keyframes: {
         "accordion-down": {
@@ -94,7 +88,7 @@ export default {
           to: { height: "0" },
         },
         "fade-up": {
-          from: { opacity: "0", transform: "translateY(20px)" },
+          from: { opacity: "0", transform: "translateY(24px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
         "fade-in": {
@@ -105,8 +99,8 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-up": "fade-up 0.6s cubic-bezier(0.2, 0, 0, 1) forwards",
-        "fade-in": "fade-in 0.4s cubic-bezier(0.2, 0, 0, 1) forwards",
+        "fade-up": "fade-up 0.7s ease-out forwards",
+        "fade-in": "fade-in 0.5s ease-out forwards",
       },
     },
   },
