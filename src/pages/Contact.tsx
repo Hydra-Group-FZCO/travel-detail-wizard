@@ -1,7 +1,7 @@
 import PageLayout from "@/components/PageLayout";
 import { Mail, Clock, MapPin } from "lucide-react";
 
-const contactInfo = [
+const contactItems = [
   { icon: Mail, label: "General enquiries", value: "support@digitalmoonkey.travel" },
   { icon: Mail, label: "Business enquiries", value: "business@digitalmoonkey.travel" },
   { icon: Mail, label: "Corporate clients", value: "corporate@digitalmoonkey.travel" },
@@ -12,37 +12,41 @@ const contactInfo = [
 const Contact = () => {
   return (
     <PageLayout>
+      <section className="pt-28 pb-12 md:pt-32 md:pb-16 bg-secondary">
+        <div className="container-grid">
+          <h1 className="mb-4">Get in Touch</h1>
+          <p className="text-base md:text-lg max-w-2xl">
+            Whether you need help with a single application or ongoing support for your business travel programme, we are here to help.
+          </p>
+        </div>
+      </section>
+
       <section className="section-spacing">
         <div className="container-grid">
-          <div className="max-w-3xl">
-            <h1 className="mb-6">Get in Touch</h1>
-            <p className="text-lg leading-relaxed mb-16">
-              Whether you need help with a single application or ongoing support for your business travel programme, we are here to help.
-            </p>
-
-            <div className="space-y-6">
-              {contactInfo.map((item) => (
-                <div key={item.label} className="flex items-start gap-4 bg-card border border-border rounded-lg p-6 shadow-card">
-                  <item.icon className="w-5 h-5 text-primary mt-0.5 shrink-0" strokeWidth={1.5} />
+          <div className="max-w-2xl">
+            <div className="space-y-4">
+              {contactItems.map((item) => (
+                <div key={item.label} className="flex items-start gap-4 bg-card border border-border rounded-xl p-5 shadow-card">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
+                    <item.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                  </div>
                   <div>
-                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider font-sans mb-1">
-                      {item.label}
-                    </p>
-                    <p className="text-sm font-medium text-foreground font-sans">{item.value}</p>
+                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-0.5">{item.label}</p>
+                    <p className="text-sm font-semibold text-foreground">{item.value}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="mt-12 bg-card border border-border rounded-lg p-6 shadow-card">
+            <div className="mt-6 bg-card border border-border rounded-xl p-5 shadow-card">
               <div className="flex items-start gap-4">
-                <MapPin className="w-5 h-5 text-primary mt-0.5 shrink-0" strokeWidth={1.5} />
+                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
+                  <MapPin className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                </div>
                 <div>
-                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider font-sans mb-1">
-                    Registered Office
-                  </p>
-                  <p className="text-sm font-medium text-foreground font-sans">Digital Moonkey Ltd</p>
-                  <p className="text-sm text-muted-foreground mt-1">England, United Kingdom</p>
+                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-0.5">Registered Office</p>
+                  <p className="text-sm font-semibold text-foreground">Digital Moonkey Ltd</p>
+                  <p className="text-sm text-muted-foreground mt-0.5">England, United Kingdom</p>
                 </div>
               </div>
             </div>
