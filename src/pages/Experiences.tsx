@@ -29,7 +29,7 @@ const Experiences = () => {
         <div className="container-grid">
           <div
             className="bokunWidget rounded-xl overflow-hidden"
-            data-src="https://widgets.bokun.io/online-sales/4bc9f458-4ebc-42a2-b3b4-1780533df977/product-list/105786"
+            data-src="https://widgets.bokun.io/online-sales/4bc9f458-4ebc-42a2-b3b4-1780533df977/product-list/105783"
             style={{ minHeight: "800px", width: "100%", background: "hsl(var(--secondary))" }}
           />
         </div>
