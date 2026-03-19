@@ -1,4 +1,4 @@
-import monkeyLogo from "@/assets/monkey-logo.jpg";
+import monkeyLogo from "@/assets/monkey-logo.png";
 
 interface LogoProps {
   size?: "sm" | "md" | "lg";
