@@ -7,6 +7,7 @@ import { useAuth } from "@/hooks/useAuth";
 const Header = () => {
   const t = useTranslations();
   const lang = useLanguage();
+  const { user, role } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const isHome = location.pathname === localizedPath("/", lang) || location.pathname === "/";
