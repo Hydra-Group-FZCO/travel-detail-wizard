@@ -10,10 +10,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "@/hooks/use-toast";
 import {
-  Globe, Share2, Wifi, Shield, Loader2, Sparkles,
+  Globe, Download, Share2, Wifi, Shield, Loader2, Sparkles,
   Check, BookOpen, MapPin, Plane
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { downloadMarkdownAsPdf } from "@/lib/downloadPdf";
 
 const LOADING_MESSAGES = [
   "Researching your destination...",
