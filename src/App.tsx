@@ -22,6 +22,8 @@ import MyBookings from "./pages/dashboard/MyBookings";
 import MyProfile from "./pages/dashboard/MyProfile";
 import MyWishlist from "./pages/dashboard/MyWishlist";
 import MyOrders from "./pages/dashboard/MyOrders";
+import MyItineraries from "./pages/dashboard/MyItineraries";
+import MyGuides from "./pages/dashboard/MyGuides";
 import AdminLayout from "./pages/admin/AdminLayout";
 import AdminPackages from "./pages/admin/AdminPackages";
 import AdminBookings from "./pages/admin/AdminBookings";
