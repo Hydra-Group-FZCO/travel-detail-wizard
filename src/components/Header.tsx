@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Menu, X, ChevronDown, User } from "lucide-react";
 import { useTranslations, useLanguage, localizedPath, languageNames, languageFlags, supportedLanguages, type Language } from "@/i18n";
 import { useAuth } from "@/hooks/useAuth";
+import Logo from "@/components/Logo";
 
 const Header = () => {
   const t = useTranslations();
