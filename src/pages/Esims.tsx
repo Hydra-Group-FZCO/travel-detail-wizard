@@ -86,7 +86,7 @@ const Esims = () => {
       .order("name");
 
     if (error) {
-      toast({ title: "Error loading packages", description: error.message, variant: "destructive" });
+      toast({ title: t.esims.errorLoading, description: error.message, variant: "destructive" });
     } else {
       setPackages(data || []);
     }
