@@ -579,6 +579,8 @@ const ItineraryGenerator = () => {
         </div>
       </section>
 
+      <SampleItineraryPreview />
+
       <section className="py-12 bg-background">
         <div className="container mx-auto px-4 max-w-3xl">
           <div className="flex items-center justify-between mb-10">
