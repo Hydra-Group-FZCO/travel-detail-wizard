@@ -51,6 +51,7 @@ const AppRoutes = () => {
           <Route path="profile" element={<MyProfile />} />
           <Route path="wishlist" element={<MyWishlist />} />
           <Route path="orders" element={<MyOrders />} />
+          <Route path="esims" element={<MyEsims />} />
         </Route>
 
         {/* Admin panel */}
