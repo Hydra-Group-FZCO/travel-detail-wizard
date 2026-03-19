@@ -54,6 +54,8 @@ const AppRoutes = () => {
         {/* Customer dashboard */}
         <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
           <Route index element={<MyBookings />} />
+          <Route path="itineraries" element={<MyItineraries />} />
+          <Route path="guides" element={<MyGuides />} />
           <Route path="profile" element={<MyProfile />} />
           <Route path="wishlist" element={<MyWishlist />} />
           <Route path="orders" element={<MyOrders />} />
