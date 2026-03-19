@@ -303,8 +303,6 @@ const ItineraryView = () => {
                                 day.content.replace(/^## (?:Day|Día|Jour|Tag|Giorno|Dia) \d+:.+\n?/, "")
                               ),
                             }}
-                              ),
-                            }}
                           />
                         </AccordionContent>
                       </AccordionItem>
