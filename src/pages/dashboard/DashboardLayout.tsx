@@ -9,6 +9,7 @@ const navItems = [
   { to: "/dashboard/profile", icon: User, label: "My Profile", end: false },
   { to: "/dashboard/wishlist", icon: Heart, label: "My Wishlist", end: false },
   { to: "/dashboard/orders", icon: FileText, label: "My Orders", end: false },
+  { to: "/dashboard/esims", icon: Wifi, label: "My eSIMs", end: false },
 ];
 
 const DashboardLayout = () => {

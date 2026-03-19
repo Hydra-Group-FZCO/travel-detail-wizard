@@ -8,6 +8,7 @@ const navItems = [
   { to: "/admin", icon: Package, label: "Packages", end: true },
   { to: "/admin/bookings", icon: CalendarDays, label: "Bookings", end: false },
   { to: "/admin/customers", icon: Users, label: "Customers", end: false },
+  { to: "/admin/esims", icon: Wifi, label: "eSIMs", end: false },
 ];
 
 const AdminLayout = () => {

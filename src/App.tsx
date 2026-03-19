@@ -69,6 +69,7 @@ const AppRoutes = () => {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/legal" element={<Legal />} />
+        <Route path="/esims" element={<Esims />} />
 
         {/* Localized routes */}
         {["es", "fr", "it", "de"].map((l) => (
