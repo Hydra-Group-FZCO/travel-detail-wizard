@@ -10,48 +10,58 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
   try {
-    const { locationCode, packageCode } = await req.json().catch(() => ({}));
+    const { locationCode, type, packageCode, iccid } = await req.json().catch(() => ({}));
 
     const apiHost = Deno.env.get("ESIM_API_HOST")!;
     const accessCode = Deno.env.get("ESIM_ACCESS_CODE")!;
-    const secretKey = Deno.env.get("ESIM_SECRET_KEY")!;
 
-    const response = await fetch(`${apiHost}/api/v5/esim/package/list`, {
+    console.log("Calling eSIM Access API:", `${apiHost}/api/v1/open/package/list`);
+
+    const response = await fetch(`${apiHost}/api/v1/open/package/list`, {
       method: "POST",
       headers: {
         "RT-AccessCode": accessCode,
-        "RT-SecretKey": secretKey,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         locationCode: locationCode || "",
-        type: "BASE",
+        type: type || "BASE",
         packageCode: packageCode || "",
-        iccid: "",
+        iccid: iccid || "",
       }),
     });
 
     const data = await response.json();
+    console.log("API response success:", data.success, "errorCode:", data.errorCode);
 
-    if (!data.success && !data.obj) {
+    if (!data.success) {
       return new Response(JSON.stringify({ error: "API error", details: data }), {
         status: 502,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
+    const packages = data.obj?.packageList || [];
+
     // Cache packages to DB
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, serviceKey);
-
-    const packages = data.obj?.packageList || data.obj || [];
 
     for (const pkg of packages) {
       const wholesalePrice = pkg.price || 0;
       // Price is in units / 10000 = USD, convert to EUR (approx 0.92), apply 1.8x markup
       const priceUsd = wholesalePrice / 10000;
       const priceEur = Math.ceil(priceUsd * 0.92 * 1.8 * 100) / 100;
+
+      // volume is in bytes, convert to GB
+      const dataGb = pkg.volume ? parseFloat((pkg.volume / (1024 * 1024 * 1024)).toFixed(2)) : null;
+
+      // location is a comma-separated string of country codes like "ES" or "CN,HK,JP"
+      const locationStr = pkg.location || "";
+      const countryCodes = locationStr ? locationStr.split(",").map((c: string) => c.trim()) : [];
+      // Use first country code as location_code for single-country packages
+      const locCode = countryCodes.length === 1 ? countryCodes[0] : (locationCode || null);
 
       await supabase.from("esim_packages_cache").upsert(
         {
@@ -60,11 +70,11 @@ serve(async (req) => {
           slug: pkg.slug || pkg.packageCode.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
           price_wholesale: wholesalePrice,
           price_retail_eur: priceEur,
-          data_gb: pkg.volume ? pkg.volume / 1024 : null,
+          data_gb: dataGb,
           duration_days: pkg.duration || null,
-          countries: pkg.locationNetworkList?.map((l: any) => l.locationCode) || [],
-          location_code: pkg.location || locationCode || null,
-          operator: pkg.operatorList?.[0]?.operatorName || null,
+          countries: countryCodes,
+          location_code: locCode,
+          operator: pkg.locationNetworkList?.[0]?.operatorList?.[0]?.operatorName || null,
           updated_at: new Date().toISOString(),
         },
         { onConflict: "package_code" }
@@ -75,6 +85,7 @@ serve(async (req) => {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {
+    console.error("Edge function error:", error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },

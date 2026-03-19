@@ -9,20 +9,24 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
   try {
-    const { orderNo } = await req.json();
+    const { orderNo, iccid, pager } = await req.json();
 
     const apiHost = Deno.env.get("ESIM_API_HOST")!;
     const accessCode = Deno.env.get("ESIM_ACCESS_CODE")!;
-    const secretKey = Deno.env.get("ESIM_SECRET_KEY")!;
 
-    const response = await fetch(`${apiHost}/api/v5/esim/query`, {
+    const body: Record<string, any> = {
+      pager: pager || { pageNum: 1, pageSize: 20 },
+    };
+    if (orderNo) body.orderNo = orderNo;
+    if (iccid) body.iccid = iccid;
+
+    const response = await fetch(`${apiHost}/api/v1/open/esim/query`, {
       method: "POST",
       headers: {
         "RT-AccessCode": accessCode,
-        "RT-SecretKey": secretKey,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ orderNo }),
+      body: JSON.stringify(body),
     });
 
     const data = await response.json();
