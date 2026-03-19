@@ -57,11 +57,21 @@ const countryNames: Record<string, string> = {
 };
 
 const Esims = () => {
+  const t = useTranslations();
   const [packages, setPackages] = useState<EsimPackage[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [region, setRegion] = useState("all");
   const { toast } = useToast();
+
+  const regions = useMemo(() => [
+    { label: t.esims.regionAll, value: "all" },
+    { label: t.esims.regionEurope, value: "europe" },
+    { label: t.esims.regionAsia, value: "asia" },
+    { label: t.esims.regionAmericas, value: "americas" },
+    { label: t.esims.regionMiddleEast, value: "middle_east" },
+    { label: t.esims.regionGlobal, value: "global" },
+  ], [t]);
 
   useEffect(() => {
     loadPackages();
