@@ -211,10 +211,15 @@ const Esims = () => {
       <section className="section-spacing">
         <div className="container-grid">
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <Skeleton key={i} className="h-64 rounded-xl" />
-              ))}
+            <div className="text-center py-16">
+              {syncing && (
+                <p className="text-muted-foreground mb-4">Loading packages from provider...</p>
+              )}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <Skeleton key={i} className="h-64 rounded-xl" />
+                ))}
+              </div>
             </div>
           ) : Object.keys(groupedByCountry).length === 0 ? (
             <div className="text-center py-16">
