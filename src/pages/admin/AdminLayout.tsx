@@ -1,6 +1,6 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { Package, CalendarDays, Users, LogOut, Home, Shield } from "lucide-react";
+import { Package, CalendarDays, Users, LogOut, Home, Shield, Wifi } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/Logo";
 
@@ -8,6 +8,7 @@ const navItems = [
   { to: "/admin", icon: Package, label: "Packages", end: true },
   { to: "/admin/bookings", icon: CalendarDays, label: "Bookings", end: false },
   { to: "/admin/customers", icon: Users, label: "Customers", end: false },
+  { to: "/admin/esims", icon: Wifi, label: "eSIMs", end: false },
 ];
 
 const AdminLayout = () => {

@@ -26,6 +26,9 @@ import AdminLayout from "./pages/admin/AdminLayout";
 import AdminPackages from "./pages/admin/AdminPackages";
 import AdminBookings from "./pages/admin/AdminBookings";
 import AdminCustomers from "./pages/admin/AdminCustomers";
+import AdminEsims from "./pages/admin/AdminEsims";
+import Esims from "./pages/Esims";
+import MyEsims from "./pages/dashboard/MyEsims";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +51,7 @@ const AppRoutes = () => {
           <Route path="profile" element={<MyProfile />} />
           <Route path="wishlist" element={<MyWishlist />} />
           <Route path="orders" element={<MyOrders />} />
+          <Route path="esims" element={<MyEsims />} />
         </Route>
 
         {/* Admin panel */}
@@ -55,6 +59,7 @@ const AppRoutes = () => {
           <Route index element={<AdminPackages />} />
           <Route path="bookings" element={<AdminBookings />} />
           <Route path="customers" element={<AdminCustomers />} />
+          <Route path="esims" element={<AdminEsims />} />
         </Route>
 
         {/* Public pages */}
@@ -64,6 +69,7 @@ const AppRoutes = () => {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/legal" element={<Legal />} />
+        <Route path="/esims" element={<Esims />} />
 
         {/* Localized routes */}
         {["es", "fr", "it", "de"].map((l) => (
