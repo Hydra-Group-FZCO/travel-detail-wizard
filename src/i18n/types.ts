@@ -120,6 +120,28 @@ export interface Translations {
     bottomLinks: { label: string; to: string }[];
     bottomNote: string;
   };
+  esims: {
+    badge: string;
+    heroTitle: string;
+    heroSubtitle: string;
+    searchPlaceholder: string;
+    regionAll: string;
+    regionEurope: string;
+    regionAsia: string;
+    regionAmericas: string;
+    regionMiddleEast: string;
+    regionGlobal: string;
+    compatibleDevices: string;
+    compatibleDevicesTitle: string;
+    compatibleDevicesDesc: string;
+    noPackages: string;
+    noPackagesHint: string;
+    plans: string;
+    plan: string;
+    days: string;
+    buyNow: string;
+    errorLoading: string;
+  };
 }
 
 export const languageNames: Record<Language, string> = {

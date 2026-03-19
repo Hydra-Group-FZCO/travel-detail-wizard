@@ -9,6 +9,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import PageLayout from "@/components/PageLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslations } from "@/i18n";
 
 type EsimPackage = {
   id: string;
@@ -21,15 +22,6 @@ type EsimPackage = {
   location_code: string | null;
   operator: string | null;
 };
-
-const regions = [
-  { label: "All", value: "all" },
-  { label: "🌍 Europe", value: "europe" },
-  { label: "🌏 Asia", value: "asia" },
-  { label: "🌎 Americas", value: "americas" },
-  { label: "🌍 Middle East", value: "middle_east" },
-  { label: "🌐 Global", value: "global" },
-];
 
 const regionCountries: Record<string, string[]> = {
   europe: ["GB", "FR", "DE", "ES", "IT", "PT", "NL", "BE", "CH", "AT", "GR", "PL", "CZ", "SE", "NO", "DK", "FI", "IE", "HR", "RO", "BG", "HU", "SK", "SI", "LT", "LV", "EE", "MT", "CY", "LU", "IS"],
@@ -65,11 +57,21 @@ const countryNames: Record<string, string> = {
 };
 
 const Esims = () => {
+  const t = useTranslations();
   const [packages, setPackages] = useState<EsimPackage[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [region, setRegion] = useState("all");
   const { toast } = useToast();
+
+  const regions = useMemo(() => [
+    { label: t.esims.regionAll, value: "all" },
+    { label: t.esims.regionEurope, value: "europe" },
+    { label: t.esims.regionAsia, value: "asia" },
+    { label: t.esims.regionAmericas, value: "americas" },
+    { label: t.esims.regionMiddleEast, value: "middle_east" },
+    { label: t.esims.regionGlobal, value: "global" },
+  ], [t]);
 
   useEffect(() => {
     loadPackages();
@@ -84,7 +86,7 @@ const Esims = () => {
       .order("name");
 
     if (error) {
-      toast({ title: "Error loading packages", description: error.message, variant: "destructive" });
+      toast({ title: t.esims.errorLoading, description: error.message, variant: "destructive" });
     } else {
       setPackages(data || []);
     }
@@ -132,18 +134,18 @@ const Esims = () => {
       <section className="pt-28 pb-16 md:pt-36 md:pb-20 bg-gradient-to-br from-accent/10 via-background to-primary/5">
         <div className="container-grid text-center">
           <Badge variant="secondary" className="mb-4 text-sm px-4 py-1.5">
-            <Wifi size={14} className="mr-1.5" /> eSIM Store
+            <Wifi size={14} className="mr-1.5" /> {t.esims.badge}
           </Badge>
-          <h1 className="text-balance mb-4">Stay Connected Worldwide</h1>
+          <h1 className="text-balance mb-4">{t.esims.heroTitle}</h1>
           <p className="text-lg max-w-2xl mx-auto mb-8">
-            Instant data plans for 190+ countries. No physical SIM needed — activate your eSIM in minutes.
+            {t.esims.heroSubtitle}
           </p>
 
           {/* Search */}
           <div className="max-w-md mx-auto relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
             <Input
-              placeholder="Search by country..."
+              placeholder={t.esims.searchPlaceholder}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="pl-10 h-12 text-base rounded-full"
@@ -171,13 +173,13 @@ const Esims = () => {
               <TooltipTrigger asChild>
                 <button className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
                   <Smartphone size={14} />
-                  <span>Compatible devices</span>
+                   <span>{t.esims.compatibleDevices}</span>
                   <Info size={12} />
                 </button>
               </TooltipTrigger>
               <TooltipContent className="max-w-xs text-left">
-                <p className="font-medium mb-1">eSIM Compatible Devices</p>
-                <p className="text-xs">iPhone XR and later, Samsung Galaxy S20+, Google Pixel 3a+, iPad Pro/Air (2018+), and most modern smartphones. Check your device settings for eSIM support.</p>
+                <p className="font-medium mb-1">{t.esims.compatibleDevicesTitle}</p>
+                <p className="text-xs">{t.esims.compatibleDevicesDesc}</p>
               </TooltipContent>
             </Tooltip>
           </div>
@@ -198,8 +200,8 @@ const Esims = () => {
           ) : Object.keys(groupedByCountry).length === 0 ? (
             <div className="text-center py-16">
               <Globe size={48} className="mx-auto text-muted-foreground mb-4" />
-              <h3 className="mb-2">No packages found</h3>
-              <p>Try a different search or region filter.</p>
+              <h3 className="mb-2">{t.esims.noPackages}</h3>
+              <p>{t.esims.noPackagesHint}</p>
             </div>
           ) : (
             <div className="space-y-12">
@@ -211,7 +213,7 @@ const Esims = () => {
                       <span className="text-2xl">{countryFlags[code] || "🌐"}</span>
                       <h2 className="text-xl font-bold">{countryNames[code] || code}</h2>
                       <Badge variant="outline" className="ml-auto">
-                        {pkgs.length} plan{pkgs.length !== 1 ? "s" : ""}
+                        {pkgs.length} {pkgs.length !== 1 ? t.esims.plans : t.esims.plan}
                       </Badge>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -238,7 +240,7 @@ const Esims = () => {
                                 {pkg.duration_days && (
                                   <span className="flex items-center gap-1">
                                     <Clock size={14} className="text-accent" />
-                                    {pkg.duration_days} days
+                                    {pkg.duration_days} {t.esims.days}
                                   </span>
                                 )}
                               </div>
@@ -247,7 +249,7 @@ const Esims = () => {
                                   €{pkg.price_retail_eur.toFixed(2)}
                                 </span>
                                 <Button size="sm" className="rounded-full">
-                                  Buy Now
+                                  {t.esims.buyNow}
                                 </Button>
                               </div>
                             </CardContent>
