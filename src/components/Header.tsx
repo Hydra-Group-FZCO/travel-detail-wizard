@@ -20,6 +20,7 @@ const Header = () => {
     { to: localizedPath("/about", lang), label: t.nav.about },
     { to: localizedPath("/contact", lang), label: t.nav.contact },
     { to: "/esims", label: "eSIM" },
+    { to: "/itinerary-generator", label: "✨ AI Planner" },
   ];
 
   const isActive = (linkTo: string) => location.pathname === linkTo;
