@@ -22,6 +22,8 @@ import MyBookings from "./pages/dashboard/MyBookings";
 import MyProfile from "./pages/dashboard/MyProfile";
 import MyWishlist from "./pages/dashboard/MyWishlist";
 import MyOrders from "./pages/dashboard/MyOrders";
+import MyItineraries from "./pages/dashboard/MyItineraries";
+import MyGuides from "./pages/dashboard/MyGuides";
 import AdminLayout from "./pages/admin/AdminLayout";
 import AdminPackages from "./pages/admin/AdminPackages";
 import AdminBookings from "./pages/admin/AdminBookings";
@@ -52,6 +54,8 @@ const AppRoutes = () => {
         {/* Customer dashboard */}
         <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
           <Route index element={<MyBookings />} />
+          <Route path="itineraries" element={<MyItineraries />} />
+          <Route path="guides" element={<MyGuides />} />
           <Route path="profile" element={<MyProfile />} />
           <Route path="wishlist" element={<MyWishlist />} />
           <Route path="orders" element={<MyOrders />} />
