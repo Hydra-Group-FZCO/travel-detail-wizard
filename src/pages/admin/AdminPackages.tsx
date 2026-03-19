@@ -11,7 +11,8 @@ import type { Tables } from "@/integrations/supabase/types";
 
 type Package = Tables<"packages">;
 
-const emptyPkg = { title: "", description: "", destination: "", price: "", currency: "GBP", duration: "", image_url: "", is_active: true };
+type EditablePackage = Partial<Package> & { price?: number | string | null };
+const emptyPkg: EditablePackage = { title: "", description: "", destination: "", price: "", currency: "GBP", duration: "", image_url: "", is_active: true };
 
 const AdminPackages = () => {
   const [packages, setPackages] = useState<Package[]>([]);
