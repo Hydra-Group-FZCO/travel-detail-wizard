@@ -24,10 +24,7 @@ const AdminLayout = () => {
       <header className="bg-card border-b border-border px-4 md:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <a href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">DM</span>
-            </div>
-            <span className="font-bold text-lg text-foreground hidden sm:block">Digital Moonkey</span>
+            <Logo />
           </a>
           <div className="flex items-center gap-1 ml-2">
             <Shield size={14} className="text-primary" />

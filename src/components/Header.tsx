@@ -28,12 +28,7 @@ const Header = () => {
       <nav className="container-grid">
         <div className="flex items-center justify-between h-16 md:h-20">
           <Link to={localizedPath("/", lang)} className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">DM</span>
-            </div>
-            <span className={`font-bold text-lg tracking-tight ${isHome ? "text-primary-foreground" : "text-foreground"}`}>
-              Digital Moonkey
-            </span>
+            <Logo textClassName={isHome ? "text-primary-foreground" : "text-foreground"} />
           </Link>
 
           {/* Desktop Nav */}
