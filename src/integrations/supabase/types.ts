@@ -454,6 +454,66 @@ export type Database = {
         }
         Relationships: []
       }
+      travel_guides: {
+        Row: {
+          content_markdown: string | null
+          created_at: string
+          depth: string
+          destination: string
+          destination_slug: string
+          focus_areas: string[] | null
+          id: string
+          language: string
+          pdf_url: string | null
+          price_paid: number | null
+          public_share_token: string | null
+          season: string | null
+          status: string
+          stripe_payment_id: string | null
+          updated_at: string
+          user_id: string
+          word_count: number | null
+        }
+        Insert: {
+          content_markdown?: string | null
+          created_at?: string
+          depth?: string
+          destination: string
+          destination_slug: string
+          focus_areas?: string[] | null
+          id?: string
+          language?: string
+          pdf_url?: string | null
+          price_paid?: number | null
+          public_share_token?: string | null
+          season?: string | null
+          status?: string
+          stripe_payment_id?: string | null
+          updated_at?: string
+          user_id: string
+          word_count?: number | null
+        }
+        Update: {
+          content_markdown?: string | null
+          created_at?: string
+          depth?: string
+          destination?: string
+          destination_slug?: string
+          focus_areas?: string[] | null
+          id?: string
+          language?: string
+          pdf_url?: string | null
+          price_paid?: number | null
+          public_share_token?: string | null
+          season?: string | null
+          status?: string
+          stripe_payment_id?: string | null
+          updated_at?: string
+          user_id?: string
+          word_count?: number | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
