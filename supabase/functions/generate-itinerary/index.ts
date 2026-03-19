@@ -68,7 +68,7 @@ Interests: ${(itinerary.interests || []).join(", ")}
 Budget level: ${itinerary.budget_level}
 Extras requested: ${extrasText}
 
-Structure the itinerary EXACTLY as follows:
+Structure the itinerary EXACTLY as follows (write all content in ${itinerary.language}, but ALWAYS keep the markdown headers "## Day X:" in English exactly as shown — do NOT translate "Day" to another language):
 
 # 🌍 ${itinerary.destination} — ${itinerary.num_days} Day Itinerary
 

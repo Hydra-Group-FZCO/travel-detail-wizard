@@ -158,9 +158,9 @@ const ItineraryView = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Parse markdown into day sections
+  // Parse markdown into day sections — supports "## Day X:", "## Día X:", "## Jour X:", "## Tag X:", "## Giorno X:", etc.
   const parseDays = (md: string) => {
-    const dayRegex = /## Day (\d+):\s*(.+)/g;
+    const dayRegex = /## (?:Day|Día|Jour|Tag|Giorno|Dia) (\d+):\s*(.+)/g;
     const days: { num: string; title: string; content: string }[] = [];
     let match;
     const indices: { start: number; num: string; title: string }[] = [];
