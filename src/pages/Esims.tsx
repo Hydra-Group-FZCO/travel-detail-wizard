@@ -1,15 +1,18 @@
 import { useState, useEffect, useMemo } from "react";
-import { Search, Wifi, Clock, Globe, Smartphone, Info } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Search, Wifi, Clock, Globe, Smartphone, Info, ShoppingCart, CheckCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import PageLayout from "@/components/PageLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslations } from "@/i18n";
+import { useAuth } from "@/hooks/useAuth";
 
 type EsimPackage = {
   id: string;
@@ -58,10 +61,15 @@ const countryNames: Record<string, string> = {
 
 const Esims = () => {
   const t = useTranslations();
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [packages, setPackages] = useState<EsimPackage[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [region, setRegion] = useState("all");
+  const [selectedPkg, setSelectedPkg] = useState<EsimPackage | null>(null);
+  const [ordering, setOrdering] = useState(false);
+  const [orderSuccess, setOrderSuccess] = useState(false);
   const { toast } = useToast();
 
   const regions = useMemo(() => [
@@ -93,6 +101,37 @@ const Esims = () => {
     setLoading(false);
   };
 
+  const handleBuyClick = (pkg: EsimPackage) => {
+    if (!user) {
+      toast({ title: "Sign in required", description: "Please sign in to purchase an eSIM.", variant: "destructive" });
+      navigate("/login");
+      return;
+    }
+    setSelectedPkg(pkg);
+    setOrderSuccess(false);
+  };
+
+  const handleConfirmOrder = async () => {
+    if (!selectedPkg || !user) return;
+    setOrdering(true);
+
+    try {
+      const { error } = await supabase.from("esim_orders").insert({
+        user_id: user.id,
+        package_code: selectedPkg.package_code,
+        price_paid_eur: selectedPkg.price_retail_eur,
+        status: "pending",
+      });
+
+      if (error) throw error;
+      setOrderSuccess(true);
+    } catch (err: any) {
+      toast({ title: "Order failed", description: err.message, variant: "destructive" });
+    } finally {
+      setOrdering(false);
+    }
+  };
+
   // Group packages by location_code
   const groupedByCountry = useMemo(() => {
     let filtered = packages;
@@ -111,9 +150,7 @@ const Esims = () => {
     if (region !== "all" && region !== "global") {
       const codes = regionCountries[region] || [];
       filtered = filtered.filter((p) => {
-        // Check location_code directly
         if (p.location_code && codes.includes(p.location_code)) return true;
-        // Check countries array for regional packages
         if (p.countries && p.countries.some((c) => codes.includes(c))) return true;
         return false;
       });
@@ -220,7 +257,7 @@ const Esims = () => {
                       {pkgs
                         .sort((a, b) => (a.data_gb || 0) - (b.data_gb || 0))
                         .map((pkg) => (
-                          <Card key={pkg.id} className="hover:shadow-md transition-shadow">
+                          <Card key={pkg.id} className="hover:shadow-md transition-shadow cursor-pointer" onClick={() => handleBuyClick(pkg)}>
                             <CardContent className="p-5">
                               <div className="flex items-start justify-between mb-3">
                                 <div>
@@ -248,7 +285,7 @@ const Esims = () => {
                                 <span className="text-2xl font-bold text-foreground">
                                   €{pkg.price_retail_eur.toFixed(2)}
                                 </span>
-                                <Button size="sm" className="rounded-full">
+                                <Button size="sm" className="rounded-full" onClick={(e) => { e.stopPropagation(); handleBuyClick(pkg); }}>
                                   {t.esims.buyNow}
                                 </Button>
                               </div>
@@ -262,6 +299,89 @@ const Esims = () => {
           )}
         </div>
       </section>
+
+      {/* Order Confirmation Dialog */}
+      <Dialog open={!!selectedPkg} onOpenChange={(open) => { if (!open) { setSelectedPkg(null); setOrderSuccess(false); } }}>
+        <DialogContent className="sm:max-w-md">
+          {orderSuccess ? (
+            <>
+              <DialogHeader>
+                <DialogTitle className="flex items-center gap-2">
+                  <CheckCircle className="text-green-500" size={22} />
+                  Order Confirmed!
+                </DialogTitle>
+                <DialogDescription>
+                  Your eSIM order has been placed. You can view it in your dashboard under "My eSIMs".
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter className="gap-2">
+                <Button variant="outline" onClick={() => { setSelectedPkg(null); setOrderSuccess(false); }}>
+                  Continue Shopping
+                </Button>
+                <Button onClick={() => navigate("/dashboard/esims")}>
+                  View My eSIMs
+                </Button>
+              </DialogFooter>
+            </>
+          ) : selectedPkg && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="flex items-center gap-2">
+                  <ShoppingCart size={20} />
+                  Confirm Your Order
+                </DialogTitle>
+                <DialogDescription>
+                  Review your eSIM package details before confirming.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="bg-muted/50 rounded-lg p-4 space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-sm text-muted-foreground">Package</span>
+                    <span className="font-medium text-sm">{selectedPkg.name}</span>
+                  </div>
+                  {selectedPkg.data_gb && (
+                    <div className="flex justify-between">
+                      <span className="text-sm text-muted-foreground">Data</span>
+                      <span className="font-medium text-sm flex items-center gap-1">
+                        <Wifi size={12} className="text-accent" />
+                        {selectedPkg.data_gb >= 1 ? `${selectedPkg.data_gb} GB` : `${Math.round(selectedPkg.data_gb * 1024)} MB`}
+                      </span>
+                    </div>
+                  )}
+                  {selectedPkg.duration_days && (
+                    <div className="flex justify-between">
+                      <span className="text-sm text-muted-foreground">Duration</span>
+                      <span className="font-medium text-sm flex items-center gap-1">
+                        <Clock size={12} className="text-accent" />
+                        {selectedPkg.duration_days} {t.esims.days}
+                      </span>
+                    </div>
+                  )}
+                  {selectedPkg.location_code && (
+                    <div className="flex justify-between">
+                      <span className="text-sm text-muted-foreground">Coverage</span>
+                      <span className="font-medium text-sm">
+                        {countryFlags[selectedPkg.location_code] || "🌐"} {countryNames[selectedPkg.location_code] || selectedPkg.location_code}
+                      </span>
+                    </div>
+                  )}
+                  <div className="border-t border-border pt-3 flex justify-between items-center">
+                    <span className="font-semibold">Total</span>
+                    <span className="text-2xl font-bold text-primary">€{selectedPkg.price_retail_eur.toFixed(2)}</span>
+                  </div>
+                </div>
+              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setSelectedPkg(null)}>Cancel</Button>
+                <Button onClick={handleConfirmOrder} disabled={ordering}>
+                  {ordering ? "Processing..." : `Pay €${selectedPkg.price_retail_eur.toFixed(2)}`}
+                </Button>
+              </DialogFooter>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </PageLayout>
   );
 };
