@@ -158,9 +158,9 @@ const ItineraryView = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Parse markdown into day sections
+  // Parse markdown into day sections — supports "## Day X:", "## Día X:", "## Jour X:", "## Tag X:", "## Giorno X:", etc.
   const parseDays = (md: string) => {
-    const dayRegex = /## Day (\d+):\s*(.+)/g;
+    const dayRegex = /## (?:Day|Día|Jour|Tag|Giorno|Dia) (\d+):\s*(.+)/g;
     const days: { num: string; title: string; content: string }[] = [];
     let match;
     const indices: { start: number; num: string; title: string }[] = [];
@@ -210,8 +210,10 @@ const ItineraryView = () => {
   const days = content ? parseDays(content) : [];
 
   // Get header content (before first day)
-  const firstDayIdx = content.indexOf("## Day ");
-  const headerContent = firstDayIdx > 0 ? content.slice(0, firstDayIdx) : "";
+  const dayHeaderPattern = /## (?:Day|Día|Jour|Tag|Giorno|Dia) \d+:/;
+  const firstDayMatch = content.match(dayHeaderPattern);
+  const firstDayIdx = firstDayMatch ? content.indexOf(firstDayMatch[0]) : -1;
+  const headerContent = firstDayIdx > 0 ? content.slice(0, firstDayIdx) : (days.length === 0 ? content : "");
 
   // Get footer content (after last day section)
   const lastDayEnd = days.length > 0 ? (() => {
@@ -298,7 +300,7 @@ const ItineraryView = () => {
                             className="prose prose-sm max-w-none"
                             dangerouslySetInnerHTML={{
                               __html: renderMarkdown(
-                                day.content.replace(/^## Day \d+:.+\n?/, "")
+                                day.content.replace(/^## (?:Day|Día|Jour|Tag|Giorno|Dia) \d+:.+\n?/, "")
                               ),
                             }}
                           />
