@@ -4,6 +4,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageContext, getLanguageFromPath } from "@/i18n";
+import { AuthProvider } from "@/hooks/useAuth";
+import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Services from "./pages/Services";
 import About from "./pages/About";
@@ -11,6 +13,19 @@ import Contact from "./pages/Contact";
 import Experiences from "./pages/Experiences";
 import Legal from "./pages/Legal";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+import DashboardLayout from "./pages/dashboard/DashboardLayout";
+import MyBookings from "./pages/dashboard/MyBookings";
+import MyProfile from "./pages/dashboard/MyProfile";
+import MyWishlist from "./pages/dashboard/MyWishlist";
+import MyOrders from "./pages/dashboard/MyOrders";
+import AdminLayout from "./pages/admin/AdminLayout";
+import AdminPackages from "./pages/admin/AdminPackages";
+import AdminBookings from "./pages/admin/AdminBookings";
+import AdminCustomers from "./pages/admin/AdminCustomers";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +36,28 @@ const AppRoutes = () => {
   return (
     <LanguageContext.Provider value={lang}>
       <Routes>
-        {/* English (default — no prefix) */}
+        {/* Auth routes */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+
+        {/* Customer dashboard */}
+        <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
+          <Route index element={<MyBookings />} />
+          <Route path="profile" element={<MyProfile />} />
+          <Route path="wishlist" element={<MyWishlist />} />
+          <Route path="orders" element={<MyOrders />} />
+        </Route>
+
+        {/* Admin panel */}
+        <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><AdminLayout /></ProtectedRoute>}>
+          <Route index element={<AdminPackages />} />
+          <Route path="bookings" element={<AdminBookings />} />
+          <Route path="customers" element={<AdminCustomers />} />
+        </Route>
+
+        {/* Public pages */}
         <Route path="/" element={<Index />} />
         <Route path="/services" element={<Services />} />
         <Route path="/experiences" element={<Experiences />} />
@@ -29,7 +65,7 @@ const AppRoutes = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/legal" element={<Legal />} />
 
-        {/* Localized routes: /es, /fr, /it, /de */}
+        {/* Localized routes */}
         {["es", "fr", "it", "de"].map((l) => (
           <Route key={l} path={`/${l}`}>
             <Route index element={<Index />} />
@@ -53,7 +89,9 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <AppRoutes />
+        <AuthProvider>
+          <AppRoutes />
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

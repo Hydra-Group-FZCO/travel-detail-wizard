@@ -17,7 +17,7 @@ const emptyPkg: EditablePackage = { title: "", description: "", destination: "",
 const AdminPackages = () => {
   const [packages, setPackages] = useState<Package[]>([]);
   const [loading, setLoading] = useState(true);
-  const [editing, setEditing] = useState<Partial<Package> | null>(null);
+  const [editing, setEditing] = useState<EditablePackage | null>(null);
   const [saving, setSaving] = useState(false);
 
   const fetchPackages = async () => {
