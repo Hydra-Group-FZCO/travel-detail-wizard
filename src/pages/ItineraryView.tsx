@@ -210,8 +210,10 @@ const ItineraryView = () => {
   const days = content ? parseDays(content) : [];
 
   // Get header content (before first day)
-  const firstDayIdx = content.indexOf("## Day ");
-  const headerContent = firstDayIdx > 0 ? content.slice(0, firstDayIdx) : "";
+  const dayHeaderPattern = /## (?:Day|Día|Jour|Tag|Giorno|Dia) \d+:/;
+  const firstDayMatch = content.match(dayHeaderPattern);
+  const firstDayIdx = firstDayMatch ? content.indexOf(firstDayMatch[0]) : -1;
+  const headerContent = firstDayIdx > 0 ? content.slice(0, firstDayIdx) : (days.length === 0 ? content : "");
 
   // Get footer content (after last day section)
   const lastDayEnd = days.length > 0 ? (() => {
