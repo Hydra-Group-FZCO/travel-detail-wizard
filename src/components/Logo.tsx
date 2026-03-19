@@ -7,14 +7,14 @@ interface LogoProps {
 }
 
 const sizes = {
-  sm: "w-10 h-10",
-  md: "w-12 h-12",
-  lg: "w-14 h-14",
+  sm: "h-12",
+  md: "h-14",
+  lg: "h-16",
 };
 
-const Logo = ({ size = "sm", showText = true, textClassName = "text-foreground" }: LogoProps) => (
+const Logo = ({ size = "sm", showText = false, textClassName = "text-foreground" }: LogoProps) => (
   <div className="flex items-center gap-2.5">
-    <img src={monkeyLogo} alt="Digital Moonkey Travel" className={`${sizes[size]} rounded-lg object-cover`} />
+    <img src={monkeyLogo} alt="Digital Moonkey Travel" className={`${sizes[size]} object-contain`} />
     {showText && (
       <span className={`font-bold text-lg tracking-tight ${textClassName}`}>
         Digital Moonkey Travel
