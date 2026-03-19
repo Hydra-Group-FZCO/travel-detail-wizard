@@ -213,7 +213,7 @@ const Esims = () => {
                       <span className="text-2xl">{countryFlags[code] || "🌐"}</span>
                       <h2 className="text-xl font-bold">{countryNames[code] || code}</h2>
                       <Badge variant="outline" className="ml-auto">
-                        {pkgs.length} plan{pkgs.length !== 1 ? "s" : ""}
+                        {pkgs.length} {pkgs.length !== 1 ? t.esims.plans : t.esims.plan}
                       </Badge>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
