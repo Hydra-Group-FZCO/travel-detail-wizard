@@ -249,7 +249,7 @@ const Esims = () => {
                                   €{pkg.price_retail_eur.toFixed(2)}
                                 </span>
                                 <Button size="sm" className="rounded-full">
-                                  Buy Now
+                                  {t.esims.buyNow}
                                 </Button>
                               </div>
                             </CardContent>
