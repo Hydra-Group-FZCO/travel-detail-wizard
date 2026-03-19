@@ -14,6 +14,7 @@ import {
   Copy, Check
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { downloadMarkdownAsPdf } from "@/lib/downloadPdf";
 
 const LOADING_MESSAGES = [
   "Researching your destination...",
@@ -321,6 +322,19 @@ const ItineraryView = () => {
                 <div className="sticky top-24 space-y-4">
                   <Card>
                     <CardContent className="p-4 space-y-3">
+                      <Button
+                        variant="outline"
+                        className="w-full justify-start"
+                        onClick={() =>
+                          downloadMarkdownAsPdf(
+                            content,
+                            `${itinerary?.destination} Itinerary`,
+                            `${itinerary?.num_days} days · ${itinerary?.trip_type} · ${itinerary?.budget_level}`
+                          )
+                        }
+                      >
+                        <Download className="w-4 h-4 mr-2" /> Download PDF
+                      </Button>
                       <Button
                         variant="outline"
                         className="w-full justify-start"

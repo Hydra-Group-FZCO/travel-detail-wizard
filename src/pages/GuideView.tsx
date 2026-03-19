@@ -10,10 +10,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "@/hooks/use-toast";
 import {
-  Globe, Share2, Wifi, Shield, Loader2, Sparkles,
+  Globe, Download, Share2, Wifi, Shield, Loader2, Sparkles,
   Check, BookOpen, MapPin, Plane
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { downloadMarkdownAsPdf } from "@/lib/downloadPdf";
 
 const LOADING_MESSAGES = [
   "Researching your destination...",
@@ -268,6 +269,20 @@ const GuideView = () => {
 
                   <Card>
                     <CardContent className="p-3 space-y-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full justify-start text-xs"
+                        onClick={() =>
+                          downloadMarkdownAsPdf(
+                            content,
+                            `${guide?.destination} Travel Guide`,
+                            `${guide?.depth ? guide.depth.charAt(0).toUpperCase() + guide.depth.slice(1) + ' · ' : ''}${guide?.season !== 'unknown' ? guide?.season + ' · ' : ''}Digital Moonkey Travel`
+                          )
+                        }
+                      >
+                        <Download className="w-3 h-3 mr-1.5" /> Download PDF
+                      </Button>
                       <Button variant="outline" size="sm" className="w-full justify-start text-xs" onClick={handleShare}>
                         {copied ? <Check className="w-3 h-3 mr-1.5" /> : <Share2 className="w-3 h-3 mr-1.5" />}
                         {copied ? "Copied!" : "Share guide"}
