@@ -200,8 +200,8 @@ const Esims = () => {
           ) : Object.keys(groupedByCountry).length === 0 ? (
             <div className="text-center py-16">
               <Globe size={48} className="mx-auto text-muted-foreground mb-4" />
-              <h3 className="mb-2">No packages found</h3>
-              <p>Try a different search or region filter.</p>
+              <h3 className="mb-2">{t.esims.noPackages}</h3>
+              <p>{t.esims.noPackagesHint}</p>
             </div>
           ) : (
             <div className="space-y-12">
