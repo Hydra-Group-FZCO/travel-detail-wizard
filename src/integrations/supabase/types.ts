@@ -233,6 +233,84 @@ export type Database = {
         }
         Relationships: []
       }
+      itineraries: {
+        Row: {
+          budget_level: string
+          children_ages: number[] | null
+          content_markdown: string | null
+          created_at: string
+          departure_city: string | null
+          destination: string
+          end_date: string
+          extras: string[] | null
+          id: string
+          interests: string[] | null
+          language: string
+          num_days: number
+          pdf_url: string | null
+          price_paid: number | null
+          public_share_token: string | null
+          start_date: string
+          status: string
+          stripe_payment_id: string | null
+          travelers_adults: number
+          travelers_children: number
+          trip_type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          budget_level?: string
+          children_ages?: number[] | null
+          content_markdown?: string | null
+          created_at?: string
+          departure_city?: string | null
+          destination: string
+          end_date: string
+          extras?: string[] | null
+          id?: string
+          interests?: string[] | null
+          language?: string
+          num_days: number
+          pdf_url?: string | null
+          price_paid?: number | null
+          public_share_token?: string | null
+          start_date: string
+          status?: string
+          stripe_payment_id?: string | null
+          travelers_adults?: number
+          travelers_children?: number
+          trip_type?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          budget_level?: string
+          children_ages?: number[] | null
+          content_markdown?: string | null
+          created_at?: string
+          departure_city?: string | null
+          destination?: string
+          end_date?: string
+          extras?: string[] | null
+          id?: string
+          interests?: string[] | null
+          language?: string
+          num_days?: number
+          pdf_url?: string | null
+          price_paid?: number | null
+          public_share_token?: string | null
+          start_date?: string
+          status?: string
+          stripe_payment_id?: string | null
+          travelers_adults?: number
+          travelers_children?: number
+          trip_type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       orders: {
         Row: {
           amount: number
