@@ -69,6 +69,15 @@ Focus areas: ${focusAreas}
 Guide depth: ${guide.depth}
 Travel season: ${guide.season || "All seasons"}
 
+IMPORTANT — LINKS & REFERENCES:
+For every place, attraction, restaurant, hotel, market, or point of interest you mention, include:
+- A Google Maps link: [Name](https://www.google.com/maps/search/Name+${encodeURIComponent(guide.destination)})
+- If you know the official website, include it: [Official site](https://example.com)
+- For booking platforms, link to them: e.g. [Book on GetYourGuide](https://www.getyourguide.com/s/?q=Name+${encodeURIComponent(guide.destination)})
+- For restaurants, add a TripAdvisor search link: [Reviews](https://www.tripadvisor.com/Search?q=Name+${encodeURIComponent(guide.destination)})
+
+This makes the guide genuinely useful — readers can tap any place to see it on the map or book instantly.
+
 Structure EXACTLY as follows:
 
 # 🌍 ${guide.destination} Travel Guide
@@ -80,7 +89,7 @@ Structure EXACTLY as follows:
 ---
 
 ## 📍 DESTINATION OVERVIEW
-- Geography & Location
+- Geography & Location (include [📍 See on Map](https://www.google.com/maps/search/${encodeURIComponent(guide.destination)}))
 - Climate & Best Time to Visit
 - Population & Culture
 - Language(s) spoken
@@ -90,49 +99,53 @@ Structure EXACTLY as follows:
 - Safety overview (honest assessment)
 
 ## ✈️ GETTING THERE
-- Best airports to fly into
-- Top airlines serving the route
+- Best airports to fly into (with Google Maps links)
+- Top airlines serving the route (link to airline websites)
 - Average flight prices by season
 - Airport transfer options with prices
 - Visa & entry requirements overview
 
 ## 🏘️ NEIGHBORHOODS GUIDE
-[For each major neighborhood: character, best for, must-see, where to stay, price range]
+[For each major neighborhood: character, best for, must-see, where to stay, price range. Include a 📍 Google Maps link for each neighborhood]
 
 ## 🏛️ TOP ATTRACTIONS
-[Top 15-20 attractions with: what it is, opening hours, ticket prices, insider tip, time needed, skip if overrated]
+[Top 15-20 attractions with: what it is, opening hours, ticket prices, insider tip, time needed, skip if overrated. EACH with:
+- 📍 [See on Google Maps](link)
+- 🎟️ [Book tickets](link) when applicable
+- 🌐 [Official website](link) when known]
 
 ## 🍽️ FOOD & DRINK GUIDE
 - Local cuisine overview, must-try dishes and drinks
-- Top 10 restaurants by budget tier
-- Best food markets & street food areas
+- Top 10 restaurants by budget tier (each with 📍 Maps link + ⭐ TripAdvisor link)
+- Best food markets & street food areas (with Maps links)
 - Dining etiquette & tipping customs
 
 ## 🛏️ WHERE TO STAY
 - Neighborhoods by traveler type
-- Top hotels: Budget (<€80), Mid (€80-200), Luxury (€200+)
+- Top hotels: Budget (<€80), Mid (€80-200), Luxury (€200+) — each with 📍 Maps link + 🔗 booking link
 - Alternative accommodation tips
 
 ## 🚇 GETTING AROUND
-- Public transport explained, best apps
-- Taxi & rideshare, car rental advice
+- Public transport explained, best apps (link to app stores)
+- Taxi & rideshare apps (link to download)
 - Day trip transport, approximate costs
 
 ## 🛍️ SHOPPING GUIDE
-- Best shopping areas, local products
-- Markets with days/hours
+- Best shopping areas (with Maps links), local products
+- Markets with days/hours (with Maps links)
 - Price negotiation tips, tourist traps to avoid
 
 ## 🎉 NIGHTLIFE & ENTERTAINMENT
-- Scene overview, best areas
+- Scene overview, best areas (with Maps links)
 - Local entertainment, dress codes
 - Safety tips
 
 ## 🌅 DAY TRIPS
-[Top 5 day trips: distance, how to get there, what to see, cost]
+[Top 5 day trips: distance, how to get there, what to see, cost. Each with 📍 Google Maps link and 🎟️ tour booking link]
 
 ## 📅 SUGGESTED ITINERARIES
 - Weekend (2 days), Short break (4 days), Full week (7 days)
+- Link back to relevant attractions/restaurants mentioned above
 
 ## 💶 BUDGET GUIDE
 | Category | Budget/day | Mid/day | Luxury/day |
@@ -158,6 +171,8 @@ Structure EXACTLY as follows:
 
 ## 📱 USEFUL APPS & RESOURCES
 - Navigation, transport, food delivery, translation, emergency apps
+- Include download links for each app (App Store / Google Play when possible)
+- Useful websites for the destination
 
 ---
 
@@ -166,6 +181,7 @@ Be specific, practical, genuinely useful.
 Use real places, real neighborhoods, real prices.
 Be honest about downsides and tourist traps.
 Write like a knowledgeable friend, not a brochure.
+ALL links must be real, functional URLs (Google Maps search links are always valid).
 Length: ${depthText}`;
 
     await supabase
