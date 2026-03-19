@@ -190,6 +190,17 @@ export const fr: Translations = {
     officeLabel: "Siège Social",
     officeName: "Digital Moonkey Ltd",
     officeLocation: "Angleterre, Royaume-Uni",
+    form: {
+      title: "Envoyez-nous un Message",
+      name: "Votre nom",
+      email: "Votre email",
+      subject: "Objet",
+      message: "Votre message",
+      submit: "Envoyer",
+      sending: "Envoi en cours…",
+      success: "Message envoyé ! Nous vous répondrons sous 24 heures.",
+      error: "Une erreur s'est produite. Réessayez ou contactez-nous directement.",
+    },
   },
   legal: {
     title: "Avis Juridique Important",

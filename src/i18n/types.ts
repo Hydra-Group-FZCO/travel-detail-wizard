@@ -89,6 +89,17 @@ export interface Translations {
     officeLabel: string;
     officeName: string;
     officeLocation: string;
+    form: {
+      title: string;
+      name: string;
+      email: string;
+      subject: string;
+      message: string;
+      submit: string;
+      sending: string;
+      success: string;
+      error: string;
+    };
   };
   legal: {
     title: string;
