@@ -33,14 +33,48 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const POPULAR_DESTINATIONS = [
-  "Paris, France", "Tokyo, Japan", "Barcelona, Spain", "Rome, Italy",
-  "New York, USA", "London, UK", "Bali, Indonesia", "Dubai, UAE",
-  "Lisbon, Portugal", "Amsterdam, Netherlands", "Bangkok, Thailand",
-  "Istanbul, Turkey", "Prague, Czech Republic", "Marrakech, Morocco",
-  "Santorini, Greece", "Buenos Aires, Argentina", "Sydney, Australia",
-  "Seoul, South Korea", "Vienna, Austria", "Cape Town, South Africa",
-];
+const POPULAR_DESTINATIONS: Record<string, string[]> = {
+  en: [
+    "Paris, France", "Tokyo, Japan", "Barcelona, Spain", "Rome, Italy",
+    "New York, USA", "London, UK", "Bali, Indonesia", "Dubai, UAE",
+    "Lisbon, Portugal", "Amsterdam, Netherlands", "Bangkok, Thailand",
+    "Istanbul, Turkey", "Prague, Czech Republic", "Marrakech, Morocco",
+    "Santorini, Greece", "Buenos Aires, Argentina", "Sydney, Australia",
+    "Seoul, South Korea", "Vienna, Austria", "Cape Town, South Africa",
+  ],
+  es: [
+    "París, Francia", "Tokio, Japón", "Barcelona, España", "Roma, Italia",
+    "Nueva York, EE.UU.", "Londres, Reino Unido", "Bali, Indonesia", "Dubái, EAU",
+    "Lisboa, Portugal", "Ámsterdam, Países Bajos", "Bangkok, Tailandia",
+    "Estambul, Turquía", "Praga, República Checa", "Marrakech, Marruecos",
+    "Santorini, Grecia", "Buenos Aires, Argentina", "Sídney, Australia",
+    "Seúl, Corea del Sur", "Viena, Austria", "Ciudad del Cabo, Sudáfrica",
+  ],
+  fr: [
+    "Paris, France", "Tokyo, Japon", "Barcelone, Espagne", "Rome, Italie",
+    "New York, États-Unis", "Londres, Royaume-Uni", "Bali, Indonésie", "Dubaï, ÉAU",
+    "Lisbonne, Portugal", "Amsterdam, Pays-Bas", "Bangkok, Thaïlande",
+    "Istanbul, Turquie", "Prague, République tchèque", "Marrakech, Maroc",
+    "Santorin, Grèce", "Buenos Aires, Argentine", "Sydney, Australie",
+    "Séoul, Corée du Sud", "Vienne, Autriche", "Le Cap, Afrique du Sud",
+  ],
+  it: [
+    "Parigi, Francia", "Tokyo, Giappone", "Barcellona, Spagna", "Roma, Italia",
+    "New York, USA", "Londra, Regno Unito", "Bali, Indonesia", "Dubai, EAU",
+    "Lisbona, Portogallo", "Amsterdam, Paesi Bassi", "Bangkok, Thailandia",
+    "Istanbul, Turchia", "Praga, Repubblica Ceca", "Marrakech, Marocco",
+    "Santorini, Grecia", "Buenos Aires, Argentina", "Sydney, Australia",
+    "Seul, Corea del Sud", "Vienna, Austria", "Città del Capo, Sudafrica",
+  ],
+  de: [
+    "Paris, Frankreich", "Tokio, Japan", "Barcelona, Spanien", "Rom, Italien",
+    "New York, USA", "London, Vereinigtes Königreich", "Bali, Indonesien", "Dubai, VAE",
+    "Lissabon, Portugal", "Amsterdam, Niederlande", "Bangkok, Thailand",
+    "Istanbul, Türkei", "Prag, Tschechien", "Marrakesch, Marokko",
+    "Santorin, Griechenland", "Buenos Aires, Argentinien", "Sydney, Australien",
+    "Seoul, Südkorea", "Wien, Österreich", "Kapstadt, Südafrika",
+  ],
+};
 
 const OUTPUT_LANGUAGES = [
   { code: "es", flag: "🇪🇸", label: "Español" },
@@ -453,7 +487,8 @@ const ItineraryGenerator = () => {
   const [extras, setExtras] = useState<string[]>(["restaurants", "transport"]);
 
   const numDays = startDate && endDate ? differenceInDays(endDate, startDate) + 1 : 0;
-  const filteredDestinations = POPULAR_DESTINATIONS.filter((d) => d.toLowerCase().includes(destSearch.toLowerCase())).slice(0, 6);
+  const destinations = POPULAR_DESTINATIONS[uiLang] || POPULAR_DESTINATIONS.en;
+  const filteredDestinations = destinations.filter((d) => d.toLowerCase().includes(destSearch.toLowerCase())).slice(0, 6);
 
   const toggleInterest = (id: string) => {
     setInterests((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
