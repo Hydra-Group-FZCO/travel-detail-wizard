@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useTranslations, useLanguage, localizedPath } from "@/i18n";
+import Logo from "@/components/Logo";
 
 const Footer = () => {
   const t = useTranslations();
