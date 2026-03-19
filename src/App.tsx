@@ -31,6 +31,8 @@ import Esims from "./pages/Esims";
 import MyEsims from "./pages/dashboard/MyEsims";
 import ItineraryGenerator from "./pages/ItineraryGenerator";
 import ItineraryView from "./pages/ItineraryView";
+import TravelGuides from "./pages/TravelGuides";
+import GuideView from "./pages/GuideView";
 
 const queryClient = new QueryClient();
 
@@ -74,6 +76,8 @@ const AppRoutes = () => {
         <Route path="/esims" element={<Esims />} />
         <Route path="/itinerary-generator" element={<ItineraryGenerator />} />
         <Route path="/itinerary/:id" element={<ItineraryView />} />
+        <Route path="/travel-guides" element={<TravelGuides />} />
+        <Route path="/travel-guides/view/:id" element={<GuideView />} />
 
         {/* Localized routes */}
         {["es", "fr", "it", "de"].map((l) => (
