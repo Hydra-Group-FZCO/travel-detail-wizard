@@ -19,9 +19,9 @@ const Header = () => {
     { to: localizedPath("/experiences", lang), label: t.nav.experiences },
     { to: localizedPath("/about", lang), label: t.nav.about },
     { to: localizedPath("/contact", lang), label: t.nav.contact },
-    { to: "/esims", label: "eSIM" },
-    { to: "/itinerary-generator", label: "✨ AI Planner" },
-    { to: "/travel-guides", label: "📖 Guides" },
+    { to: localizedPath("/esims", lang), label: "eSIM" },
+    { to: localizedPath("/itinerary-generator", lang), label: "✨ AI Planner" },
+    { to: localizedPath("/travel-guides", lang), label: "📖 Guides" },
   ];
 
   const isActive = (linkTo: string) => location.pathname === linkTo;
