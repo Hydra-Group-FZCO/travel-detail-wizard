@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { countries } from "@/data/countries";
 import { toast } from "sonner";
+import Logo from "@/components/Logo";
 
 const Register = () => {
   const navigate = useNavigate();
