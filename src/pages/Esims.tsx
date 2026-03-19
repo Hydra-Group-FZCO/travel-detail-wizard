@@ -134,11 +134,11 @@ const Esims = () => {
       <section className="pt-28 pb-16 md:pt-36 md:pb-20 bg-gradient-to-br from-accent/10 via-background to-primary/5">
         <div className="container-grid text-center">
           <Badge variant="secondary" className="mb-4 text-sm px-4 py-1.5">
-            <Wifi size={14} className="mr-1.5" /> eSIM Store
+            <Wifi size={14} className="mr-1.5" /> {t.esims.badge}
           </Badge>
-          <h1 className="text-balance mb-4">Stay Connected Worldwide</h1>
+          <h1 className="text-balance mb-4">{t.esims.heroTitle}</h1>
           <p className="text-lg max-w-2xl mx-auto mb-8">
-            Instant data plans for 190+ countries. No physical SIM needed — activate your eSIM in minutes.
+            {t.esims.heroSubtitle}
           </p>
 
           {/* Search */}
