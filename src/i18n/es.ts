@@ -4,8 +4,14 @@ export const es: Translations = {
   nav: {
     home: "Inicio",
     services: "Servicios",
+    experiences: "Experiencias",
     about: "Sobre nosotros",
     contact: "Contacto",
+  },
+  experiences: {
+    heroTitle: "Reserva Experiencias en Todo el Mundo",
+    heroSubtitle: "Tours, excursiones y actividades desde Londres, Italia, Australia y más",
+    browseButton: "Ver Experiencias",
   },
   hero: {
     badge: "Asistencia Personal de Viaje",

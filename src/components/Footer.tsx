@@ -59,6 +59,12 @@ const Footer = () => {
                     {link.label}
                   </Link>
                 ))}
+                <Link
+                  to={localizedPath("/experiences", lang)}
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {t.nav.experiences}
+                </Link>
               </div>
             </div>
           </div>

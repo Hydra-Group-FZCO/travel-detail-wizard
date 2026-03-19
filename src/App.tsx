@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Services from "./pages/Services";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Experiences from "./pages/Experiences";
 import Legal from "./pages/Legal";
 import NotFound from "./pages/NotFound";
 
@@ -23,6 +24,7 @@ const AppRoutes = () => {
         {/* English (default — no prefix) */}
         <Route path="/" element={<Index />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/experiences" element={<Experiences />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/legal" element={<Legal />} />
@@ -32,6 +34,7 @@ const AppRoutes = () => {
           <Route key={l} path={`/${l}`}>
             <Route index element={<Index />} />
             <Route path="services" element={<Services />} />
+            <Route path="experiences" element={<Experiences />} />
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
             <Route path="legal" element={<Legal />} />

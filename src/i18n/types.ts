@@ -4,8 +4,14 @@ export interface Translations {
   nav: {
     home: string;
     services: string;
+    experiences: string;
     about: string;
     contact: string;
+  };
+  experiences: {
+    heroTitle: string;
+    heroSubtitle: string;
+    browseButton: string;
   };
   hero: {
     badge: string;
