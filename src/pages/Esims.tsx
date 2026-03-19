@@ -9,6 +9,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import PageLayout from "@/components/PageLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslations } from "@/i18n";
 
 type EsimPackage = {
   id: string;
@@ -21,15 +22,6 @@ type EsimPackage = {
   location_code: string | null;
   operator: string | null;
 };
-
-const regions = [
-  { label: "All", value: "all" },
-  { label: "🌍 Europe", value: "europe" },
-  { label: "🌏 Asia", value: "asia" },
-  { label: "🌎 Americas", value: "americas" },
-  { label: "🌍 Middle East", value: "middle_east" },
-  { label: "🌐 Global", value: "global" },
-];
 
 const regionCountries: Record<string, string[]> = {
   europe: ["GB", "FR", "DE", "ES", "IT", "PT", "NL", "BE", "CH", "AT", "GR", "PL", "CZ", "SE", "NO", "DK", "FI", "IE", "HR", "RO", "BG", "HU", "SK", "SI", "LT", "LV", "EE", "MT", "CY", "LU", "IS"],
