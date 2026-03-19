@@ -240,7 +240,7 @@ const Esims = () => {
                                 {pkg.duration_days && (
                                   <span className="flex items-center gap-1">
                                     <Clock size={14} className="text-accent" />
-                                    {pkg.duration_days} days
+                                    {pkg.duration_days} {t.esims.days}
                                   </span>
                                 )}
                               </div>
