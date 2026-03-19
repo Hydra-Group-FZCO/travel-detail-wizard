@@ -26,6 +26,9 @@ import AdminLayout from "./pages/admin/AdminLayout";
 import AdminPackages from "./pages/admin/AdminPackages";
 import AdminBookings from "./pages/admin/AdminBookings";
 import AdminCustomers from "./pages/admin/AdminCustomers";
+import AdminEsims from "./pages/admin/AdminEsims";
+import Esims from "./pages/Esims";
+import MyEsims from "./pages/dashboard/MyEsims";
 
 const queryClient = new QueryClient();
 
