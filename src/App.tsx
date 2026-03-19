@@ -76,6 +76,8 @@ const AppRoutes = () => {
         <Route path="/esims" element={<Esims />} />
         <Route path="/itinerary-generator" element={<ItineraryGenerator />} />
         <Route path="/itinerary/:id" element={<ItineraryView />} />
+        <Route path="/travel-guides" element={<TravelGuides />} />
+        <Route path="/travel-guides/view/:id" element={<GuideView />} />
 
         {/* Localized routes */}
         {["es", "fr", "it", "de"].map((l) => (

@@ -11,3 +11,5 @@ project_id = "mmnjjmcivgimhatdlrjc"
     verify_jwt = false
   [functions.generate-itinerary]
     verify_jwt = false
+  [functions.generate-guide]
+    verify_jwt = false
