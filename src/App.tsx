@@ -88,6 +88,10 @@ const AppRoutes = () => {
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
             <Route path="legal" element={<Legal />} />
+            <Route path="itinerary-generator" element={<ItineraryGenerator />} />
+            <Route path="itinerary/:id" element={<ItineraryView />} />
+            <Route path="travel-guides" element={<TravelGuides />} />
+            <Route path="travel-guides/view/:id" element={<GuideView />} />
           </Route>
         ))}
 
