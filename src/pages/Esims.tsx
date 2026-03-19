@@ -137,7 +137,13 @@ const Esims = () => {
 
     if (region !== "all" && region !== "global") {
       const codes = regionCountries[region] || [];
-      filtered = filtered.filter((p) => p.location_code && codes.includes(p.location_code));
+      filtered = filtered.filter((p) => {
+        // Check location_code directly
+        if (p.location_code && codes.includes(p.location_code)) return true;
+        // Check countries array for regional packages
+        if (p.countries && p.countries.some((c) => codes.includes(c))) return true;
+        return false;
+      });
     }
 
     const grouped: Record<string, EsimPackage[]> = {};
