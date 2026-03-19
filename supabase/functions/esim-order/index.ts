@@ -9,20 +9,18 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
   try {
-    const { packageCode, transactionId, price, amount } = await req.json();
+    const { transactionId, amount, packageInfoList } = await req.json();
 
     const apiHost = Deno.env.get("ESIM_API_HOST")!;
     const accessCode = Deno.env.get("ESIM_ACCESS_CODE")!;
-    const secretKey = Deno.env.get("ESIM_SECRET_KEY")!;
 
-    const response = await fetch(`${apiHost}/api/v5/esim/order`, {
+    const response = await fetch(`${apiHost}/api/v1/open/esim/order`, {
       method: "POST",
       headers: {
         "RT-AccessCode": accessCode,
-        "RT-SecretKey": secretKey,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ packageCode, transactionId, price, amount }),
+      body: JSON.stringify({ transactionId, amount, packageInfoList }),
     });
 
     const data = await response.json();

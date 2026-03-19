@@ -69,7 +69,6 @@ const Esims = () => {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [region, setRegion] = useState("all");
-  const [syncing, setSyncing] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -86,38 +85,9 @@ const Esims = () => {
 
     if (error) {
       toast({ title: "Error loading packages", description: error.message, variant: "destructive" });
-      setLoading(false);
-      return;
-    }
-
-    if (!data || data.length === 0) {
-      // Cache is empty — sync from API
-      await syncFromApi();
     } else {
-      setPackages(data);
-      setLoading(false);
-    }
-  };
-
-  const syncFromApi = async () => {
-    setSyncing(true);
-    try {
-      const { error } = await supabase.functions.invoke("esim-packages", {
-        body: { locationCode: "" },
-      });
-      if (error) throw error;
-
-      // Reload from cache after sync
-      const { data } = await supabase
-        .from("esim_packages_cache")
-        .select("*")
-        .gt("price_retail_eur", 0)
-        .order("name");
       setPackages(data || []);
-    } catch (e: any) {
-      toast({ title: "Error syncing packages", description: e.message, variant: "destructive" });
     }
-    setSyncing(false);
     setLoading(false);
   };
 
@@ -131,13 +101,20 @@ const Esims = () => {
         (p) =>
           p.name.toLowerCase().includes(q) ||
           (p.location_code && countryNames[p.location_code]?.toLowerCase().includes(q)) ||
-          p.location_code?.toLowerCase().includes(q)
+          p.location_code?.toLowerCase().includes(q) ||
+          (p.countries && p.countries.some((c) => countryNames[c]?.toLowerCase().includes(q)))
       );
     }
 
     if (region !== "all" && region !== "global") {
       const codes = regionCountries[region] || [];
-      filtered = filtered.filter((p) => p.location_code && codes.includes(p.location_code));
+      filtered = filtered.filter((p) => {
+        // Check location_code directly
+        if (p.location_code && codes.includes(p.location_code)) return true;
+        // Check countries array for regional packages
+        if (p.countries && p.countries.some((c) => codes.includes(c))) return true;
+        return false;
+      });
     }
 
     const grouped: Record<string, EsimPackage[]> = {};
@@ -212,9 +189,6 @@ const Esims = () => {
         <div className="container-grid">
           {loading ? (
             <div className="text-center py-16">
-              {syncing && (
-                <p className="text-muted-foreground mb-4">Loading packages from provider...</p>
-              )}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {Array.from({ length: 6 }).map((_, i) => (
                   <Skeleton key={i} className="h-64 rounded-xl" />
