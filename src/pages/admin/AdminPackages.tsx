@@ -11,7 +11,7 @@ import type { Tables } from "@/integrations/supabase/types";
 
 type Package = Tables<"packages">;
 
-type EditablePackage = Partial<Package> & { price?: number | string | null };
+type EditablePackage = Omit<Partial<Package>, 'price'> & { price?: number | string | null };
 const emptyPkg: EditablePackage = { title: "", description: "", destination: "", price: "", currency: "GBP", duration: "", image_url: "", is_active: true };
 
 const AdminPackages = () => {
