@@ -59,6 +59,7 @@ const AppRoutes = () => {
           <Route index element={<AdminPackages />} />
           <Route path="bookings" element={<AdminBookings />} />
           <Route path="customers" element={<AdminCustomers />} />
+          <Route path="esims" element={<AdminEsims />} />
         </Route>
 
         {/* Public pages */}
