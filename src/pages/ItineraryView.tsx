@@ -325,6 +325,19 @@ const ItineraryView = () => {
                       <Button
                         variant="outline"
                         className="w-full justify-start"
+                        onClick={() =>
+                          downloadMarkdownAsPdf(
+                            content,
+                            `${itinerary?.destination} Itinerary`,
+                            `${itinerary?.num_days} days · ${itinerary?.trip_type} · ${itinerary?.budget_level}`
+                          )
+                        }
+                      >
+                        <Download className="w-4 h-4 mr-2" /> Download PDF
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="w-full justify-start"
                         onClick={handleShare}
                       >
                         {copied ? <Check className="w-4 h-4 mr-2" /> : <Share2 className="w-4 h-4 mr-2" />}
