@@ -143,6 +143,96 @@ export type Database = {
         }
         Relationships: []
       }
+      esim_orders: {
+        Row: {
+          activation_code: string | null
+          created_at: string
+          iccid: string | null
+          id: string
+          order_no: string | null
+          package_code: string
+          price_paid_eur: number
+          qr_code_url: string | null
+          status: string
+          stripe_payment_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          activation_code?: string | null
+          created_at?: string
+          iccid?: string | null
+          id?: string
+          order_no?: string | null
+          package_code: string
+          price_paid_eur?: number
+          qr_code_url?: string | null
+          status?: string
+          stripe_payment_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          activation_code?: string | null
+          created_at?: string
+          iccid?: string | null
+          id?: string
+          order_no?: string | null
+          package_code?: string
+          price_paid_eur?: number
+          qr_code_url?: string | null
+          status?: string
+          stripe_payment_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      esim_packages_cache: {
+        Row: {
+          countries: string[] | null
+          data_gb: number | null
+          duration_days: number | null
+          id: string
+          location_code: string | null
+          name: string
+          operator: string | null
+          package_code: string
+          price_retail_eur: number
+          price_wholesale: number
+          slug: string | null
+          updated_at: string
+        }
+        Insert: {
+          countries?: string[] | null
+          data_gb?: number | null
+          duration_days?: number | null
+          id?: string
+          location_code?: string | null
+          name: string
+          operator?: string | null
+          package_code: string
+          price_retail_eur?: number
+          price_wholesale?: number
+          slug?: string | null
+          updated_at?: string
+        }
+        Update: {
+          countries?: string[] | null
+          data_gb?: number | null
+          duration_days?: number | null
+          id?: string
+          location_code?: string | null
+          name?: string
+          operator?: string | null
+          package_code?: string
+          price_retail_eur?: number
+          price_wholesale?: number
+          slug?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       orders: {
         Row: {
           amount: number
