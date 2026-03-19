@@ -34,6 +34,7 @@ const AppRoutes = () => {
           <Route key={l} path={`/${l}`}>
             <Route index element={<Index />} />
             <Route path="services" element={<Services />} />
+            <Route path="experiences" element={<Experiences />} />
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
             <Route path="legal" element={<Legal />} />

@@ -13,6 +13,7 @@ const Header = () => {
   const navLinks = [
     { to: localizedPath("/", lang), label: t.nav.home },
     { to: localizedPath("/services", lang), label: t.nav.services },
+    { to: localizedPath("/experiences", lang), label: t.nav.experiences },
     { to: localizedPath("/about", lang), label: t.nav.about },
     { to: localizedPath("/contact", lang), label: t.nav.contact },
   ];
