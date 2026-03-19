@@ -131,7 +131,8 @@ const Esims = () => {
         (p) =>
           p.name.toLowerCase().includes(q) ||
           (p.location_code && countryNames[p.location_code]?.toLowerCase().includes(q)) ||
-          p.location_code?.toLowerCase().includes(q)
+          p.location_code?.toLowerCase().includes(q) ||
+          (p.countries && p.countries.some((c) => countryNames[c]?.toLowerCase().includes(q)))
       );
     }
 
