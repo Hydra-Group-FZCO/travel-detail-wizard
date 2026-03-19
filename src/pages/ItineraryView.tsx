@@ -300,7 +300,9 @@ const ItineraryView = () => {
                             className="prose prose-sm max-w-none"
                             dangerouslySetInnerHTML={{
                               __html: renderMarkdown(
-                                day.content.replace(/^## Day \d+:.+\n?/, "")
+                                day.content.replace(/^## (?:Day|Día|Jour|Tag|Giorno|Dia) \d+:.+\n?/, "")
+                              ),
+                            }}
                               ),
                             }}
                           />
