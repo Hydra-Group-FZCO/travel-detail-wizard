@@ -1,23 +1,18 @@
 import PageLayout from "@/components/PageLayout";
 import { Mail, Clock, MapPin } from "lucide-react";
+import { useTranslations } from "@/i18n";
 
-const contactItems = [
-  { icon: Mail, label: "General enquiries", value: "support@digitalmoonkey.travel" },
-  { icon: Mail, label: "Business enquiries", value: "business@digitalmoonkey.travel" },
-  { icon: Mail, label: "Corporate clients", value: "corporate@digitalmoonkey.travel" },
-  { icon: Clock, label: "Office hours", value: "Monday to Friday, 9:00 — 18:00 (GMT)" },
-  { icon: Clock, label: "Response time", value: "Within 24 hours on business days" },
-];
+const iconMap = [Mail, Mail, Mail, Clock, Clock];
 
 const Contact = () => {
+  const t = useTranslations();
+
   return (
     <PageLayout>
       <section className="pt-28 pb-12 md:pt-32 md:pb-16 bg-secondary">
         <div className="container-grid">
-          <h1 className="mb-4">Get in Touch</h1>
-          <p className="text-base md:text-lg max-w-2xl">
-            Whether you need help with a single application or ongoing support for your business travel programme, we are here to help.
-          </p>
+          <h1 className="mb-4">{t.contact.title}</h1>
+          <p className="text-base md:text-lg max-w-2xl">{t.contact.subtitle}</p>
         </div>
       </section>
 
@@ -25,17 +20,20 @@ const Contact = () => {
         <div className="container-grid">
           <div className="max-w-2xl">
             <div className="space-y-4">
-              {contactItems.map((item) => (
-                <div key={item.label} className="flex items-start gap-4 bg-card border border-border rounded-xl p-5 shadow-card">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
-                    <item.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
+              {t.contact.items.map((item, i) => {
+                const Icon = iconMap[i] || Mail;
+                return (
+                  <div key={item.label} className="flex items-start gap-4 bg-card border border-border rounded-xl p-5 shadow-card">
+                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
+                      <Icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-0.5">{item.label}</p>
+                      <p className="text-sm font-semibold text-foreground">{item.value}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-0.5">{item.label}</p>
-                    <p className="text-sm font-semibold text-foreground">{item.value}</p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             <div className="mt-6 bg-card border border-border rounded-xl p-5 shadow-card">
@@ -44,9 +42,9 @@ const Contact = () => {
                   <MapPin className="w-5 h-5 text-primary" strokeWidth={1.5} />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-0.5">Registered Office</p>
-                  <p className="text-sm font-semibold text-foreground">Digital Moonkey Ltd</p>
-                  <p className="text-sm text-muted-foreground mt-0.5">England, United Kingdom</p>
+                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-0.5">{t.contact.officeLabel}</p>
+                  <p className="text-sm font-semibold text-foreground">{t.contact.officeName}</p>
+                  <p className="text-sm text-muted-foreground mt-0.5">{t.contact.officeLocation}</p>
                 </div>
               </div>
             </div>

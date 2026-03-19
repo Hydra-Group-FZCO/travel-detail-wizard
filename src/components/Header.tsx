@@ -1,24 +1,29 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
-
-const navLinks = [
-  { to: "/", label: "Home" },
-  { to: "/services", label: "Services" },
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Contact" },
-];
+import { Menu, X, ChevronDown } from "lucide-react";
+import { useTranslations, useLanguage, localizedPath, languageNames, languageFlags, supportedLanguages, type Language } from "@/i18n";
 
 const Header = () => {
-  const location = useLocation();
+  const t = useTranslations();
+  const lang = useLanguage();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const isHome = location.pathname === "/";
+  const [langOpen, setLangOpen] = useState(false);
+  const isHome = location.pathname === localizedPath("/", lang) || location.pathname === "/";
+
+  const navLinks = [
+    { to: localizedPath("/", lang), label: t.nav.home },
+    { to: localizedPath("/services", lang), label: t.nav.services },
+    { to: localizedPath("/about", lang), label: t.nav.about },
+    { to: localizedPath("/contact", lang), label: t.nav.contact },
+  ];
+
+  const isActive = (linkTo: string) => location.pathname === linkTo;
 
   return (
     <header className={`absolute top-0 left-0 right-0 z-50 ${isHome ? "" : "bg-background border-b border-border"}`}>
       <nav className="container-grid">
         <div className="flex items-center justify-between h-16 md:h-20">
-          <Link to="/" className="flex items-center gap-2.5">
+          <Link to={localizedPath("/", lang)} className="flex items-center gap-2.5">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-sm">DM</span>
             </div>
@@ -34,7 +39,7 @@ const Header = () => {
                 key={link.to}
                 to={link.to}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
-                  location.pathname === link.to
+                  isActive(link.to)
                     ? isHome ? "bg-primary-foreground/20 text-primary-foreground" : "bg-muted text-foreground"
                     : isHome ? "text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10" : "text-muted-foreground hover:text-foreground hover:bg-muted"
                 }`}
@@ -42,15 +47,74 @@ const Header = () => {
                 {link.label}
               </Link>
             ))}
+
+            {/* Language Selector */}
+            <div className="relative ml-2">
+              <button
+                onClick={() => setLangOpen(!langOpen)}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium transition-colors ${
+                  isHome ? "text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10" : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                }`}
+              >
+                <span>{languageFlags[lang]}</span>
+                <span className="hidden lg:inline">{languageNames[lang]}</span>
+                <ChevronDown size={14} />
+              </button>
+              {langOpen && (
+                <div className="absolute right-0 top-full mt-1 bg-card border border-border rounded-xl shadow-elevated p-1.5 min-w-[160px] animate-fade-in z-50">
+                  {supportedLanguages.map((l) => (
+                    <Link
+                      key={l}
+                      to={localizedPath(getCurrentPagePath(lang), l)}
+                      onClick={() => setLangOpen(false)}
+                      className={`flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                        lang === l ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      }`}
+                    >
+                      <span>{languageFlags[l]}</span>
+                      <span>{languageNames[l]}</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Mobile Toggle */}
-          <button
-            className={`md:hidden p-2 rounded-lg ${isHome ? "text-primary-foreground" : "text-foreground"}`}
-            onClick={() => setMobileOpen(!mobileOpen)}
-          >
-            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
+          <div className="flex items-center gap-1 md:hidden">
+            {/* Mobile Language */}
+            <div className="relative">
+              <button
+                className={`p-2 rounded-lg ${isHome ? "text-primary-foreground" : "text-foreground"}`}
+                onClick={() => setLangOpen(!langOpen)}
+              >
+                <span className="text-base">{languageFlags[lang]}</span>
+              </button>
+              {langOpen && (
+                <div className="absolute right-0 top-full mt-1 bg-card border border-border rounded-xl shadow-elevated p-1.5 min-w-[150px] animate-fade-in z-50">
+                  {supportedLanguages.map((l) => (
+                    <Link
+                      key={l}
+                      to={localizedPath(getCurrentPagePath(lang), l)}
+                      onClick={() => setLangOpen(false)}
+                      className={`flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                        lang === l ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      }`}
+                    >
+                      <span>{languageFlags[l]}</span>
+                      <span>{languageNames[l]}</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+            <button
+              className={`p-2 rounded-lg ${isHome ? "text-primary-foreground" : "text-foreground"}`}
+              onClick={() => setMobileOpen(!mobileOpen)}
+            >
+              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
@@ -63,7 +127,7 @@ const Header = () => {
                   to={link.to}
                   onClick={() => setMobileOpen(false)}
                   className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                    location.pathname === link.to
+                    isActive(link.to)
                       ? "bg-primary/10 text-primary"
                       : "text-muted-foreground hover:bg-muted hover:text-foreground"
                   }`}
@@ -78,5 +142,17 @@ const Header = () => {
     </header>
   );
 };
+
+/** Extract the current page path (without lang prefix) */
+function getCurrentPagePath(currentLang: Language): string {
+  const path = location.pathname;
+  if (currentLang === "en") return path;
+  const prefix = `/${currentLang}`;
+  if (path.startsWith(prefix)) {
+    const rest = path.slice(prefix.length);
+    return rest || "/";
+  }
+  return path;
+}
 
 export default Header;

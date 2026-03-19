@@ -1,13 +1,17 @@
 import { Link } from "react-router-dom";
+import { useTranslations, useLanguage, localizedPath } from "@/i18n";
 
 const Footer = () => {
+  const t = useTranslations();
+  const lang = useLanguage();
+
   return (
     <footer>
       {/* Disclaimer */}
       <div className="bg-trust-bar-bg text-trust-bar-fg">
         <div className="container-grid py-5">
           <p className="text-xs leading-relaxed opacity-80" style={{ maxWidth: "none" }}>
-            <strong>Important:</strong> Digital Moonkey Ltd is a private service provider. We are not a government agency and are not affiliated with any embassy, consulate, or official body. Our service fees cover our personal assistance and are separate from any official government or application fees. Applicants may choose to apply directly through official government channels without using our services.
+            <strong>{t.footer.disclaimer.split(":")[0]}:</strong>{t.footer.disclaimer.split(":").slice(1).join(":")}
           </p>
         </div>
       </div>
@@ -24,44 +28,58 @@ const Footer = () => {
                 <span className="font-bold text-lg text-foreground">Digital Moonkey</span>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
-                Personal assistance services for travellers — from documentation and applications to connectivity and travel preparation.
+                {t.footer.description}
               </p>
             </div>
 
             <div>
-              <h4 className="text-sm font-bold text-foreground mb-4">Services</h4>
+              <h4 className="text-sm font-bold text-foreground mb-4">{t.footer.servicesTitle}</h4>
               <div className="flex flex-col gap-2.5">
-                <Link to="/services#documentation" className="text-sm text-muted-foreground hover:text-primary transition-colors">Documentation</Link>
-                <Link to="/services#tracking" className="text-sm text-muted-foreground hover:text-primary transition-colors">Tracking</Link>
-                <Link to="/services#digital" className="text-sm text-muted-foreground hover:text-primary transition-colors">Digital Services</Link>
-                <Link to="/services#corporate" className="text-sm text-muted-foreground hover:text-primary transition-colors">Corporate</Link>
+                {t.footer.serviceLinks.map((link) => (
+                  <Link
+                    key={link.hash}
+                    to={`${localizedPath("/services", lang)}#${link.hash}`}
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
               </div>
             </div>
 
             <div>
-              <h4 className="text-sm font-bold text-foreground mb-4">Company</h4>
+              <h4 className="text-sm font-bold text-foreground mb-4">{t.footer.companyTitle}</h4>
               <div className="flex flex-col gap-2.5">
-                <Link to="/about" className="text-sm text-muted-foreground hover:text-primary transition-colors">About Us</Link>
-                <Link to="/contact" className="text-sm text-muted-foreground hover:text-primary transition-colors">Contact</Link>
-                <Link to="/legal" className="text-sm text-muted-foreground hover:text-primary transition-colors">Terms & Conditions</Link>
+                {t.footer.companyLinks.map((link) => (
+                  <Link
+                    key={link.to}
+                    to={localizedPath(link.to, lang)}
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
               </div>
             </div>
           </div>
 
           <div className="mt-12 pt-6 border-t border-border">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <p className="text-xs text-muted-foreground">
-                © 2026 Digital Moonkey Ltd — Registered in England & Wales
-              </p>
+              <p className="text-xs text-muted-foreground">{t.footer.copyright}</p>
               <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
-                <Link to="/legal" className="hover:text-primary transition-colors">Terms</Link>
-                <Link to="/legal" className="hover:text-primary transition-colors">Privacy</Link>
-                <Link to="/legal" className="hover:text-primary transition-colors">Refund Policy</Link>
-                <Link to="/legal" className="hover:text-primary transition-colors">Cookies</Link>
+                {t.footer.bottomLinks.map((link) => (
+                  <Link
+                    key={link.label}
+                    to={localizedPath(link.to, lang)}
+                    className="hover:text-primary transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
               </div>
             </div>
             <p className="text-[11px] text-muted-foreground mt-2 opacity-50">
-              digitalmoonkey.travel is a private service — not a government agency.
+              {t.footer.bottomNote}
             </p>
           </div>
         </div>
