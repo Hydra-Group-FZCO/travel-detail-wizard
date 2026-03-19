@@ -69,6 +69,7 @@ const Esims = () => {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [region, setRegion] = useState("all");
+  const [syncing, setSyncing] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -85,9 +86,38 @@ const Esims = () => {
 
     if (error) {
       toast({ title: "Error loading packages", description: error.message, variant: "destructive" });
-    } else {
-      setPackages(data || []);
+      setLoading(false);
+      return;
     }
+
+    if (!data || data.length === 0) {
+      // Cache is empty — sync from API
+      await syncFromApi();
+    } else {
+      setPackages(data);
+      setLoading(false);
+    }
+  };
+
+  const syncFromApi = async () => {
+    setSyncing(true);
+    try {
+      const { error } = await supabase.functions.invoke("esim-packages", {
+        body: { locationCode: "" },
+      });
+      if (error) throw error;
+
+      // Reload from cache after sync
+      const { data } = await supabase
+        .from("esim_packages_cache")
+        .select("*")
+        .gt("price_retail_eur", 0)
+        .order("name");
+      setPackages(data || []);
+    } catch (e: any) {
+      toast({ title: "Error syncing packages", description: e.message, variant: "destructive" });
+    }
+    setSyncing(false);
     setLoading(false);
   };
 
@@ -181,10 +211,15 @@ const Esims = () => {
       <section className="section-spacing">
         <div className="container-grid">
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <Skeleton key={i} className="h-64 rounded-xl" />
-              ))}
+            <div className="text-center py-16">
+              {syncing && (
+                <p className="text-muted-foreground mb-4">Loading packages from provider...</p>
+              )}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <Skeleton key={i} className="h-64 rounded-xl" />
+                ))}
+              </div>
             </div>
           ) : Object.keys(groupedByCountry).length === 0 ? (
             <div className="text-center py-16">
