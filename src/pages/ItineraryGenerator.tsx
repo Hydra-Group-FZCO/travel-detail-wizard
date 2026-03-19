@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
-import { Button } from "@/components/ui/button";
+import { SampleItineraryPreview } from "@/components/SampleItineraryPreview";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
