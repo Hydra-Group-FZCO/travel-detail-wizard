@@ -1,6 +1,6 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { Package, CalendarDays, Users, LogOut, Home, Shield } from "lucide-react";
+import { Package, CalendarDays, Users, LogOut, Home, Shield, Wifi } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/Logo";
 
