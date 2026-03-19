@@ -487,7 +487,8 @@ const ItineraryGenerator = () => {
   const [extras, setExtras] = useState<string[]>(["restaurants", "transport"]);
 
   const numDays = startDate && endDate ? differenceInDays(endDate, startDate) + 1 : 0;
-  const filteredDestinations = POPULAR_DESTINATIONS.filter((d) => d.toLowerCase().includes(destSearch.toLowerCase())).slice(0, 6);
+  const destinations = POPULAR_DESTINATIONS[uiLang] || POPULAR_DESTINATIONS.en;
+  const filteredDestinations = destinations.filter((d) => d.toLowerCase().includes(destSearch.toLowerCase())).slice(0, 6);
 
   const toggleInterest = (id: string) => {
     setInterests((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
