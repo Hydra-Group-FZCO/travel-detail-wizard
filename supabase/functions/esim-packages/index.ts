@@ -43,45 +43,44 @@ serve(async (req) => {
 
     const packages = data.obj?.packageList || [];
 
-    // Cache packages to DB
+    // Cache packages to DB in batches
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    for (const pkg of packages) {
+    const rows = packages.map((pkg: any) => {
       const wholesalePrice = pkg.price || 0;
-      // Price is in units / 10000 = USD, convert to EUR (approx 0.92), apply 1.8x markup
       const priceUsd = wholesalePrice / 10000;
       const priceEur = Math.ceil(priceUsd * 0.92 * 1.8 * 100) / 100;
-
-      // volume is in bytes, convert to GB
       const dataGb = pkg.volume ? parseFloat((pkg.volume / (1024 * 1024 * 1024)).toFixed(2)) : null;
-
-      // location is a comma-separated string of country codes like "ES" or "CN,HK,JP"
       const locationStr = pkg.location || "";
       const countryCodes = locationStr ? locationStr.split(",").map((c: string) => c.trim()) : [];
-      // Use first country code as location_code for single-country packages
-      const locCode = countryCodes.length === 1 ? countryCodes[0] : (locationCode || null);
+      const locCode = countryCodes.length === 1 ? countryCodes[0] : (pkg.locationCode || locationCode || null);
 
-      await supabase.from("esim_packages_cache").upsert(
-        {
-          package_code: pkg.packageCode,
-          name: pkg.name || pkg.packageCode,
-          slug: pkg.slug || pkg.packageCode.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-          price_wholesale: wholesalePrice,
-          price_retail_eur: priceEur,
-          data_gb: dataGb,
-          duration_days: pkg.duration || null,
-          countries: countryCodes,
-          location_code: locCode,
-          operator: pkg.locationNetworkList?.[0]?.operatorList?.[0]?.operatorName || null,
-          updated_at: new Date().toISOString(),
-        },
-        { onConflict: "package_code" }
-      );
+      return {
+        package_code: pkg.packageCode,
+        name: pkg.name || pkg.packageCode,
+        slug: pkg.slug || pkg.packageCode.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+        price_wholesale: wholesalePrice,
+        price_retail_eur: priceEur,
+        data_gb: dataGb,
+        duration_days: pkg.duration || null,
+        countries: countryCodes,
+        location_code: locCode,
+        operator: pkg.locationNetworkList?.[0]?.operatorList?.[0]?.operatorName || null,
+        updated_at: new Date().toISOString(),
+      };
+    });
+
+    // Batch upsert in chunks of 50
+    for (let i = 0; i < rows.length; i += 50) {
+      const chunk = rows.slice(i, i + 50);
+      await supabase.from("esim_packages_cache").upsert(chunk, { onConflict: "package_code" });
     }
 
-    return new Response(JSON.stringify({ packages, count: packages.length }), {
+    console.log(`Cached ${rows.length} packages`);
+
+    return new Response(JSON.stringify({ count: packages.length }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {
