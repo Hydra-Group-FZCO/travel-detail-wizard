@@ -375,7 +375,7 @@ const TravelGuides = () => {
   const [destination, setDestination] = useState(searchParams.get("dest") || "");
   const [focusAreas, setFocusAreas] = useState<string[]>([]);
   const [depth, setDepth] = useState("essential");
-  const [language, setLanguage] = useState(uiLang);
+  const [language, setLanguage] = useState<string>(uiLang);
   const [season, setSeason] = useState("unknown");
 
   const filteredDestinations = useMemo(() => {

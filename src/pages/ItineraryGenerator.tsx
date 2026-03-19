@@ -449,7 +449,7 @@ const ItineraryGenerator = () => {
   const [tripType, setTripType] = useState("couple");
   const [interests, setInterests] = useState<string[]>([]);
   const [budgetLevel, setBudgetLevel] = useState("mid-range");
-  const [language, setLanguage] = useState(uiLang);
+  const [language, setLanguage] = useState<string>(uiLang);
   const [extras, setExtras] = useState<string[]>(["restaurants", "transport"]);
 
   const numDays = startDate && endDate ? differenceInDays(endDate, startDate) + 1 : 0;
