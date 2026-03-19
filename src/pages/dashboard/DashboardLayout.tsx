@@ -2,6 +2,7 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { CalendarDays, User, Heart, FileText, LogOut, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Logo from "@/components/Logo";
 
 const navItems = [
   { to: "/dashboard", icon: CalendarDays, label: "My Bookings", end: true },
@@ -25,10 +26,7 @@ const DashboardLayout = () => {
       <header className="bg-card border-b border-border px-4 md:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <a href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">DM</span>
-            </div>
-            <span className="font-bold text-lg text-foreground hidden sm:block">Digital Moonkey</span>
+            <Logo />
           </a>
           <span className="text-muted-foreground text-sm ml-2 hidden md:block">/ Dashboard</span>
         </div>

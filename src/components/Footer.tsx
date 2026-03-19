@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useTranslations, useLanguage, localizedPath } from "@/i18n";
+import Logo from "@/components/Logo";
 
 const Footer = () => {
   const t = useTranslations();
@@ -21,11 +22,8 @@ const Footer = () => {
         <div className="container-grid py-14">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
             <div className="md:col-span-2">
-              <div className="flex items-center gap-2.5 mb-4">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <span className="text-primary-foreground font-bold text-sm">DM</span>
-                </div>
-                <span className="font-bold text-lg text-foreground">Digital Moonkey</span>
+              <div className="mb-4">
+                <Logo />
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
                 {t.footer.description}

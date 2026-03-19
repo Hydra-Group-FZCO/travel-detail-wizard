@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import Logo from "@/components/Logo";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -29,10 +30,7 @@ const ForgotPassword = () => {
       <div className="w-full max-w-md bg-card rounded-2xl shadow-elevated p-8 border border-border">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">DM</span>
-            </div>
-            <span className="font-bold text-lg text-foreground">Digital Moonkey</span>
+            <Logo />
           </Link>
           <h1 className="text-2xl font-bold text-foreground">Forgot Password</h1>
           <p className="text-muted-foreground text-sm mt-1">We'll send you a reset link</p>
