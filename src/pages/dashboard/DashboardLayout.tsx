@@ -2,6 +2,7 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { CalendarDays, User, Heart, FileText, LogOut, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Logo from "@/components/Logo";
 
 const navItems = [
   { to: "/dashboard", icon: CalendarDays, label: "My Bookings", end: true },
