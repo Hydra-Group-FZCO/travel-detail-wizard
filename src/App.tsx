@@ -29,6 +29,8 @@ import AdminCustomers from "./pages/admin/AdminCustomers";
 import AdminEsims from "./pages/admin/AdminEsims";
 import Esims from "./pages/Esims";
 import MyEsims from "./pages/dashboard/MyEsims";
+import ItineraryGenerator from "./pages/ItineraryGenerator";
+import ItineraryView from "./pages/ItineraryView";
 
 const queryClient = new QueryClient();
 
