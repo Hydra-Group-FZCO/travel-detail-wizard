@@ -173,13 +173,13 @@ const Esims = () => {
               <TooltipTrigger asChild>
                 <button className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
                   <Smartphone size={14} />
-                  <span>Compatible devices</span>
+                   <span>{t.esims.compatibleDevices}</span>
                   <Info size={12} />
                 </button>
               </TooltipTrigger>
               <TooltipContent className="max-w-xs text-left">
-                <p className="font-medium mb-1">eSIM Compatible Devices</p>
-                <p className="text-xs">iPhone XR and later, Samsung Galaxy S20+, Google Pixel 3a+, iPad Pro/Air (2018+), and most modern smartphones. Check your device settings for eSIM support.</p>
+                <p className="font-medium mb-1">{t.esims.compatibleDevicesTitle}</p>
+                <p className="text-xs">{t.esims.compatibleDevicesDesc}</p>
               </TooltipContent>
             </Tooltip>
           </div>
