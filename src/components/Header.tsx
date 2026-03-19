@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, User } from "lucide-react";
 import { useTranslations, useLanguage, localizedPath, languageNames, languageFlags, supportedLanguages, type Language } from "@/i18n";
+import { useAuth } from "@/hooks/useAuth";
 
 const Header = () => {
   const t = useTranslations();
   const lang = useLanguage();
+  const { user, role } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const isHome = location.pathname === localizedPath("/", lang) || location.pathname === "/";
@@ -79,8 +81,29 @@ const Header = () => {
                 </div>
               )}
             </div>
-          </div>
 
+            {/* Auth Button */}
+            {user ? (
+              <Link
+                to={role === "admin" ? "/admin" : "/dashboard"}
+                className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  isHome ? "bg-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/30" : "bg-primary text-primary-foreground hover:bg-primary/90"
+                }`}
+              >
+                <User size={14} />
+                Dashboard
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  isHome ? "bg-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/30" : "bg-primary text-primary-foreground hover:bg-primary/90"
+                }`}
+              >
+                Sign In
+              </Link>
+            )}
+          </div>
           {/* Mobile Toggle */}
           <div className="flex items-center gap-1 md:hidden">
             {/* Mobile Language */}
