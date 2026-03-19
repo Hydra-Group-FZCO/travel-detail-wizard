@@ -31,6 +31,8 @@ import Esims from "./pages/Esims";
 import MyEsims from "./pages/dashboard/MyEsims";
 import ItineraryGenerator from "./pages/ItineraryGenerator";
 import ItineraryView from "./pages/ItineraryView";
+import TravelGuides from "./pages/TravelGuides";
+import GuideView from "./pages/GuideView";
 
 const queryClient = new QueryClient();
 
