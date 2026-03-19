@@ -5,6 +5,29 @@ import { Button } from "@/components/ui/button";
 import { Eye, ChevronDown, ChevronUp, MapPin, Utensils, Camera, Sparkles } from "lucide-react";
 import { useLanguage } from "@/i18n";
 
+/* Helper: renders text with [label](url) markdown links as real <a> tags */
+const RichText = ({ text }: { text: string }) => {
+  const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
+  return (
+    <span>
+      {parts.map((part, i) => {
+        const match = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+        if (match) {
+          return (
+            <a key={i} href={match[2]} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 hover:text-primary/80 transition-colors">
+              {match[1]}
+            </a>
+          );
+        }
+        return <span key={i}>{part}</span>;
+      })}
+    </span>
+  );
+};
+
+const GM = (name: string, city: string) => `https://www.google.com/maps/search/${encodeURIComponent(name + " " + city)}`;
+const TA = (name: string, city: string) => `https://www.tripadvisor.com/Search?q=${encodeURIComponent(name + " " + city)}`;
+
 const SAMPLE_ITINERARY: Record<string, {
   title: string;
   subtitle: string;
@@ -20,28 +43,28 @@ const SAMPLE_ITINERARY: Record<string, {
     seeExample: "See a real example",
     hideExample: "Hide example",
     ctaText: "Create yours now",
-    overview: "Ghent is Belgium's best-kept secret — a medieval gem with canals, world-class art, and a vibrant food scene. Perfect for culture lovers and foodies who want to skip the Brussels crowds.",
+    overview: "Ghent is Belgium's best-kept secret — a medieval gem with canals, world-class art, and a vibrant food scene. Perfect for culture lovers and foodies who want to skip the Brussels crowds. [📍 See Ghent on Maps](https://www.google.com/maps/search/Ghent+Belgium)",
     days: [
       {
         title: "Day 1: Medieval Magic & Waterfront Wonders",
-        morning: "🏛️ Start at St. Bavo's Cathedral to see the Ghent Altarpiece (van Eyck's masterpiece). Walk to the Gravensteen Castle — climb the ramparts for city views. Stroll along Graslei & Korenlei, the postcard-perfect canal houses.",
-        afternoon: "🎨 Visit the STAM city museum for Ghent's history. Explore the Patershol neighborhood — cobblestone alleys full of charm. Coffee at Mokabon, a local institution since 1937.",
-        evening: "🍽️ Dinner at Publiek (modern Belgian, $$). Evening walk along the illuminated canals — Ghent's famous light plan makes the city magical at night.",
-        tip: "The Ghent Altarpiece requires a timed ticket — book online at least 2 days ahead. It's free with the CityCard Gent (€38, includes all museums + transport).",
+        morning: `🏛️ Start at [St. Bavo's Cathedral](${GM("St Bavo's Cathedral", "Ghent")}) to see the Ghent Altarpiece (van Eyck's masterpiece). Walk to [Gravensteen Castle](${GM("Gravensteen", "Ghent")}) — climb the ramparts for city views. Stroll along [Graslei & Korenlei](${GM("Graslei", "Ghent")}), the postcard-perfect canal houses.`,
+        afternoon: `🎨 Visit [STAM city museum](${GM("STAM", "Ghent")}) for Ghent's history. Explore the [Patershol](${GM("Patershol", "Ghent")}) neighborhood — cobblestone alleys full of charm. Coffee at [Mokabon](${GM("Mokabon", "Ghent")}), a local institution since 1937.`,
+        evening: `🍽️ Dinner at [Publiek](${GM("Publiek restaurant", "Ghent")}) ([⭐ Reviews](${TA("Publiek", "Ghent")})) — modern Belgian, $$. Evening walk along the illuminated canals — Ghent's famous light plan makes the city magical at night.`,
+        tip: `The Ghent Altarpiece requires a timed ticket — [book online](https://www.sintbaafskathedraal.be/en/) at least 2 days ahead. It's free with the [CityCard Gent](https://www.visitgent.be/en/citycard-gent) (€38, includes all museums + transport).`,
       },
       {
         title: "Day 2: Art, Street Food & Hidden Corners",
-        morning: "🖼️ Museum of Fine Arts (MSK) — Flemish masters collection. Walk through Citadelpark, Ghent's green lung. Visit S.M.A.K. (contemporary art) right next door.",
-        afternoon: "🍟 Street food tour: Frituur Tartaar for the best Belgian fries. Try a cuberdons (nose-shaped candy) at the Groentenmarkt. Wander through the Werregarenstraatje — Ghent's ever-changing graffiti alley.",
-        evening: "🍺 Belgian beer tasting at Dulle Griet (you leave your shoe as deposit for the house beer!). Dinner at Otomat for gourmet pizza with a Belgian twist.",
+        morning: `🖼️ [Museum of Fine Arts (MSK)](${GM("MSK Museum", "Ghent")}) — Flemish masters collection. Walk through [Citadelpark](${GM("Citadelpark", "Ghent")}), Ghent's green lung. Visit [S.M.A.K.](${GM("SMAK", "Ghent")}) (contemporary art) right next door.`,
+        afternoon: `🍟 Street food tour: [Frituur Tartaar](${GM("Frituur Tartaar", "Ghent")}) for the best Belgian fries. Try cuberdons (nose-shaped candy) at [Groentenmarkt](${GM("Groentenmarkt", "Ghent")}). Wander through [Werregarenstraatje](${GM("Werregarenstraatje", "Ghent")}) — Ghent's ever-changing graffiti alley.`,
+        evening: `🍺 Belgian beer tasting at [Dulle Griet](${GM("Dulle Griet", "Ghent")}) ([⭐ Reviews](${TA("Dulle Griet", "Ghent")})) — you leave your shoe as deposit! Dinner at [Otomat](${GM("Otomat", "Ghent")}) for gourmet pizza with a Belgian twist.`,
         tip: "Ghent is a university city — Thursday nights the bars along Overpoortstraat are packed with students. Great atmosphere!",
       },
       {
         title: "Day 3: Nature, Markets & Farewell Waffles",
-        morning: "🌿 Rent a bike and ride along the Coupure canal to Blaarmeersen park. Visit the Flower Market at Kouter square (weekends). Browse the vintage shops on Bij Sint-Jacobs.",
-        afternoon: "☕ Lunch at Holy Food Market (converted chapel turned food hall — stunning). Last-minute shopping for Belgian chocolate at Yuzu or local speculoos at Tierenteyn-Verlent (mustard shop since 1790!).",
-        evening: "🧇 Farewell Liège waffle at Max. Final sunset from St. Michael's Bridge — the best panoramic view in Ghent.",
-        tip: "Take the train to Bruges for a half-day trip if you have extra time — it's only 26 minutes away. But honestly, Ghent has enough to keep you busy for a week!",
+        morning: `🌿 Rent a bike and ride along the Coupure canal to [Blaarmeersen park](${GM("Blaarmeersen", "Ghent")}). Visit the [Flower Market at Kouter](${GM("Kouter", "Ghent")}) (weekends). Browse the vintage shops on [Bij Sint-Jacobs](${GM("Bij Sint-Jacobs", "Ghent")}).`,
+        afternoon: `☕ Lunch at [Holy Food Market](${GM("Holy Food Market", "Ghent")}) ([⭐ Reviews](${TA("Holy Food Market", "Ghent")})) — converted chapel turned food hall. Belgian chocolate at [Yuzu](${GM("Yuzu chocolate", "Ghent")}). Speculoos at [Tierenteyn-Verlent](${GM("Tierenteyn-Verlent", "Ghent")}) (mustard shop since 1790!).`,
+        evening: `🧇 Farewell Liège waffle at [Max](${GM("Max waffles", "Ghent")}). Final sunset from [St. Michael's Bridge](${GM("Sint-Michielsbrug", "Ghent")}) — the best panoramic view in Ghent.`,
+        tip: `Take the train to [Bruges](${GM("Bruges", "Belgium")}) for a half-day trip — only 26 minutes away. But honestly, Ghent has enough to keep you busy for a week!`,
       },
     ],
   },
@@ -51,28 +74,28 @@ const SAMPLE_ITINERARY: Record<string, {
     seeExample: "Ver un ejemplo real",
     hideExample: "Ocultar ejemplo",
     ctaText: "Crea el tuyo ahora",
-    overview: "Gante es el secreto mejor guardado de Bélgica — una joya medieval con canales, arte de clase mundial y una escena gastronómica vibrante. Perfecta para amantes de la cultura y foodies que quieren evitar las multitudes de Bruselas.",
+    overview: "Gante es el secreto mejor guardado de Bélgica — una joya medieval con canales, arte de clase mundial y una escena gastronómica vibrante. [📍 Ver Gante en Maps](https://www.google.com/maps/search/Ghent+Belgium)",
     days: [
       {
         title: "Día 1: Magia Medieval y Maravillas junto al Agua",
-        morning: "🏛️ Empieza en la Catedral de San Bavón para ver el Altar de Gante (obra maestra de van Eyck). Camina al Castillo de Gravensteen — sube a las murallas para vistas de la ciudad. Pasea por Graslei y Korenlei, las casas de canal más fotogénicas.",
-        afternoon: "🎨 Visita el museo STAM para conocer la historia de Gante. Explora el barrio de Patershol — callejones empedrados llenos de encanto. Café en Mokabon, una institución local desde 1937.",
-        evening: "🍽️ Cena en Publiek (belga moderno, $$). Paseo nocturno por los canales iluminados — el famoso plan de iluminación de Gante hace la ciudad mágica de noche.",
-        tip: "El Altar de Gante requiere entrada con hora — reserva online al menos 2 días antes. Es gratis con la CityCard Gent (38 €, incluye todos los museos + transporte).",
+        morning: `🏛️ Empieza en la [Catedral de San Bavón](${GM("St Bavo's Cathedral", "Ghent")}) para ver el Altar de Gante. Camina al [Castillo de Gravensteen](${GM("Gravensteen", "Ghent")}). Pasea por [Graslei y Korenlei](${GM("Graslei", "Ghent")}).`,
+        afternoon: `🎨 Visita el [museo STAM](${GM("STAM", "Ghent")}). Explora el barrio de [Patershol](${GM("Patershol", "Ghent")}). Café en [Mokabon](${GM("Mokabon", "Ghent")}), institución local desde 1937.`,
+        evening: `🍽️ Cena en [Publiek](${GM("Publiek restaurant", "Ghent")}) ([⭐ Reseñas](${TA("Publiek", "Ghent")})) — belga moderno, $$. Paseo nocturno por los canales iluminados.`,
+        tip: `El Altar de Gante requiere entrada con hora — [reserva online](https://www.sintbaafskathedraal.be/en/) al menos 2 días antes. Gratis con la [CityCard Gent](https://www.visitgent.be/en/citycard-gent) (38 €).`,
       },
       {
         title: "Día 2: Arte, Street Food y Rincones Ocultos",
-        morning: "🖼️ Museo de Bellas Artes (MSK) — colección de maestros flamencos. Paseo por Citadelpark, el pulmón verde de Gante. Visita S.M.A.K. (arte contemporáneo) justo al lado.",
-        afternoon: "🍟 Ruta de street food: Frituur Tartaar para las mejores patatas fritas belgas. Prueba los cuberdons (caramelo en forma de nariz) en el Groentenmarkt. Recorre el Werregarenstraatje — el callejón de grafiti que cambia constantemente.",
-        evening: "🍺 Cata de cervezas belgas en Dulle Griet (¡dejas tu zapato como depósito por la cerveza de la casa!). Cena en Otomat para pizza gourmet con toque belga.",
+        morning: `🖼️ [Museo de Bellas Artes (MSK)](${GM("MSK Museum", "Ghent")}) — maestros flamencos. Paseo por [Citadelpark](${GM("Citadelpark", "Ghent")}). Visita [S.M.A.K.](${GM("SMAK", "Ghent")}) justo al lado.`,
+        afternoon: `🍟 [Frituur Tartaar](${GM("Frituur Tartaar", "Ghent")}) para las mejores patatas fritas. Cuberdons en el [Groentenmarkt](${GM("Groentenmarkt", "Ghent")}). Recorre el [Werregarenstraatje](${GM("Werregarenstraatje", "Ghent")}) — callejón de grafiti.`,
+        evening: `🍺 Cata de cervezas en [Dulle Griet](${GM("Dulle Griet", "Ghent")}) ([⭐ Reseñas](${TA("Dulle Griet", "Ghent")})) — ¡dejas tu zapato como depósito! Cena en [Otomat](${GM("Otomat", "Ghent")}).`,
         tip: "Gante es una ciudad universitaria — los jueves por la noche los bares de Overpoortstraat están llenos de estudiantes. ¡Gran ambiente!",
       },
       {
         title: "Día 3: Naturaleza, Mercados y Gofres de Despedida",
-        morning: "🌿 Alquila una bici y recorre el canal Coupure hasta el parque Blaarmeersen. Visita el Mercado de Flores en la plaza Kouter (fines de semana). Explora las tiendas vintage en Bij Sint-Jacobs.",
-        afternoon: "☕ Almuerzo en Holy Food Market (capilla convertida en mercado gastronómico — impresionante). Últimas compras de chocolate belga en Yuzu o speculoos local en Tierenteyn-Verlent (¡tienda de mostaza desde 1790!).",
-        evening: "🧇 Gofre de Lieja de despedida en Max. Último atardecer desde el Puente de San Miguel — la mejor vista panorámica de Gante.",
-        tip: "Toma el tren a Brujas para una visita de medio día si te sobra tiempo — está a solo 26 minutos. Pero sinceramente, ¡Gante tiene suficiente para mantenerte ocupado una semana!",
+        morning: `🌿 Alquila una bici y recorre el canal hasta [Blaarmeersen](${GM("Blaarmeersen", "Ghent")}). [Mercado de Flores en Kouter](${GM("Kouter", "Ghent")}). Tiendas vintage en [Bij Sint-Jacobs](${GM("Bij Sint-Jacobs", "Ghent")}).`,
+        afternoon: `☕ Almuerzo en [Holy Food Market](${GM("Holy Food Market", "Ghent")}) ([⭐ Reseñas](${TA("Holy Food Market", "Ghent")})) — capilla convertida en mercado gastronómico. Chocolate belga en [Yuzu](${GM("Yuzu chocolate", "Ghent")}). Speculoos en [Tierenteyn-Verlent](${GM("Tierenteyn-Verlent", "Ghent")}).`,
+        evening: `🧇 Gofre de Lieja en [Max](${GM("Max waffles", "Ghent")}). Último atardecer desde el [Puente de San Miguel](${GM("Sint-Michielsbrug", "Ghent")}).`,
+        tip: `Toma el tren a [Brujas](${GM("Bruges", "Belgium")}) — a solo 26 minutos. Pero sinceramente, ¡Gante tiene suficiente para una semana!`,
       },
     ],
   },
@@ -82,28 +105,28 @@ const SAMPLE_ITINERARY: Record<string, {
     seeExample: "Voir un exemple réel",
     hideExample: "Masquer l'exemple",
     ctaText: "Créez le vôtre maintenant",
-    overview: "Gand est le secret le mieux gardé de Belgique — un joyau médiéval avec des canaux, un art de classe mondiale et une scène culinaire vibrante. Parfait pour les amateurs de culture et les gourmets qui veulent éviter la foule de Bruxelles.",
+    overview: "Gand est le secret le mieux gardé de Belgique — un joyau médiéval avec des canaux, un art de classe mondiale et une scène culinaire vibrante. [📍 Voir Gand sur Maps](https://www.google.com/maps/search/Ghent+Belgium)",
     days: [
       {
         title: "Jour 1 : Magie Médiévale et Merveilles au Bord de l'Eau",
-        morning: "🏛️ Commencez par la Cathédrale Saint-Bavon pour voir le Retable de Gand (chef-d'œuvre de van Eyck). Promenez-vous au Château des Comtes — montez sur les remparts pour la vue. Flânez le long de Graslei & Korenlei.",
-        afternoon: "🎨 Visitez le musée STAM. Explorez le quartier Patershol — ruelles pavées pleines de charme. Café chez Mokabon, institution locale depuis 1937.",
-        evening: "🍽️ Dîner au Publiek (belge moderne, $$). Promenade nocturne le long des canaux illuminés.",
-        tip: "Le Retable de Gand nécessite un billet horodaté — réservez en ligne au moins 2 jours à l'avance. Gratuit avec la CityCard Gent (38 €).",
+        morning: `🏛️ Commencez par la [Cathédrale Saint-Bavon](${GM("St Bavo's Cathedral", "Ghent")}) pour le Retable de Gand. Promenez-vous au [Château des Comtes](${GM("Gravensteen", "Ghent")}). Flânez le long de [Graslei & Korenlei](${GM("Graslei", "Ghent")}).`,
+        afternoon: `🎨 Visitez le [musée STAM](${GM("STAM", "Ghent")}). Explorez [Patershol](${GM("Patershol", "Ghent")}). Café chez [Mokabon](${GM("Mokabon", "Ghent")}).`,
+        evening: `🍽️ Dîner au [Publiek](${GM("Publiek restaurant", "Ghent")}) ([⭐ Avis](${TA("Publiek", "Ghent")})) — belge moderne. Promenade nocturne le long des canaux illuminés.`,
+        tip: `Le Retable nécessite un billet horodaté — [réservez en ligne](https://www.sintbaafskathedraal.be/en/) au moins 2 jours à l'avance. Gratuit avec la [CityCard Gent](https://www.visitgent.be/en/citycard-gent) (38 €).`,
       },
       {
         title: "Jour 2 : Art, Street Food et Recoins Cachés",
-        morning: "🖼️ Musée des Beaux-Arts (MSK) — collection des maîtres flamands. Balade dans le Citadelpark. Visite du S.M.A.K. (art contemporain) juste à côté.",
-        afternoon: "🍟 Tour street food : Frituur Tartaar pour les meilleures frites belges. Goûtez les cuberdons au Groentenmarkt. Parcourez le Werregarenstraatje — la ruelle de graffiti toujours changeante.",
-        evening: "🍺 Dégustation de bières belges au Dulle Griet (vous laissez votre chaussure en caution !). Dîner chez Otomat.",
-        tip: "Gand est une ville universitaire — les jeudis soirs les bars d'Overpoortstraat sont bondés. Superbe ambiance !",
+        morning: `🖼️ [Musée des Beaux-Arts (MSK)](${GM("MSK Museum", "Ghent")}). Balade dans le [Citadelpark](${GM("Citadelpark", "Ghent")}). [S.M.A.K.](${GM("SMAK", "Ghent")}) juste à côté.`,
+        afternoon: `🍟 [Frituur Tartaar](${GM("Frituur Tartaar", "Ghent")}) pour les meilleures frites. Cuberdons au [Groentenmarkt](${GM("Groentenmarkt", "Ghent")}). [Werregarenstraatje](${GM("Werregarenstraatje", "Ghent")}) — la ruelle de graffiti.`,
+        evening: `🍺 Dégustation au [Dulle Griet](${GM("Dulle Griet", "Ghent")}) ([⭐ Avis](${TA("Dulle Griet", "Ghent")})). Dîner chez [Otomat](${GM("Otomat", "Ghent")}).`,
+        tip: "Les jeudis soirs les bars d'Overpoortstraat sont bondés. Superbe ambiance !",
       },
       {
         title: "Jour 3 : Nature, Marchés et Gaufres d'Adieu",
-        morning: "🌿 Louez un vélo et longez le canal Coupure. Visitez le Marché aux Fleurs sur la place Kouter. Chineurs, direction Bij Sint-Jacobs.",
-        afternoon: "☕ Déjeuner au Holy Food Market (chapelle reconvertie en halle gourmande). Derniers achats de chocolat belge chez Yuzu.",
-        evening: "🧇 Gaufre de Liège d'adieu chez Max. Dernier coucher de soleil depuis le Pont Saint-Michel.",
-        tip: "Prenez le train pour Bruges si vous avez du temps — à seulement 26 minutes. Mais honnêtement, Gand a de quoi vous occuper une semaine !",
+        morning: `🌿 Louez un vélo et longez le canal jusqu'à [Blaarmeersen](${GM("Blaarmeersen", "Ghent")}). [Marché aux Fleurs au Kouter](${GM("Kouter", "Ghent")}). Chineurs : [Bij Sint-Jacobs](${GM("Bij Sint-Jacobs", "Ghent")}).`,
+        afternoon: `☕ Déjeuner au [Holy Food Market](${GM("Holy Food Market", "Ghent")}) ([⭐ Avis](${TA("Holy Food Market", "Ghent")})). Chocolat chez [Yuzu](${GM("Yuzu chocolate", "Ghent")}). [Tierenteyn-Verlent](${GM("Tierenteyn-Verlent", "Ghent")}).`,
+        evening: `🧇 Gaufre d'adieu chez [Max](${GM("Max waffles", "Ghent")}). Coucher de soleil depuis le [Pont Saint-Michel](${GM("Sint-Michielsbrug", "Ghent")}).`,
+        tip: `Prenez le train pour [Bruges](${GM("Bruges", "Belgium")}) — 26 minutes. Mais Gand a de quoi vous occuper une semaine !`,
       },
     ],
   },
@@ -113,28 +136,28 @@ const SAMPLE_ITINERARY: Record<string, {
     seeExample: "Vedi un esempio reale",
     hideExample: "Nascondi esempio",
     ctaText: "Crea il tuo ora",
-    overview: "Gand è il segreto meglio custodito del Belgio — un gioiello medievale con canali, arte di livello mondiale e una vivace scena gastronomica.",
+    overview: "Gand è il segreto meglio custodito del Belgio — un gioiello medievale con canali, arte di livello mondiale e una vivace scena gastronomica. [📍 Vedi Gand su Maps](https://www.google.com/maps/search/Ghent+Belgium)",
     days: [
       {
         title: "Giorno 1: Magia Medievale e Meraviglie sull'Acqua",
-        morning: "🏛️ Inizia dalla Cattedrale di San Bavone per vedere il Polittico di Gand. Passeggia al Castello dei Conti. Ammira Graslei e Korenlei.",
-        afternoon: "🎨 Visita il museo STAM. Esplora il quartiere Patershol. Caffè da Mokabon, istituzione dal 1937.",
-        evening: "🍽️ Cena da Publiek. Passeggiata serale lungo i canali illuminati.",
-        tip: "Il Polittico richiede un biglietto con orario — prenota online almeno 2 giorni prima. Gratis con la CityCard Gent (38 €).",
+        morning: `🏛️ Inizia dalla [Cattedrale di San Bavone](${GM("St Bavo's Cathedral", "Ghent")}). Passeggia al [Castello dei Conti](${GM("Gravensteen", "Ghent")}). Ammira [Graslei e Korenlei](${GM("Graslei", "Ghent")}).`,
+        afternoon: `🎨 Visita il [museo STAM](${GM("STAM", "Ghent")}). Esplora [Patershol](${GM("Patershol", "Ghent")}). Caffè da [Mokabon](${GM("Mokabon", "Ghent")}).`,
+        evening: `🍽️ Cena da [Publiek](${GM("Publiek restaurant", "Ghent")}) ([⭐ Recensioni](${TA("Publiek", "Ghent")})). Passeggiata serale lungo i canali illuminati.`,
+        tip: `Il Polittico richiede biglietto con orario — [prenota online](https://www.sintbaafskathedraal.be/en/). Gratis con la [CityCard Gent](https://www.visitgent.be/en/citycard-gent) (38 €).`,
       },
       {
         title: "Giorno 2: Arte, Street Food e Angoli Nascosti",
-        morning: "🖼️ Museo di Belle Arti (MSK). Passeggiata nel Citadelpark. S.M.A.K. subito accanto.",
-        afternoon: "🍟 Tour street food: Frituur Tartaar per le migliori patatine. Cuberdons al Groentenmarkt. Werregarenstraatje — il vicolo dei graffiti.",
-        evening: "🍺 Degustazione birre al Dulle Griet. Cena da Otomat.",
-        tip: "Gand è una città universitaria — i giovedì sera i bar di Overpoortstraat sono pieni!",
+        morning: `🖼️ [Museo di Belle Arti (MSK)](${GM("MSK Museum", "Ghent")}). [Citadelpark](${GM("Citadelpark", "Ghent")}). [S.M.A.K.](${GM("SMAK", "Ghent")}) accanto.`,
+        afternoon: `🍟 [Frituur Tartaar](${GM("Frituur Tartaar", "Ghent")}) per le migliori patatine. Cuberdons al [Groentenmarkt](${GM("Groentenmarkt", "Ghent")}). [Werregarenstraatje](${GM("Werregarenstraatje", "Ghent")}) — vicolo dei graffiti.`,
+        evening: `🍺 Degustazione al [Dulle Griet](${GM("Dulle Griet", "Ghent")}) ([⭐ Recensioni](${TA("Dulle Griet", "Ghent")})). Cena da [Otomat](${GM("Otomat", "Ghent")}).`,
+        tip: "I giovedì sera i bar di Overpoortstraat sono pieni di studenti!",
       },
       {
         title: "Giorno 3: Natura, Mercati e Waffle d'Addio",
-        morning: "🌿 Noleggia una bici e percorri il canale Coupure. Mercato dei Fiori a Kouter. Negozi vintage a Bij Sint-Jacobs.",
-        afternoon: "☕ Pranzo al Holy Food Market. Ultimi acquisti di cioccolato belga da Yuzu.",
-        evening: "🧇 Waffle di Liegi d'addio da Max. Ultimo tramonto dal Ponte di San Michele.",
-        tip: "Prendi il treno per Bruges — solo 26 minuti. Ma Gand ha abbastanza per una settimana!",
+        morning: `🌿 Noleggia una bici fino a [Blaarmeersen](${GM("Blaarmeersen", "Ghent")}). [Mercato dei Fiori a Kouter](${GM("Kouter", "Ghent")}). Vintage a [Bij Sint-Jacobs](${GM("Bij Sint-Jacobs", "Ghent")}).`,
+        afternoon: `☕ Pranzo al [Holy Food Market](${GM("Holy Food Market", "Ghent")}) ([⭐ Recensioni](${TA("Holy Food Market", "Ghent")})). Cioccolato da [Yuzu](${GM("Yuzu chocolate", "Ghent")}). [Tierenteyn-Verlent](${GM("Tierenteyn-Verlent", "Ghent")}).`,
+        evening: `🧇 Waffle d'addio da [Max](${GM("Max waffles", "Ghent")}). Tramonto dal [Ponte di San Michele](${GM("Sint-Michielsbrug", "Ghent")}).`,
+        tip: `Treno per [Bruges](${GM("Bruges", "Belgium")}) — solo 26 minuti. Ma Gand ha abbastanza per una settimana!`,
       },
     ],
   },
@@ -144,28 +167,28 @@ const SAMPLE_ITINERARY: Record<string, {
     seeExample: "Echtes Beispiel ansehen",
     hideExample: "Beispiel ausblenden",
     ctaText: "Erstelle deinen jetzt",
-    overview: "Gent ist Belgiens bestgehütetes Geheimnis — ein mittelalterliches Juwel mit Kanälen, erstklassiger Kunst und einer lebhaften Food-Szene.",
+    overview: "Gent ist Belgiens bestgehütetes Geheimnis — ein mittelalterliches Juwel mit Kanälen, erstklassiger Kunst und einer lebhaften Food-Szene. [📍 Gent auf Maps](https://www.google.com/maps/search/Ghent+Belgium)",
     days: [
       {
         title: "Tag 1: Mittelalterliche Magie und Uferpromenade",
-        morning: "🏛️ Starte an der St.-Bavo-Kathedrale für den Genter Altar. Spaziere zur Gravensteen-Burg. Schlendere entlang Graslei & Korenlei.",
-        afternoon: "🎨 Besuche das STAM-Museum. Erkunde Patershol. Kaffee im Mokabon seit 1937.",
-        evening: "🍽️ Abendessen im Publiek. Abendspaziergang an den beleuchteten Kanälen.",
-        tip: "Der Genter Altar braucht ein Zeitfenster-Ticket — mindestens 2 Tage vorher online buchen. Gratis mit CityCard Gent (38 €).",
+        morning: `🏛️ Starte an der [St.-Bavo-Kathedrale](${GM("St Bavo's Cathedral", "Ghent")}). Spaziere zur [Gravensteen-Burg](${GM("Gravensteen", "Ghent")}). Schlendere entlang [Graslei & Korenlei](${GM("Graslei", "Ghent")}).`,
+        afternoon: `🎨 Besuche das [STAM-Museum](${GM("STAM", "Ghent")}). Erkunde [Patershol](${GM("Patershol", "Ghent")}). Kaffee im [Mokabon](${GM("Mokabon", "Ghent")}).`,
+        evening: `🍽️ Abendessen im [Publiek](${GM("Publiek restaurant", "Ghent")}) ([⭐ Bewertungen](${TA("Publiek", "Ghent")})). Abendspaziergang an den beleuchteten Kanälen.`,
+        tip: `Der Genter Altar braucht ein Zeitfenster-Ticket — [online buchen](https://www.sintbaafskathedraal.be/en/). Gratis mit [CityCard Gent](https://www.visitgent.be/en/citycard-gent) (38 €).`,
       },
       {
         title: "Tag 2: Kunst, Street Food & Versteckte Ecken",
-        morning: "🖼️ Museum für Schöne Künste (MSK). Spaziergang durch den Citadelpark. S.M.A.K. direkt nebenan.",
-        afternoon: "🍟 Street-Food-Tour: Frituur Tartaar. Cuberdons am Groentenmarkt. Werregarenstraatje — die Graffiti-Gasse.",
-        evening: "🍺 Bierverkostung im Dulle Griet. Abendessen im Otomat.",
-        tip: "Gent ist eine Universitätsstadt — donnerstags sind die Bars in der Overpoortstraat voll!",
+        morning: `🖼️ [Museum für Schöne Künste (MSK)](${GM("MSK Museum", "Ghent")}). [Citadelpark](${GM("Citadelpark", "Ghent")}). [S.M.A.K.](${GM("SMAK", "Ghent")}) nebenan.`,
+        afternoon: `🍟 [Frituur Tartaar](${GM("Frituur Tartaar", "Ghent")}). Cuberdons am [Groentenmarkt](${GM("Groentenmarkt", "Ghent")}). [Werregarenstraatje](${GM("Werregarenstraatje", "Ghent")}) — die Graffiti-Gasse.`,
+        evening: `🍺 Bierverkostung im [Dulle Griet](${GM("Dulle Griet", "Ghent")}) ([⭐ Bewertungen](${TA("Dulle Griet", "Ghent")})). Abendessen im [Otomat](${GM("Otomat", "Ghent")}).`,
+        tip: "Donnerstags sind die Bars in der Overpoortstraat voll!",
       },
       {
         title: "Tag 3: Natur, Märkte & Abschieds-Waffeln",
-        morning: "🌿 Miete ein Fahrrad und fahre am Coupure-Kanal entlang. Blumenmarkt am Kouter. Vintage-Läden bei Bij Sint-Jacobs.",
-        afternoon: "☕ Mittagessen im Holy Food Market. Letzte Einkäufe: belgische Schokolade bei Yuzu.",
-        evening: "🧇 Abschieds-Lütticher-Waffel bei Max. Letzter Sonnenuntergang von der St.-Michael-Brücke.",
-        tip: "Nimm den Zug nach Brügge — nur 26 Minuten. Aber Gent hat genug für eine Woche!",
+        morning: `🌿 Fahrrad bis [Blaarmeersen](${GM("Blaarmeersen", "Ghent")}). [Blumenmarkt am Kouter](${GM("Kouter", "Ghent")}). Vintage bei [Bij Sint-Jacobs](${GM("Bij Sint-Jacobs", "Ghent")}).`,
+        afternoon: `☕ Mittagessen im [Holy Food Market](${GM("Holy Food Market", "Ghent")}) ([⭐ Bewertungen](${TA("Holy Food Market", "Ghent")})). Schokolade bei [Yuzu](${GM("Yuzu chocolate", "Ghent")}). [Tierenteyn-Verlent](${GM("Tierenteyn-Verlent", "Ghent")}).`,
+        evening: `🧇 Abschieds-Waffel bei [Max](${GM("Max waffles", "Ghent")}). Sonnenuntergang von der [St.-Michael-Brücke](${GM("Sint-Michielsbrug", "Ghent")}).`,
+        tip: `Zug nach [Brügge](${GM("Bruges", "Belgium")}) — nur 26 Minuten. Aber Gent hat genug für eine Woche!`,
       },
     ],
   },
@@ -205,7 +228,7 @@ export const SampleItineraryPreview = () => {
               <p className="text-sm text-muted-foreground mb-6 italic">{sample.subtitle}</p>
 
               <div className="bg-accent/10 rounded-lg p-4 mb-6">
-                <p className="text-sm text-foreground leading-relaxed">{sample.overview}</p>
+                <p className="text-sm text-foreground leading-relaxed"><RichText text={sample.overview} /></p>
               </div>
 
               <div className="space-y-6">
@@ -215,18 +238,18 @@ export const SampleItineraryPreview = () => {
                     <div className="space-y-2 text-sm text-muted-foreground">
                       <div className="flex gap-2">
                         <Camera className="w-4 h-4 mt-0.5 text-primary shrink-0" />
-                        <div><span className="font-medium text-foreground">Morning — </span>{day.morning}</div>
+                        <div><span className="font-medium text-foreground">Morning — </span><RichText text={day.morning} /></div>
                       </div>
                       <div className="flex gap-2">
                         <MapPin className="w-4 h-4 mt-0.5 text-primary shrink-0" />
-                        <div><span className="font-medium text-foreground">Afternoon — </span>{day.afternoon}</div>
+                        <div><span className="font-medium text-foreground">Afternoon — </span><RichText text={day.afternoon} /></div>
                       </div>
                       <div className="flex gap-2">
                         <Utensils className="w-4 h-4 mt-0.5 text-primary shrink-0" />
-                        <div><span className="font-medium text-foreground">Evening — </span>{day.evening}</div>
+                        <div><span className="font-medium text-foreground">Evening — </span><RichText text={day.evening} /></div>
                       </div>
                       <div className="bg-primary/5 rounded p-2 mt-2 text-xs">
-                        💡 <strong>Pro tip:</strong> {day.tip}
+                        💡 <strong>Pro tip:</strong> <RichText text={day.tip} />
                       </div>
                     </div>
                   </div>
@@ -234,11 +257,8 @@ export const SampleItineraryPreview = () => {
               </div>
 
               <div className="mt-6 p-4 bg-primary/5 rounded-lg border border-primary/10 text-center">
-                <p className="text-xs text-muted-foreground mb-1">
-                  {sample.subtitle}
-                </p>
                 <p className="text-xs text-muted-foreground">
-                  ✅ Restaurant tips · ✅ Budget breakdown · ✅ Transport · ✅ Packing list · ✅ Local phrases
+                  ✅ Google Maps links · ✅ Restaurant reviews · ✅ Budget breakdown · ✅ Transport · ✅ Booking links · ✅ Local phrases
                 </p>
               </div>
             </CardContent>
@@ -264,11 +284,11 @@ const SAMPLE_GUIDE: Record<string, {
     seeExample: "See a real guide example",
     hideExample: "Hide example",
     sections: [
-      { icon: "🌍", heading: "Overview", content: "Kotor is a fortified town nestled in a secluded bay of the Adriatic Sea. Its old town is a UNESCO World Heritage Site, with Venetian architecture, winding alleys, and dramatic mountain backdrops. Often overshadowed by Dubrovnik, Kotor offers similar charm at a fraction of the price." },
-      { icon: "🏛️", heading: "Top Attractions", content: "• San Giovanni Fortress — 1,350 steps to the top for breathtaking bay views (free entry, go at sunset)\n• Kotor Old Town — car-free medieval maze with 12th-century cathedral\n• Our Lady of the Rocks — tiny island church accessible by boat from Perast (€5)\n• Lovćen National Park — 25 serpentine curves to Njeguši village for smoked ham & cheese" },
-      { icon: "🍽️", heading: "Where to Eat", content: "• Galion ($$) — Waterfront fine dining with the best seafood risotto in Montenegro\n• Cesarica ($) — Family-run konoba with grilled squid and local Vranac wine\n• Forza Gastro Bar ($$) — Creative Mediterranean fusion in a converted stone house\n• Tanjga ($) — Hidden gem for ćevapi and burek near the North Gate" },
-      { icon: "💰", heading: "Budget Tips", content: "Montenegro uses the Euro. A day in Kotor costs ~€40-60 (budget) or €100-150 (mid-range). Accommodation in the old town starts at €30/night for apartments. The city walls hike is free. Water taxis to beaches cost €3-5. Avoid restaurants on the main square — walk 2 minutes into the alleys for 40% lower prices." },
-      { icon: "🚌", heading: "Getting Around", content: "Kotor is walkable. For day trips: Blue Line buses to Budva (€3, 40min), Perast (€2, 15min), or Herceg Novi (€5, 1h). Rent a car for Lovćen (€25/day). Tivat Airport is 8km away (taxi €15). From Dubrovnik Airport: shared shuttle €25 or bus via Herceg Novi." },
+      { icon: "🌍", heading: "Overview", content: `Kotor is a fortified town nestled in a secluded bay of the Adriatic Sea. Its old town is a UNESCO World Heritage Site. Often overshadowed by Dubrovnik, Kotor offers similar charm at a fraction of the price. [📍 See Kotor on Maps](${GM("Kotor", "Montenegro")})` },
+      { icon: "🏛️", heading: "Top Attractions", content: `• [San Giovanni Fortress](${GM("San Giovanni Fortress", "Kotor")}) — 1,350 steps for breathtaking bay views (free entry, go at sunset) [🎟️ Book tour](https://www.getyourguide.com/s/?q=San+Giovanni+Kotor)\n• [Kotor Old Town](${GM("Kotor Old Town", "Montenegro")}) — car-free medieval maze with 12th-century cathedral\n• [Our Lady of the Rocks](${GM("Our Lady of the Rocks", "Perast")}) — tiny island church, boat from Perast (€5) [🎟️ Book boat](https://www.getyourguide.com/s/?q=Our+Lady+Rocks+Perast)\n• [Lovćen National Park](${GM("Lovćen National Park", "Montenegro")}) — 25 serpentine curves to Njeguši village for smoked ham & cheese` },
+      { icon: "🍽️", heading: "Where to Eat", content: `• [Galion](${GM("Galion restaurant", "Kotor")}) ([⭐ Reviews](${TA("Galion", "Kotor")})) — waterfront fine dining, best seafood risotto\n• [Cesarica](${GM("Cesarica", "Kotor")}) ([⭐ Reviews](${TA("Cesarica", "Kotor")})) — family konoba, grilled squid & Vranac wine\n• [Forza Gastro Bar](${GM("Forza Gastro Bar", "Kotor")}) ([⭐ Reviews](${TA("Forza Gastro Bar", "Kotor")})) — Mediterranean fusion in converted stone house\n• [Tanjga](${GM("Tanjga", "Kotor")}) ([⭐ Reviews](${TA("Tanjga", "Kotor")})) — hidden gem for ćevapi near North Gate` },
+      { icon: "💰", heading: "Budget Tips", content: `Montenegro uses the Euro. A day in Kotor costs ~€40-60 (budget) or €100-150 (mid-range). Accommodation in the [old town](${GM("Kotor Old Town", "Montenegro")}) starts at €30/night. The city walls hike is free. Avoid restaurants on the main square — walk 2 minutes into the alleys for 40% lower prices.` },
+      { icon: "🚌", heading: "Getting Around", content: `Kotor is walkable. Day trips: buses to [Budva](${GM("Budva", "Montenegro")}) (€3, 40min), [Perast](${GM("Perast", "Montenegro")}) (€2, 15min), [Herceg Novi](${GM("Herceg Novi", "Montenegro")}) (€5, 1h). Rent a car for [Lovćen](${GM("Lovćen", "Montenegro")}) (€25/day). [Tivat Airport](${GM("Tivat Airport", "Montenegro")}) is 8km away (taxi €15).` },
       { icon: "🗣️", heading: "Useful Phrases", content: "• Zdravo (ZDRAH-voh) — Hello\n• Hvala (HVAH-lah) — Thank you\n• Koliko košta? (KOH-lee-koh KOSH-tah) — How much?\n• Račun, molim (RAH-choon MOH-leem) — The bill, please\n• Jedno pivo (YED-noh PEE-voh) — One beer" },
     ],
   },
@@ -278,11 +298,11 @@ const SAMPLE_GUIDE: Record<string, {
     seeExample: "Ver un ejemplo de guía real",
     hideExample: "Ocultar ejemplo",
     sections: [
-      { icon: "🌍", heading: "Visión General", content: "Kotor es una ciudad fortificada en una bahía recóndita del mar Adriático. Su casco antiguo es Patrimonio de la Humanidad de la UNESCO, con arquitectura veneciana, callejones sinuosos y montañas impresionantes. A menudo eclipsada por Dubrovnik, Kotor ofrece un encanto similar a una fracción del precio." },
-      { icon: "🏛️", heading: "Principales Atracciones", content: "• Fortaleza de San Giovanni — 1.350 escalones hasta la cima para vistas impresionantes de la bahía (gratis, ve al atardecer)\n• Casco Antiguo de Kotor — laberinto medieval sin coches con catedral del siglo XII\n• Nuestra Señora de las Rocas — iglesia en isla accesible en barco desde Perast (5 €)\n• Parque Nacional Lovćen — 25 curvas serpenteantes hasta Njeguši para jamón ahumado y queso" },
-      { icon: "🍽️", heading: "Dónde Comer", content: "• Galion ($$) — Alta cocina frente al mar con el mejor risotto de marisco de Montenegro\n• Cesarica ($) — Konoba familiar con calamar a la parrilla y vino local Vranac\n• Forza Gastro Bar ($$) — Fusión mediterránea creativa en casa de piedra\n• Tanjga ($) — Joya oculta para ćevapi y burek cerca de la Puerta Norte" },
-      { icon: "💰", heading: "Consejos de Presupuesto", content: "Montenegro usa el Euro. Un día en Kotor cuesta ~40-60 € (económico) o 100-150 € (gama media). Alojamiento en el casco antiguo desde 30 €/noche. La subida a las murallas es gratis. Taxis acuáticos a playas: 3-5 €. Evita restaurantes en la plaza principal — camina 2 minutos por los callejones para precios 40% más bajos." },
-      { icon: "🚌", heading: "Cómo Moverse", content: "Kotor se recorre a pie. Para excursiones: autobuses Blue Line a Budva (3 €, 40min), Perast (2 €, 15min) o Herceg Novi (5 €, 1h). Alquila coche para Lovćen (25 €/día). Aeropuerto de Tivat a 8km (taxi 15 €)." },
+      { icon: "🌍", heading: "Visión General", content: `Kotor es una ciudad fortificada en una bahía recóndita del Adriático. Su casco antiguo es Patrimonio UNESCO. A menudo eclipsada por Dubrovnik, ofrece un encanto similar a una fracción del precio. [📍 Ver Kotor en Maps](${GM("Kotor", "Montenegro")})` },
+      { icon: "🏛️", heading: "Principales Atracciones", content: `• [Fortaleza de San Giovanni](${GM("San Giovanni Fortress", "Kotor")}) — 1.350 escalones, vistas impresionantes (gratis, ve al atardecer) [🎟️ Reservar tour](https://www.getyourguide.com/s/?q=San+Giovanni+Kotor)\n• [Casco Antiguo de Kotor](${GM("Kotor Old Town", "Montenegro")}) — laberinto medieval sin coches\n• [Nuestra Señora de las Rocas](${GM("Our Lady of the Rocks", "Perast")}) — iglesia en isla, barco desde Perast (5 €) [🎟️ Reservar barco](https://www.getyourguide.com/s/?q=Our+Lady+Rocks+Perast)\n• [Parque Nacional Lovćen](${GM("Lovćen National Park", "Montenegro")}) — 25 curvas hasta Njeguši` },
+      { icon: "🍽️", heading: "Dónde Comer", content: `• [Galion](${GM("Galion restaurant", "Kotor")}) ([⭐ Reseñas](${TA("Galion", "Kotor")})) — alta cocina, mejor risotto de marisco\n• [Cesarica](${GM("Cesarica", "Kotor")}) ([⭐ Reseñas](${TA("Cesarica", "Kotor")})) — konoba familiar, calamar a la parrilla\n• [Forza Gastro Bar](${GM("Forza Gastro Bar", "Kotor")}) ([⭐ Reseñas](${TA("Forza Gastro Bar", "Kotor")})) — fusión mediterránea\n• [Tanjga](${GM("Tanjga", "Kotor")}) ([⭐ Reseñas](${TA("Tanjga", "Kotor")})) — joya oculta para ćevapi` },
+      { icon: "💰", heading: "Presupuesto", content: `Montenegro usa el Euro. Día en Kotor: ~40-60 € (económico) o 100-150 € (gama media). Alojamiento en el [casco antiguo](${GM("Kotor Old Town", "Montenegro")}) desde 30 €/noche. Las murallas son gratis. Evita la plaza principal — callejones = precios 40% más bajos.` },
+      { icon: "🚌", heading: "Cómo Moverse", content: `Kotor se recorre a pie. Excursiones: bus a [Budva](${GM("Budva", "Montenegro")}) (3 €, 40min), [Perast](${GM("Perast", "Montenegro")}) (2 €, 15min), [Herceg Novi](${GM("Herceg Novi", "Montenegro")}) (5 €, 1h). Alquila coche para [Lovćen](${GM("Lovćen", "Montenegro")}) (25 €/día). [Aeropuerto de Tivat](${GM("Tivat Airport", "Montenegro")}) a 8km.` },
       { icon: "🗣️", heading: "Frases Útiles", content: "• Zdravo (ZDRAH-voh) — Hola\n• Hvala (HVAH-lah) — Gracias\n• Koliko košta? (KOH-lee-koh KOSH-tah) — ¿Cuánto cuesta?\n• Račun, molim (RAH-choon MOH-leem) — La cuenta, por favor\n• Jedno pivo (YED-noh PEE-voh) — Una cerveza" },
     ],
   },
@@ -292,12 +312,12 @@ const SAMPLE_GUIDE: Record<string, {
     seeExample: "Voir un exemple de guide",
     hideExample: "Masquer l'exemple",
     sections: [
-      { icon: "🌍", heading: "Aperçu", content: "Kotor est une ville fortifiée nichée dans une baie secrète de l'Adriatique. Sa vieille ville est classée au patrimoine mondial de l'UNESCO. Souvent éclipsée par Dubrovnik, Kotor offre un charme similaire à une fraction du prix." },
-      { icon: "🏛️", heading: "Attractions Principales", content: "• Forteresse Saint-Jean — 1 350 marches pour une vue imprenable (gratuit, allez-y au coucher du soleil)\n• Vieille ville de Kotor — labyrinthe médiéval piéton\n• Notre-Dame du Récif — église sur une île, accessible en bateau (5 €)\n• Parc national du Lovćen — 25 virages jusqu'à Njeguši" },
-      { icon: "🍽️", heading: "Où Manger", content: "• Galion ($$) — Fruits de mer en bord de mer\n• Cesarica ($) — Konoba familiale\n• Forza Gastro Bar ($$) — Fusion méditerranéenne créative\n• Tanjga ($) — Ćevapi et burek près de la Porte Nord" },
-      { icon: "💰", heading: "Budget", content: "Le Monténégro utilise l'Euro. Journée à Kotor : ~40-60 € (économique) ou 100-150 € (moyen). Hébergement dès 30 €/nuit dans la vieille ville." },
-      { icon: "🚌", heading: "Se Déplacer", content: "Kotor se visite à pied. Bus Blue Line vers Budva (3 €, 40min), Perast (2 €, 15min). Location voiture pour le Lovćen (25 €/jour). Aéroport de Tivat à 8km." },
-      { icon: "🗣️", heading: "Phrases Utiles", content: "• Zdravo — Bonjour\n• Hvala — Merci\n• Koliko košta? — Combien ça coûte ?\n• Račun, molim — L'addition, s'il vous plaît\n• Jedno pivo — Une bière" },
+      { icon: "🌍", heading: "Aperçu", content: `Kotor est une ville fortifiée dans une baie secrète de l'Adriatique. Patrimoine UNESCO. [📍 Voir Kotor sur Maps](${GM("Kotor", "Montenegro")})` },
+      { icon: "🏛️", heading: "Attractions Principales", content: `• [Forteresse Saint-Jean](${GM("San Giovanni Fortress", "Kotor")}) — 1 350 marches, vue imprenable [🎟️ Réserver](https://www.getyourguide.com/s/?q=San+Giovanni+Kotor)\n• [Vieille ville de Kotor](${GM("Kotor Old Town", "Montenegro")}) — labyrinthe médiéval piéton\n• [Notre-Dame du Récif](${GM("Our Lady of the Rocks", "Perast")}) — île accessible en bateau (5 €) [🎟️ Réserver](https://www.getyourguide.com/s/?q=Our+Lady+Rocks+Perast)\n• [Parc national du Lovćen](${GM("Lovćen National Park", "Montenegro")})` },
+      { icon: "🍽️", heading: "Où Manger", content: `• [Galion](${GM("Galion restaurant", "Kotor")}) ([⭐ Avis](${TA("Galion", "Kotor")})) — fruits de mer\n• [Cesarica](${GM("Cesarica", "Kotor")}) ([⭐ Avis](${TA("Cesarica", "Kotor")})) — konoba familiale\n• [Forza Gastro Bar](${GM("Forza Gastro Bar", "Kotor")}) ([⭐ Avis](${TA("Forza Gastro Bar", "Kotor")}))\n• [Tanjga](${GM("Tanjga", "Kotor")}) ([⭐ Avis](${TA("Tanjga", "Kotor")})) — ćevapi` },
+      { icon: "💰", heading: "Budget", content: `Euro. Journée : ~40-60 € (éco) ou 100-150 € (moyen). [Vieille ville](${GM("Kotor Old Town", "Montenegro")}) dès 30 €/nuit.` },
+      { icon: "🚌", heading: "Se Déplacer", content: `À pied. Bus vers [Budva](${GM("Budva", "Montenegro")}) (3 €, 40min), [Perast](${GM("Perast", "Montenegro")}) (2 €, 15min). Voiture pour [Lovćen](${GM("Lovćen", "Montenegro")}) (25 €/jour). [Aéroport de Tivat](${GM("Tivat Airport", "Montenegro")}) à 8km.` },
+      { icon: "🗣️", heading: "Phrases Utiles", content: "• Zdravo — Bonjour\n• Hvala — Merci\n• Koliko košta? — Combien ?\n• Račun, molim — L'addition\n• Jedno pivo — Une bière" },
     ],
   },
   it: {
@@ -306,12 +326,12 @@ const SAMPLE_GUIDE: Record<string, {
     seeExample: "Vedi un esempio di guida",
     hideExample: "Nascondi esempio",
     sections: [
-      { icon: "🌍", heading: "Panoramica", content: "Kotor è una città fortificata in una baia appartata dell'Adriatico. Il centro storico è Patrimonio UNESCO. Spesso oscurata da Dubrovnik, offre lo stesso fascino a prezzi molto più bassi." },
-      { icon: "🏛️", heading: "Attrazioni", content: "• Fortezza di San Giovanni — 1.350 gradini per una vista mozzafiato\n• Centro storico di Kotor — labirinto medievale pedonale\n• Nostra Signora delle Rocce — chiesa su un'isoletta (5 €)\n• Parco Nazionale Lovćen" },
-      { icon: "🍽️", heading: "Dove Mangiare", content: "• Galion ($$) — Risotto ai frutti di mare\n• Cesarica ($) — Konoba familiare\n• Forza Gastro Bar ($$) — Fusione mediterranea\n• Tanjga ($) — Ćevapi e burek" },
-      { icon: "💰", heading: "Budget", content: "Il Montenegro usa l'Euro. Giornata a Kotor: ~40-60 € (economico) o 100-150 € (fascia media). Alloggio da 30 €/notte." },
-      { icon: "🚌", heading: "Come Muoversi", content: "Kotor è visitabile a piedi. Bus per Budva (3 €, 40min), Perast (2 €, 15min). Noleggio auto per Lovćen (25 €/giorno)." },
-      { icon: "🗣️", heading: "Frasi Utili", content: "• Zdravo — Ciao\n• Hvala — Grazie\n• Koliko košta? — Quanto costa?\n• Račun, molim — Il conto, per favore\n• Jedno pivo — Una birra" },
+      { icon: "🌍", heading: "Panoramica", content: `Kotor è una città fortificata in una baia dell'Adriatico. Patrimonio UNESCO. [📍 Vedi Kotor su Maps](${GM("Kotor", "Montenegro")})` },
+      { icon: "🏛️", heading: "Attrazioni", content: `• [Fortezza di San Giovanni](${GM("San Giovanni Fortress", "Kotor")}) — 1.350 gradini, vista mozzafiato [🎟️ Prenota tour](https://www.getyourguide.com/s/?q=San+Giovanni+Kotor)\n• [Centro storico di Kotor](${GM("Kotor Old Town", "Montenegro")}) — labirinto medievale pedonale\n• [Nostra Signora delle Rocce](${GM("Our Lady of the Rocks", "Perast")}) — isoletta (5 €) [🎟️ Prenota barca](https://www.getyourguide.com/s/?q=Our+Lady+Rocks+Perast)\n• [Parco Nazionale Lovćen](${GM("Lovćen National Park", "Montenegro")})` },
+      { icon: "🍽️", heading: "Dove Mangiare", content: `• [Galion](${GM("Galion restaurant", "Kotor")}) ([⭐ Recensioni](${TA("Galion", "Kotor")})) — risotto ai frutti di mare\n• [Cesarica](${GM("Cesarica", "Kotor")}) ([⭐ Recensioni](${TA("Cesarica", "Kotor")}))\n• [Forza Gastro Bar](${GM("Forza Gastro Bar", "Kotor")}) ([⭐ Recensioni](${TA("Forza Gastro Bar", "Kotor")}))\n• [Tanjga](${GM("Tanjga", "Kotor")}) ([⭐ Recensioni](${TA("Tanjga", "Kotor")}))` },
+      { icon: "💰", heading: "Budget", content: `Euro. Giornata: ~40-60 € (economico) o 100-150 €. [Centro storico](${GM("Kotor Old Town", "Montenegro")}) da 30 €/notte.` },
+      { icon: "🚌", heading: "Come Muoversi", content: `A piedi. Bus per [Budva](${GM("Budva", "Montenegro")}) (3 €, 40min), [Perast](${GM("Perast", "Montenegro")}) (2 €, 15min). Auto per [Lovćen](${GM("Lovćen", "Montenegro")}) (25 €/giorno). [Aeroporto di Tivat](${GM("Tivat Airport", "Montenegro")}) a 8km.` },
+      { icon: "🗣️", heading: "Frasi Utili", content: "• Zdravo — Ciao\n• Hvala — Grazie\n• Koliko košta? — Quanto costa?\n• Račun, molim — Il conto\n• Jedno pivo — Una birra" },
     ],
   },
   de: {
@@ -320,12 +340,12 @@ const SAMPLE_GUIDE: Record<string, {
     seeExample: "Echtes Guide-Beispiel ansehen",
     hideExample: "Beispiel ausblenden",
     sections: [
-      { icon: "🌍", heading: "Überblick", content: "Kotor ist eine befestigte Stadt in einer abgelegenen Bucht der Adria. Die Altstadt ist UNESCO-Weltkulturerbe. Oft übersehen zugunsten von Dubrovnik, bietet Kotor ähnlichen Charme zu einem Bruchteil des Preises." },
-      { icon: "🏛️", heading: "Top-Sehenswürdigkeiten", content: "• San-Giovanni-Festung — 1.350 Stufen mit atemberaubender Aussicht\n• Altstadt von Kotor — autofreies mittelalterliches Labyrinth\n• Unsere Liebe Frau auf dem Felsen — Inselkirche per Boot erreichbar (5 €)\n• Nationalpark Lovćen" },
-      { icon: "🍽️", heading: "Essen gehen", content: "• Galion ($$) — Meeresfrüchte am Wasser\n• Cesarica ($) — Familien-Konoba\n• Forza Gastro Bar ($$) — Kreative mediterrane Fusion\n• Tanjga ($) — Ćevapi und Burek" },
-      { icon: "💰", heading: "Budget-Tipps", content: "Montenegro nutzt den Euro. Ein Tag in Kotor: ~40-60 € (Budget) oder 100-150 € (Mittelklasse). Unterkünfte ab 30 €/Nacht." },
-      { icon: "🚌", heading: "Fortbewegung", content: "Kotor ist zu Fuß erkundbar. Busse nach Budva (3 €, 40min), Perast (2 €, 15min). Mietwagen für Lovćen (25 €/Tag)." },
-      { icon: "🗣️", heading: "Nützliche Sätze", content: "• Zdravo — Hallo\n• Hvala — Danke\n• Koliko košta? — Wie viel kostet das?\n• Račun, molim — Die Rechnung, bitte\n• Jedno pivo — Ein Bier" },
+      { icon: "🌍", heading: "Überblick", content: `Kotor ist eine befestigte Stadt in einer Bucht der Adria. UNESCO-Weltkulturerbe. [📍 Kotor auf Maps](${GM("Kotor", "Montenegro")})` },
+      { icon: "🏛️", heading: "Top-Sehenswürdigkeiten", content: `• [San-Giovanni-Festung](${GM("San Giovanni Fortress", "Kotor")}) — 1.350 Stufen, atemberaubende Aussicht [🎟️ Tour buchen](https://www.getyourguide.com/s/?q=San+Giovanni+Kotor)\n• [Altstadt von Kotor](${GM("Kotor Old Town", "Montenegro")}) — autofreies mittelalterliches Labyrinth\n• [Unsere Liebe Frau auf dem Felsen](${GM("Our Lady of the Rocks", "Perast")}) — Inselkirche (5 €) [🎟️ Boot buchen](https://www.getyourguide.com/s/?q=Our+Lady+Rocks+Perast)\n• [Nationalpark Lovćen](${GM("Lovćen National Park", "Montenegro")})` },
+      { icon: "🍽️", heading: "Essen gehen", content: `• [Galion](${GM("Galion restaurant", "Kotor")}) ([⭐ Bewertungen](${TA("Galion", "Kotor")})) — Meeresfrüchte\n• [Cesarica](${GM("Cesarica", "Kotor")}) ([⭐ Bewertungen](${TA("Cesarica", "Kotor")}))\n• [Forza Gastro Bar](${GM("Forza Gastro Bar", "Kotor")}) ([⭐ Bewertungen](${TA("Forza Gastro Bar", "Kotor")}))\n• [Tanjga](${GM("Tanjga", "Kotor")}) ([⭐ Bewertungen](${TA("Tanjga", "Kotor")}))` },
+      { icon: "💰", heading: "Budget-Tipps", content: `Euro. Tag: ~40-60 € (Budget) oder 100-150 €. [Altstadt](${GM("Kotor Old Town", "Montenegro")}) ab 30 €/Nacht.` },
+      { icon: "🚌", heading: "Fortbewegung", content: `Zu Fuß. Busse nach [Budva](${GM("Budva", "Montenegro")}) (3 €, 40min), [Perast](${GM("Perast", "Montenegro")}) (2 €, 15min). Mietwagen für [Lovćen](${GM("Lovćen", "Montenegro")}) (25 €/Tag). [Flughafen Tivat](${GM("Tivat Airport", "Montenegro")}) 8km.` },
+      { icon: "🗣️", heading: "Nützliche Sätze", content: "• Zdravo — Hallo\n• Hvala — Danke\n• Koliko košta? — Wie viel?\n• Račun, molim — Die Rechnung\n• Jedno pivo — Ein Bier" },
     ],
   },
 };
@@ -367,14 +387,16 @@ export const SampleGuidePreview = () => {
                 {sample.sections.map((section, i) => (
                   <div key={i} className="border-l-4 border-primary/40 pl-4">
                     <h4 className="font-bold text-foreground mb-2">{section.icon} {section.heading}</h4>
-                    <p className="text-sm text-muted-foreground whitespace-pre-line leading-relaxed">{section.content}</p>
+                    <div className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
+                      <RichText text={section.content} />
+                    </div>
                   </div>
                 ))}
               </div>
 
               <div className="mt-6 p-4 bg-primary/5 rounded-lg border border-primary/10 text-center">
                 <p className="text-xs text-muted-foreground">
-                  ✅ Culture · ✅ Food · ✅ Budget · ✅ Transport · ✅ Local phrases · ✅ Hidden gems
+                  ✅ Google Maps links · ✅ TripAdvisor reviews · ✅ Booking links · ✅ Official websites · ✅ Transport apps · ✅ Local phrases
                 </p>
               </div>
             </CardContent>
