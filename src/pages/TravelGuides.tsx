@@ -616,6 +616,8 @@ const TravelGuides = () => {
         </div>
       </section>
 
+      <SampleGuidePreview />
+
       <section className="py-12 bg-background">
         <div className="container mx-auto px-4">
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
