@@ -29,6 +29,8 @@ import AdminCustomers from "./pages/admin/AdminCustomers";
 import AdminEsims from "./pages/admin/AdminEsims";
 import Esims from "./pages/Esims";
 import MyEsims from "./pages/dashboard/MyEsims";
+import ItineraryGenerator from "./pages/ItineraryGenerator";
+import ItineraryView from "./pages/ItineraryView";
 
 const queryClient = new QueryClient();
 
@@ -70,6 +72,8 @@ const AppRoutes = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/legal" element={<Legal />} />
         <Route path="/esims" element={<Esims />} />
+        <Route path="/itinerary-generator" element={<ItineraryGenerator />} />
+        <Route path="/itinerary/:id" element={<ItineraryView />} />
 
         {/* Localized routes */}
         {["es", "fr", "it", "de"].map((l) => (
