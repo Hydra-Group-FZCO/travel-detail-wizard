@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { SampleGuidePreview } from "@/components/SampleItineraryPreview";
 import PageLayout from "@/components/PageLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -614,6 +615,8 @@ const TravelGuides = () => {
           </Button>
         </div>
       </section>
+
+      <SampleGuidePreview />
 
       <section className="py-12 bg-background">
         <div className="container mx-auto px-4">

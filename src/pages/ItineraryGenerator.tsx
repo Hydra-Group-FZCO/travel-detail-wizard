@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
+import { SampleItineraryPreview } from "@/components/SampleItineraryPreview";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -577,6 +578,8 @@ const ItineraryGenerator = () => {
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">{copy.heroSubtitle}</p>
         </div>
       </section>
+
+      <SampleItineraryPreview />
 
       <section className="py-12 bg-background">
         <div className="container mx-auto px-4 max-w-3xl">
