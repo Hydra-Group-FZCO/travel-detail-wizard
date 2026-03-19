@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, User } from "lucide-react";
 import { useTranslations, useLanguage, localizedPath, languageNames, languageFlags, supportedLanguages, type Language } from "@/i18n";
+import { useAuth } from "@/hooks/useAuth";
 
 const Header = () => {
   const t = useTranslations();
