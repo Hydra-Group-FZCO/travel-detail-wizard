@@ -14,6 +14,7 @@ import {
   Copy, Check
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { downloadMarkdownAsPdf } from "@/lib/downloadPdf";
 
 const LOADING_MESSAGES = [
   "Researching your destination...",
