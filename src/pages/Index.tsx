@@ -19,7 +19,7 @@ const Index = () => {
   const lang = useLanguage();
 
   const trustItems = [
-    { icon: Shield, label: t.trust.verified },
+    { icon: ShieldCheck, label: t.trust.verified },
     { icon: Clock, label: t.trust.response },
     { icon: Star, label: t.trust.pricing },
     { icon: Globe, label: t.trust.languages },
