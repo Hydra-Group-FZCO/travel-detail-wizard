@@ -118,7 +118,7 @@ export interface Translations {
     disclaimer: string;
     description: string;
     servicesTitle: string;
-    serviceLinks: { label: string; hash: string }[];
+    serviceLinks: { label: string; hash?: string; to?: string }[];
     companyTitle: string;
     companyLinks: { label: string; to: string }[];
     copyright: string;
