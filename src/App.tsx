@@ -119,6 +119,7 @@ const AppRoutes = () => {
             <Route path="terms" element={<Terms />} />
             <Route path="privacy" element={<Privacy />} />
             <Route path="refunds" element={<Refunds />} />
+            <Route path="cookies" element={<Cookies />} />
             <Route path="pricing" element={<Pricing />} />
             <Route path="esims" element={<Esims />} />
             <Route path="itinerary-generator" element={<ItineraryGenerator />} />
