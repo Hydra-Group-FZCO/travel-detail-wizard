@@ -28,8 +28,8 @@ export const de: Translations = {
     languages: "EN · ES · FR",
   },
   intro: {
-    title: "Alles, was Ihre Reise braucht, an einem Ort",
-    text: "KI-gestützte Reisepläne und Reiseführer, eSIM-Datentarife für sofortige Konnektivität, kuratierte Erlebnisse weltweit und fachkundige Unterstützung bei Reisedokumenten · alles auf einer einzigen Plattform.",
+    title: "Ihre gesamte Reise, organisiert",
+    text: "Planen Sie mit KI-gestützten Reiseplänen und Guides, bleiben Sie mit eSIM-Datentarifen verbunden, buchen Sie kuratierte Erlebnisse weltweit und erhalten Sie fachkundige Hilfe bei Reisedokumenten · eine Plattform, null Aufwand.",
   },
   services: {
     pageTitle: "Unsere Leistungen",
