@@ -76,20 +76,29 @@ const Index = () => {
       <section className="pb-16 md:pb-24">
         <div className="container-grid">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {t.services.cards.map((service, i) => (
-              <Link
-                to={localizedPath("/services", lang)}
-                key={service.title}
-                className="group relative rounded-xl overflow-hidden aspect-[4/3] shadow-card hover:shadow-hover transition-all duration-300"
-              >
-                <img src={serviceImages[i]} alt={service.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <h3 className="text-primary-foreground text-lg font-bold mb-1">{service.title}</h3>
-                  <p className="text-primary-foreground/75 text-sm leading-relaxed line-clamp-2">{service.description}</p>
-                </div>
-              </Link>
-            ))}
+            {t.services.cards.map((service, i) => {
+              const serviceLinks = [
+                localizedPath("/experiences", lang),
+                localizedPath("/itinerary-generator", lang),
+                localizedPath("/travel-guides", lang),
+                localizedPath("/esims", lang),
+                localizedPath("/services", lang),
+              ];
+              return (
+                <Link
+                  to={serviceLinks[i]}
+                  key={service.title}
+                  className="group relative rounded-xl overflow-hidden aspect-[4/3] shadow-card hover:shadow-hover transition-all duration-300"
+                >
+                  <img src={serviceImages[i]} alt={service.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <h3 className="text-primary-foreground text-lg font-bold mb-1">{service.title}</h3>
+                    <p className="text-primary-foreground/75 text-sm leading-relaxed line-clamp-2">{service.description}</p>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
