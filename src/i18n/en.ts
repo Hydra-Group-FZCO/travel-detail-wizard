@@ -159,6 +159,13 @@ export const en: Translations = {
       "We clearly distinguish our private services from official government processes",
       "We are available before, during, and after the application process",
     ],
+    numbersTitle: "Digital Moonkey in numbers",
+    numbersItems: [
+      { value: "190+", label: "Destinations covered by our eSIM service" },
+      { value: "50+", label: "Curated experiences across multiple countries" },
+      { value: "15", label: "Languages available for AI-powered planning" },
+      { value: "UK", label: "Registered and regulated company" },
+    ],
     companyTitle: "Company Information",
     companyName: "Digital Moonkey Ltd",
     companyRegistered: "Company registered in England and Wales — Company No. 15716386",
