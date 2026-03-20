@@ -34,33 +34,35 @@ const Footer = () => {
               </div>
             </div>
 
-            <div>
-              <h4 className="text-sm font-bold text-foreground mb-4">{t.footer.servicesTitle}</h4>
-              <div className="flex flex-col gap-2.5">
-                {t.footer.serviceLinks.map((link) => (
-                  <Link
-                    key={link.label}
-                    to={link.to ? localizedPath(link.to, lang) : `${localizedPath("/services", lang)}#${link.hash}`}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+            <div className="grid grid-cols-2 gap-8 md:contents">
+              <div>
+                <h4 className="text-sm font-bold text-foreground mb-4">{t.footer.servicesTitle}</h4>
+                <div className="flex flex-col gap-2.5">
+                  {t.footer.serviceLinks.map((link) => (
+                    <Link
+                      key={link.label}
+                      to={link.to ? localizedPath(link.to, lang) : `${localizedPath("/services", lang)}#${link.hash}`}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            <div>
-              <h4 className="text-sm font-bold text-foreground mb-4">{t.footer.companyTitle}</h4>
-              <div className="flex flex-col gap-2.5">
-                {t.footer.companyLinks.map((link) => (
-                  <Link
-                    key={link.label}
-                    to={localizedPath(link.to, lang)}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+              <div>
+                <h4 className="text-sm font-bold text-foreground mb-4">{t.footer.companyTitle}</h4>
+                <div className="flex flex-col gap-2.5">
+                  {t.footer.companyLinks.map((link) => (
+                    <Link
+                      key={link.label}
+                      to={localizedPath(link.to, lang)}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
