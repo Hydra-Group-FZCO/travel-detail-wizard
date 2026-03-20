@@ -12,6 +12,7 @@ export const en: Translations = {
     heroTitle: "Explore Experiences Worldwide",
     heroSubtitle: "Tours, day trips and activities from selected local partners in destinations worldwide",
     browseButton: "Browse Experiences",
+    cancellationNote: "Each experience has its own cancellation policy, set by the local operator. Please review the cancellation terms on the experience page before booking.",
   },
   hero: {
     badge: "Smart Travel, Simplified",
