@@ -41,12 +41,9 @@ const Index = () => {
               {t.hero.headline}{" "}<span className="text-accent">{t.hero.headlineAccent}</span>
             </h1>
             <p className="mt-5 text-primary-foreground/80 text-base md:text-lg leading-relaxed max-w-lg">{t.hero.subheadline}</p>
-            <div className="mt-8 flex flex-wrap gap-3 animate-fade-up [animation-delay:200ms] opacity-0">
+            <div className="mt-8 animate-fade-up [animation-delay:200ms] opacity-0">
               <Button variant="hero" size="lg" asChild>
-                <Link to={localizedPath("/services", lang)}>{t.hero.cta}</Link>
-              </Button>
-              <Button variant="hero-outline" size="lg" asChild>
-                <Link to={localizedPath("/contact", lang)}>{t.hero.ctaSecondary}</Link>
+                <Link to={localizedPath("/experiences", lang)}>{t.hero.cta}</Link>
               </Button>
             </div>
           </div>
@@ -58,7 +55,7 @@ const Index = () => {
             <div className="flex items-center justify-center md:justify-between gap-6 md:gap-4 flex-wrap">
               {trustItems.map((item) => (
                 <div key={item.label} className="flex items-center gap-2.5">
-                  <item.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                  <item.icon className="w-5 h-5 text-accent" strokeWidth={1.5} />
                   <span className="text-trust-bar-fg text-sm font-medium">{item.label}</span>
                 </div>
               ))}

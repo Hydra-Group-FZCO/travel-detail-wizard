@@ -18,8 +18,8 @@ export const es: Translations = {
     headline: "Viaja más inteligente.",
     headlineAccent: "Nosotros lo hacemos fácil.",
     subheadline: "Desde itinerarios y guías con IA hasta eSIMs, experiencias seleccionadas y documentación de viaje · todo tu viaje, resuelto.",
-    cta: "Explorar Nuestros Servicios",
-    ctaSecondary: "Contáctanos",
+    cta: "Reservar Experiencias",
+    ctaSecondary: "",
   },
   trust: {
     verified: "Servicio Verificado",

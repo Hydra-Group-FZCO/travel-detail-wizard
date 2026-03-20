@@ -15,11 +15,11 @@ const Header = () => {
 
   const navLinks = [
     { to: localizedPath("/", lang), label: t.nav.home },
-    { to: localizedPath("/services", lang), label: t.nav.services },
     { to: localizedPath("/experiences", lang), label: t.nav.experiences },
     { to: localizedPath("/esims", lang), label: "eSIM" },
     { to: localizedPath("/itinerary-generator", lang), label: "✨ AI Planner" },
     { to: localizedPath("/travel-guides", lang), label: "📖 Guides" },
+    { to: localizedPath("/services", lang), label: t.nav.services },
     { to: localizedPath("/pricing", lang), label: "Pricing" },
   ];
 
@@ -28,7 +28,7 @@ const Header = () => {
   return (
     <header className={`absolute top-0 left-0 right-0 z-50 ${isHome ? "" : "bg-background border-b border-border"}`}>
       <nav className="container-grid">
-          <div className="flex items-center justify-between h-14 md:h-16">
+          <div className="flex items-center justify-between h-16 md:h-20">
           <Link to={localizedPath("/", lang)} className={`flex items-center gap-2.5 ${isHome ? "opacity-0 pointer-events-none" : ""}`}>
             <Logo textClassName={isHome ? "text-primary-foreground" : "text-foreground"} />
           </Link>

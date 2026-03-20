@@ -18,8 +18,8 @@ export const fr: Translations = {
     headline: "Voyagez plus malin.",
     headlineAccent: "On s'occupe de tout.",
     subheadline: "Des itinéraires et guides IA aux eSIMs, expériences sélectionnées et documents de voyage · tout votre voyage, organisé.",
-    cta: "Explorer Nos Services",
-    ctaSecondary: "Nous Contacter",
+    cta: "Réserver des Expériences",
+    ctaSecondary: "",
   },
   trust: {
     verified: "Service Vérifié",

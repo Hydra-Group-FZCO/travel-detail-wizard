@@ -18,8 +18,8 @@ export const de: Translations = {
     headline: "Reisen Sie smarter.",
     headlineAccent: "Wir machen es mühelos.",
     subheadline: "Von KI-gestützten Reiseplänen und Guides über eSIMs bis hin zu kuratierten Erlebnissen und Reisedokumenten · Ihre gesamte Reise, erledigt.",
-    cta: "Unsere Leistungen entdecken",
-    ctaSecondary: "Kontakt aufnehmen",
+    cta: "Erlebnisse Buchen",
+    ctaSecondary: "",
   },
   trust: {
     verified: "Verifizierter Service",
