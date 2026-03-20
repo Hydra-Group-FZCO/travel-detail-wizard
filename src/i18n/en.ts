@@ -231,7 +231,7 @@ export const en: Translations = {
       { label: "T&C", to: "/terms" },
       { label: "Privacy Policy", to: "/privacy" },
       { label: "Refund Policy", to: "/refunds" },
-      { label: "Cookie Policy", to: "/cookies" },
+      { label: "Cookies", to: "/cookies" },
     ],
     bottomNote: "digitalmoonkey.travel is a private service · not a government agency.",
   },
