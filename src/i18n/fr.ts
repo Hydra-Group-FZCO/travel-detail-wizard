@@ -107,19 +107,6 @@ export const fr: Translations = {
         ],
       },
       {
-        id: "insurance",
-        title: "Comparaison & Orientation Assurance",
-        intro: "L'assurance voyage est essentielle mais choisir la bonne police peut être déroutant. Nous vous aidons à comprendre vos options.",
-        subtitle: "Notre service comprend :",
-        items: [
-          "Comparaison des options d'assurance voyage pertinentes pour votre destination et type de voyage",
-          "Explication des domaines clés de couverture : médical, annulation, bagages, responsabilité",
-          "Orientation vers des fournisseurs d'assurance vérifiés",
-          "Assistance avec la documentation de réclamation si nécessaire",
-        ],
-        note: "Note : Digital Moonkey n'est ni un fournisseur ni un courtier d'assurance. Nous fournissons des services d'information et d'orientation pour vous aider à prendre une décision éclairée.",
-      },
-      {
         id: "corporate",
         title: "Conformité Voyage d'Entreprise",
         badge: "B2B",
