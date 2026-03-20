@@ -12,6 +12,7 @@ export const it: Translations = {
     heroTitle: "Esplora Esperienze in Tutto il Mondo",
     heroSubtitle: "Tour, escursioni e attività da partner locali selezionati in destinazioni di tutto il mondo",
     browseButton: "Scopri le Esperienze",
+    cancellationNote: "Ogni esperienza ha la propria politica di cancellazione, stabilita dall'operatore locale. Consulta le condizioni di cancellazione sulla pagina dell'esperienza prima di prenotare.",
   },
   hero: {
     badge: "Viaggi Intelligenti, Semplificati",
