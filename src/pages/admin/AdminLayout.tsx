@@ -118,7 +118,7 @@ const AdminLayout = () => {
                       className={({ isActive }) =>
                         `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
                           isActive
-                            ? "bg-[hsl(345,82%,60%,0.12)] text-[hsl(345,82%,65%)]"
+                            ? "bg-[hsl(207,94%,29%,0.15)] text-[hsl(207,85%,50%)]"
                             : "text-[hsl(220,10%,55%)] hover:bg-[hsl(220,20%,14%)] hover:text-[hsl(220,14%,85%)]"
                         } ${collapsed ? "justify-center px-0" : ""}`
                       }
