@@ -375,11 +375,23 @@ const Esims = () => {
                   </div>
                 </div>
               </div>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setSelectedPkg(null)}>Cancel</Button>
-                <Button onClick={handleConfirmOrder} disabled={ordering}>
-                  {ordering ? "Processing..." : `Pay €${selectedPkg.price_retail_eur.toFixed(2)}`}
-                </Button>
+              <DialogFooter className="flex-col gap-3 sm:flex-col">
+                <label className="flex items-start gap-2.5 cursor-pointer text-left">
+                  <Checkbox
+                    checked={esimConsent}
+                    onCheckedChange={(checked) => setEsimConsent(checked === true)}
+                    className="mt-0.5"
+                  />
+                  <span className="text-xs text-muted-foreground leading-relaxed">
+                    I consent to immediate delivery of this digital content and acknowledge that I lose my right to cancel once the eSIM is delivered.
+                  </span>
+                </label>
+                <div className="flex gap-2 justify-end w-full">
+                  <Button variant="outline" onClick={() => setSelectedPkg(null)}>Cancel</Button>
+                  <Button onClick={handleConfirmOrder} disabled={ordering || !esimConsent}>
+                    {ordering ? "Processing..." : `Pay €${selectedPkg.price_retail_eur.toFixed(2)}`}
+                  </Button>
+                </div>
               </DialogFooter>
             </>
           )}
