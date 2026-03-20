@@ -9,7 +9,7 @@ interface LogoProps {
 const sizes = {
   sm: "h-10",
   md: "h-[5.25rem]",
-  lg: "h-28",
+  lg: "h-36",
 };
 
 const Logo = ({ size = "sm", showText = false, textClassName = "text-foreground" }: LogoProps) => (
