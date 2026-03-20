@@ -1,5 +1,6 @@
 import PageLayout from "@/components/PageLayout";
 import { useTranslations } from "@/i18n";
+import { Globe, Compass, Languages, ShieldCheck } from "lucide-react";
 
 const About = () => {
   const t = useTranslations();
