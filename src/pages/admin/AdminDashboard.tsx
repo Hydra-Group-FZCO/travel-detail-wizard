@@ -126,7 +126,7 @@ const AdminDashboard = () => {
   if (!kpi) return null;
 
   const kpiCards = [
-    { label: "Revenue This Month", value: `€${kpi.totalRevenueMonth.toFixed(2)}`, icon: DollarSign, color: "hsl(345,82%,60%)" },
+    { label: "Revenue This Month", value: `€${kpi.totalRevenueMonth.toFixed(2)}`, icon: DollarSign, color: "hsl(207,94%,29%)" },
     { label: "Revenue This Year", value: `€${kpi.totalRevenueYear.toFixed(2)}`, icon: TrendingUp, color: "hsl(210,70%,55%)" },
     { label: "Total Users", value: kpi.totalUsers.toString(), icon: Users, color: "hsl(142,71%,45%)" },
     { label: "New Users This Month", value: kpi.newUsersMonth.toString(), icon: ArrowUpRight, color: "hsl(38,92%,50%)" },
