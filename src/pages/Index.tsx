@@ -55,7 +55,7 @@ const Index = () => {
             <div className="flex items-center justify-center md:justify-between gap-6 md:gap-4 flex-wrap">
               {trustItems.map((item) => (
                 <div key={item.label} className="flex items-center gap-2.5">
-                  <item.icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                  <item.icon className="w-5 h-5 text-accent" strokeWidth={1.5} />
                   <span className="text-trust-bar-fg text-sm font-medium">{item.label}</span>
                 </div>
               ))}
