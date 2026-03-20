@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-const iconMap = [Mail, Mail, Mail, Clock, Clock];
+const iconMap = [Mail, Mail, Mail, Clock, Clock, MessageCircle];
 
 const Contact = () => {
   const t = useTranslations();

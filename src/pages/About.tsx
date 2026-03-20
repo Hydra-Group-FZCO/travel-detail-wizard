@@ -32,6 +32,24 @@ const About = () => {
               ))}
             </ul>
 
+            {/* Numbers section */}
+            <div className="mt-16">
+              <h2 className="mb-6">{t.about.numbersTitle}</h2>
+              <div className="grid grid-cols-2 gap-4">
+                {t.about.numbersItems.map((item, i) => {
+                  const icons = [Globe, Compass, Languages, ShieldCheck];
+                  const Icon = icons[i] || Globe;
+                  return (
+                    <div key={i} className="bg-secondary rounded-xl p-5 text-center">
+                      <Icon className="w-6 h-6 text-primary mx-auto mb-2" strokeWidth={1.5} />
+                      <p className="text-2xl font-bold text-foreground">{item.value}</p>
+                      <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{item.label}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
             <div className="mt-16 bg-secondary rounded-xl p-8">
               <h3 className="text-xl font-bold mb-5">{t.about.companyTitle}</h3>
               <div className="space-y-2 text-sm">
