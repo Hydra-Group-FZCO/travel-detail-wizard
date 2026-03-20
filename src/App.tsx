@@ -14,6 +14,7 @@ import Experiences from "./pages/Experiences";
 import Legal from "./pages/Legal";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
+import Cookies from "./pages/Cookies";
 import Refunds from "./pages/Refunds";
 import Pricing from "./pages/Pricing";
 import NotFound from "./pages/NotFound";

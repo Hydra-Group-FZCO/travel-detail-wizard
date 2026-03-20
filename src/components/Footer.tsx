@@ -82,7 +82,7 @@ const Footer = () => {
                 <Link to="/terms" className="hover:text-primary transition-colors">Terms & Conditions</Link>
                 <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
                 <Link to="/refunds" className="hover:text-primary transition-colors">Refund Policy</Link>
-                <Link to="/privacy#cookies" className="hover:text-primary transition-colors">Cookie Policy</Link>
+                <Link to="/cookies" className="hover:text-primary transition-colors">Cookie Policy</Link>
                 <Link to={localizedPath("/pricing", lang)} className="hover:text-primary transition-colors">Pricing</Link>
                 <Link to={localizedPath("/legal", lang)} className="hover:text-primary transition-colors">Disclaimer</Link>
               </div>
