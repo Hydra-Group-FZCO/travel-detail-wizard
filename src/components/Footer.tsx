@@ -34,7 +34,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <div>
+            <div className="grid grid-cols-2 md:grid-cols-1 gap-10 md:contents">
               <h4 className="text-sm font-bold text-foreground mb-4">{t.footer.servicesTitle}</h4>
               <div className="flex flex-col gap-2.5">
                 {t.footer.serviceLinks.map((link) => (
