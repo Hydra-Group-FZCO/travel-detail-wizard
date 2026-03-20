@@ -12,6 +12,7 @@ interface AuthContextType {
   profile: Profile | null;
   role: AppRole;
   loading: boolean;
+  roleLoaded: boolean;
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>;
 }
@@ -24,6 +25,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [role, setRole] = useState<AppRole>("customer");
   const [loading, setLoading] = useState(true);
+  const [roleLoaded, setRoleLoaded] = useState(false);
 
   const fetchProfile = async (userId: string) => {
     const { data } = await supabase
@@ -41,6 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .eq("user_id", userId)
       .single();
     setRole((data?.role as AppRole) || "customer");
+    setRoleLoaded(true);
   };
 
   const refreshProfile = async () => {
@@ -55,6 +58,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setSession(session);
         setUser(session?.user ?? null);
         if (session?.user) {
+          // Use setTimeout to avoid blocking the auth state change callback
           setTimeout(async () => {
             await Promise.all([
               fetchProfile(session.user.id),
@@ -65,6 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         } else {
           setProfile(null);
           setRole("customer");
+          setRoleLoaded(true);
           setLoading(false);
         }
       }
@@ -91,7 +96,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ session, user, profile, role, loading, signOut, refreshProfile }}>
+    <AuthContext.Provider value={{ session, user, profile, role, loading, roleLoaded, signOut, refreshProfile }}>
       {children}
     </AuthContext.Provider>
   );
