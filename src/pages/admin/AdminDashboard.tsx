@@ -27,7 +27,7 @@ interface KPIData {
   recentBookings: any[];
 }
 
-const COLORS = ["hsl(345,82%,60%)", "hsl(210,70%,55%)", "hsl(142,71%,45%)", "hsl(38,92%,50%)", "hsl(280,60%,55%)"];
+const COLORS = ["hsl(207,94%,29%)", "hsl(45,98%,53%)", "hsl(142,71%,45%)", "hsl(207,70%,55%)", "hsl(280,60%,55%)"];
 
 const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -126,14 +126,14 @@ const AdminDashboard = () => {
   if (!kpi) return null;
 
   const kpiCards = [
-    { label: "Revenue This Month", value: `€${kpi.totalRevenueMonth.toFixed(2)}`, icon: DollarSign, color: "hsl(345,82%,60%)" },
+    { label: "Revenue This Month", value: `€${kpi.totalRevenueMonth.toFixed(2)}`, icon: DollarSign, color: "hsl(207,94%,29%)" },
     { label: "Revenue This Year", value: `€${kpi.totalRevenueYear.toFixed(2)}`, icon: TrendingUp, color: "hsl(210,70%,55%)" },
     { label: "Total Users", value: kpi.totalUsers.toString(), icon: Users, color: "hsl(142,71%,45%)" },
     { label: "New Users This Month", value: kpi.newUsersMonth.toString(), icon: ArrowUpRight, color: "hsl(38,92%,50%)" },
     { label: "Orders Today", value: kpi.ordersToday.toString(), icon: ShoppingCart, color: "hsl(280,60%,55%)" },
     { label: "Orders This Week", value: kpi.ordersWeek.toString(), icon: ShoppingCart, color: "hsl(200,60%,55%)" },
     { label: "Orders This Month", value: kpi.ordersMonth.toString(), icon: ShoppingCart, color: "hsl(160,60%,45%)" },
-    { label: "eSIM Revenue", value: `€${kpi.esimRevenue.toFixed(2)}`, icon: Wifi, color: "hsl(345,82%,60%)" },
+    { label: "eSIM Revenue", value: `€${kpi.esimRevenue.toFixed(2)}`, icon: Wifi, color: "hsl(207,94%,29%)" },
   ];
 
   const pieData = [

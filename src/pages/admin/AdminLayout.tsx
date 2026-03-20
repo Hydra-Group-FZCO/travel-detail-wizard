@@ -61,7 +61,7 @@ const AdminLayout = () => {
       <header className="bg-[hsl(220,20%,10%)] border-b border-[hsl(220,20%,16%)] px-4 md:px-6 h-14 flex items-center justify-between sticky top-0 z-50">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            <Shield size={18} className="text-[hsl(345,82%,60%)]" />
+            <Shield size={18} className="text-[hsl(45,98%,53%)]" />
             <span className="font-bold text-sm tracking-wide text-white">DMT Admin</span>
           </div>
           <span className="text-[hsl(220,10%,40%)] text-xs hidden md:block">/ {currentItem.label}</span>
@@ -71,7 +71,7 @@ const AdminLayout = () => {
             <Search size={14} className="absolute left-3 text-[hsl(220,10%,40%)]" />
             <Input
               placeholder="Search..."
-              className="w-56 h-8 pl-9 text-xs bg-[hsl(220,20%,14%)] border-[hsl(220,20%,20%)] text-[hsl(220,14%,80%)] placeholder:text-[hsl(220,10%,35%)] focus:border-[hsl(345,82%,60%)]"
+              className="w-56 h-8 pl-9 text-xs bg-[hsl(210,35%,14%)] border-[hsl(210,30%,20%)] text-[hsl(210,25%,80%)] placeholder:text-[hsl(210,15%,35%)] focus:border-[hsl(207,94%,40%)]"
             />
           </div>
           <Button
@@ -118,7 +118,7 @@ const AdminLayout = () => {
                       className={({ isActive }) =>
                         `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
                           isActive
-                            ? "bg-[hsl(345,82%,60%,0.12)] text-[hsl(345,82%,65%)]"
+                            ? "bg-[hsl(207,94%,29%,0.15)] text-[hsl(207,85%,50%)]"
                             : "text-[hsl(220,10%,55%)] hover:bg-[hsl(220,20%,14%)] hover:text-[hsl(220,14%,85%)]"
                         } ${collapsed ? "justify-center px-0" : ""}`
                       }
@@ -165,7 +165,7 @@ const AdminLayout = () => {
               end={item.end}
               className={({ isActive }) =>
                 `flex flex-col items-center gap-0.5 px-2 py-1 text-[10px] font-medium rounded-lg ${
-                  isActive ? "text-[hsl(345,82%,65%)]" : "text-[hsl(220,10%,50%)]"
+                  isActive ? "text-[hsl(207,85%,50%)]" : "text-[hsl(210,15%,50%)]"
                 }`
               }
             >
