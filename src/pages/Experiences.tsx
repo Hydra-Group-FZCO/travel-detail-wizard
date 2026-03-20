@@ -26,10 +26,13 @@ const Experiences = () => {
 
       {/* Merchant of Record Notice */}
       <section className="bg-secondary border-b border-border">
-        <div className="container-grid py-5">
+        <div className="container-grid py-5 space-y-2">
           <p className="text-sm text-muted-foreground text-center leading-relaxed">
             All experience bookings are processed by Digital Moonkey Limited. Experiences are delivered and fulfilled by independent local operators and partners. Digital Moonkey acts as the booking platform — the experience itself is provided by the operator listed on each experience page. You will be charged by Digital Moonkey Limited. For any queries contact{" "}
             <a href="mailto:hello@digitalmoonkey.travel" className="text-primary hover:underline">hello@digitalmoonkey.travel</a>
+          </p>
+          <p className="text-xs text-muted-foreground text-center leading-relaxed opacity-80">
+            {t.experiences.cancellationNote}
           </p>
         </div>
       </section>

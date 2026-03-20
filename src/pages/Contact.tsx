@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PageLayout from "@/components/PageLayout";
-import { Mail, Clock, MapPin, Send } from "lucide-react";
+import { Mail, Clock, MapPin, Send, MessageCircle } from "lucide-react";
 import { useTranslations } from "@/i18n";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-const iconMap = [Mail, Mail, Mail, Clock, Clock];
+const iconMap = [Mail, Mail, Mail, Clock, Clock, MessageCircle];
 
 const Contact = () => {
   const t = useTranslations();

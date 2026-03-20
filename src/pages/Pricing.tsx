@@ -93,10 +93,47 @@ const Pricing = () => {
             </div>
 
 
-            <div className="border-t border-border pt-6 space-y-2">
+            <div className="border-t border-border pt-6 space-y-4">
               <p className="text-sm text-muted-foreground">
                 All payments processed securely by Stripe.
               </p>
+
+              {/* Payment method logos */}
+              <div className="flex flex-wrap items-center gap-4 opacity-60">
+                {/* Visa */}
+                <svg viewBox="0 0 48 32" className="h-7 w-auto" aria-label="Visa">
+                  <rect width="48" height="32" rx="4" fill="#1A1F71" />
+                  <text x="24" y="20" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold" fontFamily="sans-serif">VISA</text>
+                </svg>
+                {/* Mastercard */}
+                <svg viewBox="0 0 48 32" className="h-7 w-auto" aria-label="Mastercard">
+                  <rect width="48" height="32" rx="4" fill="#252525" />
+                  <circle cx="19" cy="16" r="8" fill="#EB001B" />
+                  <circle cx="29" cy="16" r="8" fill="#F79E1B" />
+                  <path d="M24 9.37a8 8 0 0 1 0 13.26 8 8 0 0 1 0-13.26z" fill="#FF5F00" />
+                </svg>
+                {/* Amex */}
+                <svg viewBox="0 0 48 32" className="h-7 w-auto" aria-label="American Express">
+                  <rect width="48" height="32" rx="4" fill="#006FCF" />
+                  <text x="24" y="18" textAnchor="middle" fill="white" fontSize="7" fontWeight="bold" fontFamily="sans-serif">AMEX</text>
+                </svg>
+                {/* Apple Pay */}
+                <svg viewBox="0 0 48 32" className="h-7 w-auto" aria-label="Apple Pay">
+                  <rect width="48" height="32" rx="4" fill="#000" />
+                  <text x="24" y="19" textAnchor="middle" fill="white" fontSize="9" fontWeight="500" fontFamily="sans-serif"> Pay</text>
+                </svg>
+                {/* Google Pay */}
+                <svg viewBox="0 0 48 32" className="h-7 w-auto" aria-label="Google Pay">
+                  <rect width="48" height="32" rx="4" fill="#fff" stroke="#ddd" />
+                  <text x="24" y="19" textAnchor="middle" fill="#5F6368" fontSize="8" fontWeight="500" fontFamily="sans-serif">G Pay</text>
+                </svg>
+                {/* Powered by Stripe */}
+                <svg viewBox="0 0 64 32" className="h-7 w-auto" aria-label="Powered by Stripe">
+                  <rect width="64" height="32" rx="4" fill="#635BFF" />
+                  <text x="32" y="19" textAnchor="middle" fill="white" fontSize="8" fontWeight="600" fontFamily="sans-serif">stripe</text>
+                </svg>
+              </div>
+
               <p className="text-sm text-muted-foreground">
                 For questions about pricing contact <a href="mailto:hello@digitalmoonkey.travel" className="text-primary hover:underline">hello@digitalmoonkey.travel</a>
               </p>
