@@ -39,7 +39,6 @@ export const de: Translations = {
       { title: "Antragsverfolgung", description: "Wir überwachen den Fortschritt Ihres Antrags und halten Sie in jeder Phase informiert." },
       { title: "Digitale Reisedienste", description: "Visafotos, eSIM-Konnektivität und digitale Lösungen für moderne Reisende." },
       { title: "Reisevorbereitung", description: "Ziel-Checklisten, Einreisewarnungen, Gesundheitsinformationen und Zeitplanung." },
-      { title: "Versicherung & Schutz", description: "Vergleichen Sie Reiseversicherungsoptionen und verstehen Sie die Deckung für Ihre Reise." },
       { title: "Unternehmens-Compliance", description: "Dokumentation und Sorgfaltspflicht-Lösungen für Geschäftsreisende." },
     ],
     sections: [
