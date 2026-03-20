@@ -17,7 +17,7 @@ export const es: Translations = {
     badge: "Viajes Inteligentes, Simplificados",
     headline: "Viaja más inteligente.",
     headlineAccent: "Nosotros lo hacemos fácil.",
-    subheadline: "Desde itinerarios y guías con IA hasta eSIMs, experiencias seleccionadas y documentación de viaje — todo tu viaje, resuelto.",
+    subheadline: "Desde itinerarios y guías con IA hasta eSIMs, experiencias seleccionadas y documentación de viaje · todo tu viaje, resuelto.",
     cta: "Explorar Nuestros Servicios",
     ctaSecondary: "Contáctanos",
   },
@@ -29,7 +29,7 @@ export const es: Translations = {
   },
   intro: {
     title: "Todo lo que tu viaje necesita, en un solo lugar",
-    text: "Itinerarios y guías de destino con IA, planes de datos eSIM para conectividad instantánea, experiencias seleccionadas en todo el mundo y asistencia experta con documentación de viaje — todo desde una sola plataforma.",
+    text: "Itinerarios y guías de destino con IA, planes de datos eSIM para conectividad instantánea, experiencias seleccionadas en todo el mundo y asistencia experta con documentación de viaje · todo desde una sola plataforma.",
   },
   services: {
     pageTitle: "Nuestros Servicios",
@@ -54,7 +54,7 @@ export const es: Translations = {
           "Preparación y organización de documentos de apoyo",
           "Asesoramiento sobre errores comunes y cómo evitarlos",
         ],
-        closing: "Te guiamos durante el proceso — tú tomas las decisiones.",
+        closing: "Te guiamos durante el proceso · tú tomas las decisiones.",
       },
       {
         id: "tracking",
@@ -79,7 +79,7 @@ export const es: Translations = {
             items: [
               "Fotografías digitales conformes con los requisitos específicos de tu país de destino",
               "Formato, tamaño, fondo y resolución verificados antes de la entrega",
-              "Entrega digital — listas para subir o imprimir",
+              "Entrega digital · listas para subir o imprimir",
             ],
           },
           {
@@ -88,7 +88,7 @@ export const es: Translations = {
               "Soluciones eSIM internacionales para más de 190 destinos",
               "Planes de datos adaptados a la duración y uso de tu viaje",
               "Guía de configuración para todos los tipos de dispositivos principales",
-              "Conéctate desde el momento en que llegues — sin sorpresas de roaming",
+              "Conéctate desde el momento en que llegues · sin sorpresas de roaming",
             ],
           },
         ],
@@ -149,10 +149,10 @@ export const es: Translations = {
     subtitle: "Una empresa registrada en el Reino Unido especializada en servicios de asistencia personal para viajeros y el sector turístico.",
     introText: "Comenzamos con una simple observación: preparar un viaje internacional implica navegar por requisitos complejos que cambian con frecuencia, varían según la nacionalidad y están dispersos en múltiples fuentes oficiales. Creamos Digital Moonkey para aportar claridad y apoyo personal a ese proceso.",
     whatWeDoTitle: "Lo que hacemos",
-    whatWeDoText: "Ayudamos a viajeros individuales y corporativos con los aspectos prácticos de la preparación del viaje — desde documentación y solicitudes hasta conectividad y herramientas digitales de viaje. Nuestro equipo combina conocimiento de la industria turística con un compromiso de precisión y servicio al cliente.",
+    whatWeDoText: "Ayudamos a viajeros individuales y corporativos con los aspectos prácticos de la preparación del viaje · desde documentación y solicitudes hasta conectividad y herramientas digitales de viaje. Nuestro equipo combina conocimiento de la industria turística con un compromiso de precisión y servicio al cliente.",
     howWeWorkTitle: "Cómo trabajamos",
     howWeWorkItems: [
-      "Proporcionamos orientación y asistencia — no tomamos decisiones por ti",
+      "Proporcionamos orientación y asistencia · no tomamos decisiones por ti",
       "Somos transparentes sobre lo que incluyen nuestros servicios y cuánto cuestan",
       "Distinguimos claramente nuestros servicios privados de los procesos gubernamentales oficiales",
       "Estamos disponibles antes, durante y después del proceso de solicitud",
@@ -170,7 +170,7 @@ export const es: Translations = {
       { label: "Consultas generales", value: "support@digitalmoonkey.travel" },
       { label: "Consultas comerciales", value: "business@digitalmoonkey.travel" },
       { label: "Clientes corporativos", value: "corporate@digitalmoonkey.travel" },
-      { label: "Horario de oficina", value: "Lunes a viernes, 9:00 — 18:00 (GMT)" },
+      { label: "Horario de oficina", value: "Lunes a viernes, 9:00 · 18:00 (GMT)" },
       { label: "Tiempo de respuesta", value: "Dentro de 24 horas en días laborables" },
     ],
     officeLabel: "Oficina Registrada",
@@ -203,7 +203,7 @@ export const es: Translations = {
   },
   footer: {
     disclaimer: "Importante: Digital Moonkey Ltd es un proveedor de servicios privado. No somos una agencia gubernamental y no estamos afiliados a ninguna embajada, consulado u organismo oficial. Nuestras tarifas cubren nuestra asistencia personal y son independientes de cualquier tasa gubernamental oficial. Los solicitantes pueden optar por solicitar directamente a través de los canales gubernamentales oficiales sin utilizar nuestros servicios.",
-    description: "Servicios de asistencia personal para viajeros — desde documentación y solicitudes hasta conectividad y preparación de viaje.",
+    description: "Servicios de asistencia personal para viajeros · desde documentación y solicitudes hasta conectividad y preparación de viaje.",
     servicesTitle: "Servicios",
     serviceLinks: [
       { label: "Documentación", hash: "documentation" },
@@ -217,19 +217,19 @@ export const es: Translations = {
       { label: "Contacto", to: "/contact" },
       { label: "Términos y Condiciones", to: "/legal" },
     ],
-    copyright: "© 2026 Digital Moonkey Ltd — Registrada en Inglaterra y Gales",
+    copyright: "© 2026 Digital Moonkey Ltd · Registrada en Inglaterra y Gales",
     bottomLinks: [
       { label: "Términos", to: "/legal" },
       { label: "Privacidad", to: "/legal" },
       { label: "Reembolsos", to: "/legal" },
       { label: "Cookies", to: "/legal" },
     ],
-    bottomNote: "digitalmoonkey.travel es un servicio privado — no una agencia gubernamental.",
+    bottomNote: "digitalmoonkey.travel es un servicio privado · no una agencia gubernamental.",
   },
   esims: {
     badge: "Tienda eSIM",
     heroTitle: "Conéctate en todo el mundo",
-    heroSubtitle: "Planes de datos instantáneos para más de 190 países. Sin SIM física — activa tu eSIM en minutos.",
+    heroSubtitle: "Planes de datos instantáneos para más de 190 países. Sin SIM física · activa tu eSIM en minutos.",
     searchPlaceholder: "Buscar por país...",
     regionAll: "Todos",
     regionEurope: "🌍 Europa",

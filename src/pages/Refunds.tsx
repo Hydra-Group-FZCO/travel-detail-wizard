@@ -96,7 +96,7 @@ const Refunds = () => {
                 <h2 className="text-lg font-bold mb-3">7. How to Request a Refund</h2>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p>Email: <a href="mailto:hello@digitalmoonkey.travel" className="text-primary hover:underline">hello@digitalmoonkey.travel</a></p>
-                  <p>Subject line: Refund Request — [your order number]</p>
+                  <p>Subject line: Refund Request · [your order number]</p>
                   <p>Include: your name, order number, product purchased, and reason for refund request.</p>
                   <p>We aim to respond within 2 business days and process approved refunds within 5-10 business days to the original payment method.</p>
                 </div>

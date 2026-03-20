@@ -585,7 +585,7 @@ const TravelGuides = () => {
                   {isGenerating ? (
                     <><Loader2 className="w-4 h-4 animate-spin mr-2" /> {copy.form.creating}</>
                   ) : (
-                    <><Sparkles className="w-4 h-4 mr-2" /> {copy.form.generate} — €{selectedDepth.price}</>
+                    <><Sparkles className="w-4 h-4 mr-2" /> {copy.form.generate} · €{selectedDepth.price}</>
                   )}
                 </Button>
               )}

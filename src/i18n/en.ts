@@ -17,7 +17,7 @@ export const en: Translations = {
     badge: "Smart Travel, Simplified",
     headline: "Travel smarter.",
     headlineAccent: "We make it effortless.",
-    subheadline: "From AI-powered itineraries and guides to eSIMs, curated experiences and travel documentation — your entire trip, sorted.",
+    subheadline: "From AI-powered itineraries and guides to eSIMs, curated experiences and travel documentation · your entire trip, sorted.",
     cta: "Explore Our Services",
     ctaSecondary: "Get in Touch",
   },
@@ -29,7 +29,7 @@ export const en: Translations = {
   },
   intro: {
     title: "Everything your trip needs, in one place",
-    text: "AI-powered itineraries and destination guides, eSIM data plans for instant connectivity, curated experiences worldwide, and expert travel documentation assistance — all from a single platform.",
+    text: "AI-powered itineraries and destination guides, eSIM data plans for instant connectivity, curated experiences worldwide, and expert travel documentation assistance · all from a single platform.",
   },
   services: {
     pageTitle: "Our Services",
@@ -54,7 +54,7 @@ export const en: Translations = {
           "Preparation and organisation of supporting documents",
           "Advice on common errors and how to avoid them",
         ],
-        closing: "We guide you through the process — you make the decisions.",
+        closing: "We guide you through the process · you make the decisions.",
       },
       {
         id: "tracking",
@@ -79,7 +79,7 @@ export const en: Translations = {
             items: [
               "Digital photographs compliant with the specific requirements of your destination country",
               "Format, size, background, and resolution verified before delivery",
-              "Delivered digitally — ready to upload or print",
+              "Delivered digitally · ready to upload or print",
             ],
           },
           {
@@ -88,7 +88,7 @@ export const en: Translations = {
               "International eSIM solutions for 190+ destinations",
               "Data plans tailored to your trip duration and usage",
               "Setup guidance for all major device types",
-              "Stay connected from the moment you arrive — no roaming surprises",
+              "Stay connected from the moment you arrive · no roaming surprises",
             ],
           },
         ],
@@ -149,10 +149,10 @@ export const en: Translations = {
     subtitle: "A UK-registered company specialising in personal assistance services for travellers and the tourism sector.",
     introText: "We started with a simple observation: preparing for international travel involves navigating complex requirements that change frequently, vary by nationality, and are spread across multiple official sources. We built Digital Moonkey to bring clarity and personal support to that process.",
     whatWeDoTitle: "What we do",
-    whatWeDoText: "We help individual and corporate travellers with the practical aspects of travel preparation — from documentation and applications to connectivity and digital travel tools. Our team combines travel industry knowledge with a commitment to accuracy and customer service.",
+    whatWeDoText: "We help individual and corporate travellers with the practical aspects of travel preparation · from documentation and applications to connectivity and digital travel tools. Our team combines travel industry knowledge with a commitment to accuracy and customer service.",
     howWeWorkTitle: "How we work",
     howWeWorkItems: [
-      "We provide guidance and assistance — we do not make decisions for you",
+      "We provide guidance and assistance · we do not make decisions for you",
       "We are transparent about what our services include and what they cost",
       "We clearly distinguish our private services from official government processes",
       "We are available before, during, and after the application process",
@@ -170,7 +170,7 @@ export const en: Translations = {
       { label: "General enquiries", value: "support@digitalmoonkey.travel" },
       { label: "Business enquiries", value: "business@digitalmoonkey.travel" },
       { label: "Corporate clients", value: "corporate@digitalmoonkey.travel" },
-      { label: "Office hours", value: "Monday to Friday, 9:00 — 18:00 (GMT)" },
+      { label: "Office hours", value: "Monday to Friday, 9:00 · 18:00 (GMT)" },
       { label: "Response time", value: "Within 24 hours on business days" },
     ],
     officeLabel: "Registered Office",
@@ -203,7 +203,7 @@ export const en: Translations = {
   },
   footer: {
     disclaimer: "Important: Digital Moonkey Ltd is a private service provider. We are not a government agency and are not affiliated with any embassy, consulate, or official body. Our service fees cover our personal assistance and are separate from any official government or application fees. Applicants may choose to apply directly through official government channels without using our services.",
-    description: "Personal assistance services for travellers — from documentation and applications to connectivity and travel preparation.",
+    description: "Personal assistance services for travellers · from documentation and applications to connectivity and travel preparation.",
     servicesTitle: "Services",
     serviceLinks: [
       { label: "Documentation", hash: "documentation" },
@@ -217,19 +217,19 @@ export const en: Translations = {
       { label: "Contact", to: "/contact" },
       { label: "Terms & Conditions", to: "/legal" },
     ],
-    copyright: "© 2026 Digital Moonkey Ltd — Registered in England & Wales",
+    copyright: "© 2026 Digital Moonkey Ltd · Registered in England & Wales",
     bottomLinks: [
       { label: "Terms", to: "/legal" },
       { label: "Privacy", to: "/legal" },
       { label: "Refund Policy", to: "/legal" },
       { label: "Cookies", to: "/legal" },
     ],
-    bottomNote: "digitalmoonkey.travel is a private service — not a government agency.",
+    bottomNote: "digitalmoonkey.travel is a private service · not a government agency.",
   },
   esims: {
     badge: "eSIM Store",
     heroTitle: "Stay Connected Worldwide",
-    heroSubtitle: "Instant data plans for 190+ countries. No physical SIM needed — activate your eSIM in minutes.",
+    heroSubtitle: "Instant data plans for 190+ countries. No physical SIM needed · activate your eSIM in minutes.",
     searchPlaceholder: "Search by country...",
     regionAll: "All",
     regionEurope: "🌍 Europe",
