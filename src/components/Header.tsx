@@ -28,8 +28,8 @@ const Header = () => {
   return (
     <header className={`absolute top-0 left-0 right-0 z-50 ${isHome ? "" : "bg-background border-b border-border"}`}>
       <nav className="container-grid">
-          <div className="flex items-center justify-between h-20 md:h-24">
-          <Link to={localizedPath("/", lang)} className="flex items-center gap-2.5 -ml-2">
+          <div className="flex items-center justify-between h-14 md:h-16">
+          <Link to={localizedPath("/", lang)} className={`flex items-center gap-2.5 ${isHome ? "opacity-0 pointer-events-none" : ""}`}>
             <Logo textClassName={isHome ? "text-primary-foreground" : "text-foreground"} />
           </Link>
 
