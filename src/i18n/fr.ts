@@ -39,7 +39,6 @@ export const fr: Translations = {
       { title: "Suivi des Demandes", description: "Nous surveillons l'avancement de votre demande et vous tenons informé à chaque étape." },
       { title: "Services Numériques de Voyage", description: "Photos de visa, connectivité eSIM et solutions numériques pour les voyageurs modernes." },
       { title: "Préparation de Voyage", description: "Listes de destination, alertes d'entrée, informations sanitaires et planification." },
-      { title: "Assurance & Protection", description: "Comparez les options d'assurance voyage et comprenez la couverture pour votre voyage." },
       { title: "Conformité Entreprise", description: "Documentation et solutions de devoir de vigilance pour les voyageurs d'affaires." },
     ],
     sections: [
