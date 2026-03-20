@@ -14,6 +14,7 @@ import Experiences from "./pages/Experiences";
 import Legal from "./pages/Legal";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
+import Cookies from "./pages/Cookies";
 import Refunds from "./pages/Refunds";
 import Pricing from "./pages/Pricing";
 import NotFound from "./pages/NotFound";
@@ -97,7 +98,8 @@ const AppRoutes = () => {
         <Route path="/legal" element={<Legal />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
-        <Route path="/refunds" element={<Refunds />} />
+         <Route path="/refunds" element={<Refunds />} />
+         <Route path="/cookies" element={<Cookies />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/esims" element={<Esims />} />
         <Route path="/itinerary-generator" element={<ItineraryGenerator />} />
@@ -117,6 +119,7 @@ const AppRoutes = () => {
             <Route path="terms" element={<Terms />} />
             <Route path="privacy" element={<Privacy />} />
             <Route path="refunds" element={<Refunds />} />
+            <Route path="cookies" element={<Cookies />} />
             <Route path="pricing" element={<Pricing />} />
             <Route path="esims" element={<Esims />} />
             <Route path="itinerary-generator" element={<ItineraryGenerator />} />
