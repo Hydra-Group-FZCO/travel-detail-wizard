@@ -107,19 +107,6 @@ export const en: Translations = {
         ],
       },
       {
-        id: "insurance",
-        title: "Insurance Comparison & Referral",
-        intro: "Travel insurance is essential but choosing the right policy can be confusing. We help you understand your options.",
-        subtitle: "Our service includes:",
-        items: [
-          "Comparison of travel insurance options relevant to your destination and trip type",
-          "Explanation of key coverage areas: medical, cancellation, luggage, liability",
-          "Referral to vetted insurance providers",
-          "Assistance with claims documentation if needed",
-        ],
-        note: "Note: Digital Moonkey is not an insurance provider or broker. We provide information and referral services to help you make an informed decision.",
-      },
-      {
         id: "corporate",
         title: "Corporate Travel Compliance",
         badge: "B2B",
