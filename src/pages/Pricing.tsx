@@ -83,18 +83,6 @@ const Pricing = () => {
               <p className="text-xs text-muted-foreground mt-2">Price includes government fees and our assistance service.</p>
             </div>
 
-            {/* Club */}
-            <div className="bg-trust-bar-bg rounded-xl p-8">
-              <h2 className="text-lg font-bold mb-3 text-trust-bar-fg">Digital Moonkey Club — Monthly Membership</h2>
-              <p className="text-2xl font-bold text-trust-bar-fg mb-3">€14.90<span className="text-sm font-normal text-trust-bar-fg/70"> / month</span></p>
-              <div className="space-y-2 text-sm text-trust-bar-fg/80">
-                <p>✓ Unlimited AI itineraries</p>
-                <p>✓ Unlimited AI guides</p>
-                <p>✓ 20% discount on eSIMs</p>
-                <p>✓ Member-only experiences</p>
-                <p>✓ Cancel anytime</p>
-              </div>
-            </div>
 
             <div className="border-t border-border pt-6 space-y-2">
               <p className="text-sm text-muted-foreground">
