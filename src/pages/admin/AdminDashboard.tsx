@@ -27,7 +27,7 @@ interface KPIData {
   recentBookings: any[];
 }
 
-const COLORS = ["hsl(345,82%,60%)", "hsl(210,70%,55%)", "hsl(142,71%,45%)", "hsl(38,92%,50%)", "hsl(280,60%,55%)"];
+const COLORS = ["hsl(207,94%,29%)", "hsl(45,98%,53%)", "hsl(142,71%,45%)", "hsl(207,70%,55%)", "hsl(280,60%,55%)"];
 
 const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
