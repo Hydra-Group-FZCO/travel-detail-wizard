@@ -486,6 +486,7 @@ const ItineraryGenerator = () => {
   const [budgetLevel, setBudgetLevel] = useState("mid-range");
   const [language, setLanguage] = useState<string>(uiLang);
   const [extras, setExtras] = useState<string[]>(["restaurants", "transport"]);
+  const [digitalConsent, setDigitalConsent] = useState(false);
 
   const numDays = startDate && endDate ? differenceInDays(endDate, startDate) + 1 : 0;
   const destinations = POPULAR_DESTINATIONS[uiLang] || POPULAR_DESTINATIONS.en;

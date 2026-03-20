@@ -223,6 +223,11 @@ const Esims = () => {
               </TooltipContent>
             </Tooltip>
           </div>
+
+          {/* Third-party provider note */}
+          <p className="text-xs text-muted-foreground text-center mt-4 max-w-lg mx-auto leading-relaxed">
+            eSIM data plans are provided by our connectivity partner. Digital Moonkey facilitates the purchase — the data service is delivered by the network provider.
+          </p>
         </div>
       </section>
 
