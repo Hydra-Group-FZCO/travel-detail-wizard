@@ -55,14 +55,14 @@ const Privacy = () => {
                 <h2 className="text-lg font-bold mb-3">3. How We Use Your Data</h2>
                 <p className="text-sm leading-relaxed text-muted-foreground mb-3">We use your personal data for the following purposes and legal bases:</p>
                 <div className="space-y-2 text-sm text-muted-foreground">
-                  <p>To fulfil your orders and deliver products and services — <em>Legal basis: Contract performance</em></p>
-                  <p>To manage your account — <em>Legal basis: Contract performance</em></p>
-                  <p>To process payments — <em>Legal basis: Contract performance</em></p>
-                  <p>To send order confirmations and service updates — <em>Legal basis: Contract performance</em></p>
-                  <p>To send marketing communications (only with your consent) — <em>Legal basis: Consent</em></p>
-                  <p>To improve our platform and services — <em>Legal basis: Legitimate interests</em></p>
-                  <p>To comply with legal obligations — <em>Legal basis: Legal obligation</em></p>
-                  <p>To detect and prevent fraud — <em>Legal basis: Legitimate interests</em></p>
+                  <p>To fulfil your orders and deliver products and services · <em>Legal basis: Contract performance</em></p>
+                  <p>To manage your account · <em>Legal basis: Contract performance</em></p>
+                  <p>To process payments · <em>Legal basis: Contract performance</em></p>
+                  <p>To send order confirmations and service updates · <em>Legal basis: Contract performance</em></p>
+                  <p>To send marketing communications (only with your consent) · <em>Legal basis: Consent</em></p>
+                  <p>To improve our platform and services · <em>Legal basis: Legitimate interests</em></p>
+                  <p>To comply with legal obligations · <em>Legal basis: Legal obligation</em></p>
+                  <p>To detect and prevent fraud · <em>Legal basis: Legitimate interests</em></p>
                 </div>
               </div>
 
@@ -70,12 +70,12 @@ const Privacy = () => {
                 <h2 className="text-lg font-bold mb-3">4. Data Sharing</h2>
                 <p className="text-sm leading-relaxed text-muted-foreground mb-3">We share your data only with:</p>
                 <div className="space-y-2 text-sm text-muted-foreground">
-                  <p><strong className="text-foreground">Stripe, Inc.</strong> — payment processing. Stripe is certified to PCI DSS Level 1.</p>
-                  <p><strong className="text-foreground">Supabase</strong> — secure database infrastructure for account and order data.</p>
-                  <p><strong className="text-foreground">Anthropic</strong> — AI content generation. Only travel preferences provided; no identifying personal data shared.</p>
-                  <p><strong className="text-foreground">eSIM Access</strong> — for eSIM order fulfilment. Email and order details shared as required for delivery.</p>
-                  <p><strong className="text-foreground">Bokun</strong> — for experience booking management.</p>
-                  <p><strong className="text-foreground">Travelpayouts</strong> — affiliate tracking (anonymised click data).</p>
+                  <p><strong className="text-foreground">Stripe, Inc.</strong> · payment processing. Stripe is certified to PCI DSS Level 1.</p>
+                  <p><strong className="text-foreground">Supabase</strong> · secure database infrastructure for account and order data.</p>
+                  <p><strong className="text-foreground">Anthropic</strong> · AI content generation. Only travel preferences provided; no identifying personal data shared.</p>
+                  <p><strong className="text-foreground">eSIM Access</strong> · for eSIM order fulfilment. Email and order details shared as required for delivery.</p>
+                  <p><strong className="text-foreground">Bokun</strong> · for experience booking management.</p>
+                  <p><strong className="text-foreground">Travelpayouts</strong> · affiliate tracking (anonymised click data).</p>
                   <p className="font-semibold text-foreground mt-3">We do not sell your personal data to third parties.</p>
                 </div>
               </div>
@@ -101,13 +101,13 @@ const Privacy = () => {
                 <h2 className="text-lg font-bold mb-3">7. Your Rights Under UK GDPR</h2>
                 <p className="text-sm leading-relaxed text-muted-foreground mb-3">You have the following rights:</p>
                 <div className="space-y-2 text-sm text-muted-foreground">
-                  <p><strong className="text-foreground">Right to access</strong> — request a copy of your personal data</p>
-                  <p><strong className="text-foreground">Right to rectification</strong> — request correction of inaccurate data</p>
-                  <p><strong className="text-foreground">Right to erasure</strong> — request deletion of your data (subject to legal retention requirements)</p>
-                  <p><strong className="text-foreground">Right to restrict processing</strong> — request we limit how we use your data</p>
-                  <p><strong className="text-foreground">Right to data portability</strong> — request your data in a machine-readable format</p>
-                  <p><strong className="text-foreground">Right to object</strong> — object to processing based on legitimate interests or for direct marketing</p>
-                  <p><strong className="text-foreground">Rights related to automated decision-making</strong> — we do not make solely automated decisions that significantly affect you</p>
+                  <p><strong className="text-foreground">Right to access</strong> · request a copy of your personal data</p>
+                  <p><strong className="text-foreground">Right to rectification</strong> · request correction of inaccurate data</p>
+                  <p><strong className="text-foreground">Right to erasure</strong> · request deletion of your data (subject to legal retention requirements)</p>
+                  <p><strong className="text-foreground">Right to restrict processing</strong> · request we limit how we use your data</p>
+                  <p><strong className="text-foreground">Right to data portability</strong> · request your data in a machine-readable format</p>
+                  <p><strong className="text-foreground">Right to object</strong> · object to processing based on legitimate interests or for direct marketing</p>
+                  <p><strong className="text-foreground">Rights related to automated decision-making</strong> · we do not make solely automated decisions that significantly affect you</p>
                 </div>
                 <p className="text-sm text-muted-foreground mt-3">
                   To exercise any of these rights, contact us at <a href="mailto:hello@digitalmoonkey.travel" className="text-primary hover:underline">hello@digitalmoonkey.travel</a>. We will respond within one month.
