@@ -79,8 +79,10 @@ export interface Translations {
     companyTitle: string;
     companyName: string;
     companyRegistered: string;
+    companyAddress: string;
     companyDirector: string;
     companyWebsite: string;
+    companyEmail: string;
   };
   contact: {
     title: string;
