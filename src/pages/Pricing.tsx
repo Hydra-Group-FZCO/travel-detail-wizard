@@ -75,11 +75,20 @@ const Pricing = () => {
             {/* Travel Auth */}
             <div>
               <h2 className="text-lg font-bold mb-3">Travel Authorisation Assistance</h2>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-2">
-                Prices vary by destination country and type of authorisation. Includes government fees and our assistance service.
+              <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+                Personalised assistance with visa, ETA, eVisa and ETIAS applications. Our fee includes the applicable government fee and our assistance service.
               </p>
-              <p className="text-sm text-muted-foreground">
-                Contact <a href="mailto:hello@digitalmoonkey.travel" className="text-primary hover:underline">hello@digitalmoonkey.travel</a> for a quote.
+              <p className="text-sm font-bold text-foreground mb-2">Indicative price ranges (government fee + service fee):</p>
+              <ul className="text-sm text-muted-foreground space-y-1.5 mb-3">
+                <li>• USA ESTA — from €35</li>
+                <li>• Canada eTA — from €25</li>
+                <li>• UK ETA — from €30</li>
+                <li>• Australia ETA — from €35</li>
+                <li>• India eVisa — from €55</li>
+                <li>• ETIAS (coming soon) — TBC</li>
+              </ul>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Prices vary depending on nationality, destination and type of authorisation. Final price confirmed before payment. For destinations not listed, contact <a href="mailto:hello@digitalmoonkey.travel" className="text-primary hover:underline">hello@digitalmoonkey.travel</a>
               </p>
             </div>
 

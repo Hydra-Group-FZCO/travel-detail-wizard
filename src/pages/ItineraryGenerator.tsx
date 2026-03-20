@@ -835,7 +835,12 @@ const ItineraryGenerator = () => {
             </Card>
           )}
 
-          <div className="flex justify-between mt-8">
+          {/* AI content disclaimer */}
+          <p className="text-xs text-muted-foreground text-center mt-4 max-w-lg mx-auto leading-relaxed">
+            AI-generated content. While we strive for accuracy, always verify critical information (opening hours, prices, availability) independently before travel.
+          </p>
+
+          <div className="flex justify-between mt-6">
             <Button variant="outline" onClick={() => setStep(step - 1)} disabled={step === 0}>
               <ChevronLeft className="w-4 h-4 mr-1" /> {copy.form.back}
             </Button>
@@ -845,13 +850,25 @@ const ItineraryGenerator = () => {
                 {copy.form.next} <ChevronRight className="w-4 h-4 ml-1" />
               </Button>
             ) : (
-              <Button variant="cta" size="lg" onClick={handleGenerate} disabled={isGenerating || !canProceed()}>
-                {isGenerating ? (
-                  <><Loader2 className="w-4 h-4 animate-spin mr-2" /> {copy.form.creating}</>
-                ) : (
-                  <><Sparkles className="w-4 h-4 mr-2" /> {copy.form.generate}</>
-                )}
-              </Button>
+              <div className="space-y-3 text-right">
+                <label className="flex items-start gap-2.5 cursor-pointer text-left max-w-md ml-auto">
+                  <Checkbox
+                    checked={digitalConsent}
+                    onCheckedChange={(checked) => setDigitalConsent(checked === true)}
+                    className="mt-0.5"
+                  />
+                  <span className="text-xs text-muted-foreground leading-relaxed">
+                    I consent to immediate delivery of this digital content and acknowledge that I lose my right to cancel once the itinerary is generated.
+                  </span>
+                </label>
+                <Button variant="cta" size="lg" onClick={handleGenerate} disabled={isGenerating || !canProceed() || !digitalConsent}>
+                  {isGenerating ? (
+                    <><Loader2 className="w-4 h-4 animate-spin mr-2" /> {copy.form.creating}</>
+                  ) : (
+                    <><Sparkles className="w-4 h-4 mr-2" /> {copy.form.generate}</>
+                  )}
+                </Button>
+              </div>
             )}
           </div>
         </div>

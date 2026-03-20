@@ -104,7 +104,7 @@ const Refunds = () => {
               </div>
 
               <div>
-                <h2 className="text-lg font-bold mb-3">9. Contact</h2>
+                <h2 className="text-lg font-bold mb-3">8. Contact</h2>
                 <div className="space-y-1 text-sm text-muted-foreground">
                   <p><a href="mailto:hello@digitalmoonkey.travel" className="text-primary hover:underline">hello@digitalmoonkey.travel</a></p>
                   <p>Digital Moonkey Limited</p>
