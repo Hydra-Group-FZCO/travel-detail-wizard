@@ -68,6 +68,9 @@ const Refunds = () => {
                   <p>Operator cancellation: full refund within 5-10 business days.</p>
                 </div>
                 <p className="text-sm text-muted-foreground mt-3">
+                  Digital Moonkey processes the booking and payment, but the experience is delivered by an independent operator. Refund eligibility for experiences is determined by the operator's cancellation policy displayed on each listing. We will assist you in processing refund requests with the operator.
+                </p>
+                <p className="text-sm text-muted-foreground mt-3">
                   For experience refund requests contact <a href="mailto:hello@digitalmoonkey.travel" className="text-primary hover:underline">hello@digitalmoonkey.travel</a> with your booking reference.
                 </p>
               </div>
