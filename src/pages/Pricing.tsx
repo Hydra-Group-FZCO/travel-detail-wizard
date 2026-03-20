@@ -80,12 +80,12 @@ const Pricing = () => {
               </p>
               <p className="text-sm font-bold text-foreground mb-2">Indicative price ranges (government fee + service fee):</p>
               <ul className="text-sm text-muted-foreground space-y-1.5 mb-3">
-                <li>• USA ESTA — from €35</li>
-                <li>• Canada eTA — from €25</li>
-                <li>• UK ETA — from €30</li>
-                <li>• Australia ETA — from €35</li>
-                <li>• India eVisa — from €55</li>
-                <li>• ETIAS (coming soon) — TBC</li>
+                <li>• USA ESTA – from €35</li>
+                <li>• Canada eTA – from €25</li>
+                <li>• UK ETA – from €30</li>
+                <li>• Australia ETA – from €35</li>
+                <li>• India eVisa – from €55</li>
+                <li>• ETIAS (coming soon) – TBC</li>
               </ul>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Prices vary depending on nationality, destination and type of authorisation. Final price confirmed before payment. For destinations not listed, contact <a href="mailto:hello@digitalmoonkey.travel" className="text-primary hover:underline">hello@digitalmoonkey.travel</a>

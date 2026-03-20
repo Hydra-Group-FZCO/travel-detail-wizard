@@ -270,7 +270,7 @@ const AdminDashboard = () => {
         <div className="space-y-2">
           <div className="flex items-center gap-3 text-sm text-[hsl(220,10%,60%)]">
             <div className="w-2 h-2 rounded-full bg-[hsl(142,71%,45%)]" />
-            System operational — All APIs connected
+            System operational – All APIs connected
           </div>
           {kpi.newUsersMonth > 0 && (
             <div className="flex items-center gap-3 text-sm text-[hsl(220,10%,60%)]">

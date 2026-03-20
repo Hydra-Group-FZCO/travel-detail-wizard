@@ -105,7 +105,7 @@ const AdminExperiences = () => {
                   <td className="px-4 py-2.5 text-sm font-medium text-white">{b.experience_name}</td>
                   <td className="px-4 py-2.5 text-sm text-[hsl(220,10%,60%)]">{new Date(b.booking_date).toLocaleDateString()}</td>
                   <td className="px-4 py-2.5 text-sm text-[hsl(220,10%,60%)]">{b.guests}</td>
-                  <td className="px-4 py-2.5 text-sm font-medium text-white">{b.total_amount ? `€${Number(b.total_amount).toFixed(2)}` : "—"}</td>
+                  <td className="px-4 py-2.5 text-sm font-medium text-white">{b.total_amount ? `€${Number(b.total_amount).toFixed(2)}` : "–"}</td>
                   <td className="px-4 py-2.5">
                     <Select value={b.status} onValueChange={v => updateStatus(b.id, v)}>
                       <SelectTrigger className="w-28 h-7 text-[11px] bg-[hsl(220,20%,14%)] border-[hsl(220,20%,22%)] text-[hsl(220,14%,80%)]"><SelectValue /></SelectTrigger>

@@ -58,15 +58,15 @@ const CookieConsent = () => {
               <div className="space-y-3 mb-4">
                 <label className="flex items-center gap-3 text-sm">
                   <input type="checkbox" checked disabled className="accent-primary" />
-                  <span><strong>Essential</strong> — required for the website to function</span>
+                  <span><strong>Essential</strong> – required for the website to function</span>
                 </label>
                 <label className="flex items-center gap-3 text-sm cursor-pointer">
                   <input type="checkbox" checked={analytics} onChange={e => setAnalytics(e.target.checked)} className="accent-primary" />
-                  <span><strong>Analytics</strong> — help us understand how visitors use our site</span>
+                  <span><strong>Analytics</strong> – help us understand how visitors use our site</span>
                 </label>
                 <label className="flex items-center gap-3 text-sm cursor-pointer">
                   <input type="checkbox" checked={marketing} onChange={e => setMarketing(e.target.checked)} className="accent-primary" />
-                  <span><strong>Marketing</strong> — used for affiliate tracking</span>
+                  <span><strong>Marketing</strong> – used for affiliate tracking</span>
                 </label>
               </div>
               <div className="flex gap-2">

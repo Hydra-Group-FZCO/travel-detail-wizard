@@ -1,9 +1,9 @@
 import { Bell, ShoppingCart, UserPlus, AlertTriangle } from "lucide-react";
 
 const mockNotifications = [
-  { icon: ShoppingCart, text: "System ready — all product sections are live", time: "Just now", type: "info" },
-  { icon: UserPlus, text: "Monitor new user registrations here", time: "—", type: "info" },
-  { icon: AlertTriangle, text: "Payment failure alerts will appear here", time: "—", type: "warning" },
+  { icon: ShoppingCart, text: "System ready – all product sections are live", time: "Just now", type: "info" },
+  { icon: UserPlus, text: "Monitor new user registrations here", time: "–", type: "info" },
+  { icon: AlertTriangle, text: "Payment failure alerts will appear here", time: "–", type: "warning" },
 ];
 
 const AdminNotifications = () => {

@@ -36,9 +36,9 @@ const Terms = () => {
                 </p>
               </div>
 
-              {/* 2. Important Notice — Nature of Our Services */}
+              {/* 2. Important Notice – Nature of Our Services */}
               <div>
-                <h2 className="text-lg font-bold mb-3">2. Important Notice — Nature of Our Services</h2>
+                <h2 className="text-lg font-bold mb-3">2. Important Notice – Nature of Our Services</h2>
                 <div className="space-y-3 text-sm leading-relaxed text-muted-foreground">
                   <p>
                     Digital Moonkey Limited is a private service provider. We are NOT a government agency, embassy, consulate, immigration authority, or official body of any country.

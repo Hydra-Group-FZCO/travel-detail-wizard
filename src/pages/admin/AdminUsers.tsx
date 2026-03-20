@@ -140,9 +140,9 @@ const AdminUsers = () => {
           <tbody>
             {filteredCustomers.map(c => (
               <tr key={c.user_id} className="border-b border-[hsl(220,20%,16%)] last:border-0 hover:bg-[hsl(220,20%,14%)] transition-colors">
-                <td className="px-4 py-3 text-sm font-medium text-white">{c.full_name || "—"}</td>
-                <td className="px-4 py-3 text-sm text-[hsl(220,10%,60%)]">{c.country || "—"}</td>
-                <td className="px-4 py-3 text-sm text-[hsl(220,10%,60%)]">{c.phone || "—"}</td>
+                <td className="px-4 py-3 text-sm font-medium text-white">{c.full_name || "–"}</td>
+                <td className="px-4 py-3 text-sm text-[hsl(220,10%,60%)]">{c.country || "–"}</td>
+                <td className="px-4 py-3 text-sm text-[hsl(220,10%,60%)]">{c.phone || "–"}</td>
                 <td className="px-4 py-3 text-sm text-[hsl(220,10%,50%)]">{new Date(c.created_at).toLocaleDateString()}</td>
                 <td className="px-4 py-3">
                   <Select value={c.role} onValueChange={v => updateRole(c.user_id, v)}>
