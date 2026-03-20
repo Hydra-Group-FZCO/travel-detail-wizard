@@ -71,7 +71,7 @@ const AdminLayout = () => {
             <Search size={14} className="absolute left-3 text-[hsl(220,10%,40%)]" />
             <Input
               placeholder="Search..."
-              className="w-56 h-8 pl-9 text-xs bg-[hsl(220,20%,14%)] border-[hsl(220,20%,20%)] text-[hsl(220,14%,80%)] placeholder:text-[hsl(220,10%,35%)] focus:border-[hsl(345,82%,60%)]"
+              className="w-56 h-8 pl-9 text-xs bg-[hsl(210,35%,14%)] border-[hsl(210,30%,20%)] text-[hsl(210,25%,80%)] placeholder:text-[hsl(210,15%,35%)] focus:border-[hsl(207,94%,40%)]"
             />
           </div>
           <Button
