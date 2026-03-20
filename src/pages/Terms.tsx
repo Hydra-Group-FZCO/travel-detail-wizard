@@ -1,4 +1,5 @@
 import PageLayout from "@/components/PageLayout";
+import LegalLanguageNotice from "@/components/LegalLanguageNotice";
 
 const Terms = () => {
   return (
@@ -13,6 +14,7 @@ const Terms = () => {
       <section className="section-spacing">
         <div className="container-grid">
           <div className="max-w-3xl space-y-8">
+            <LegalLanguageNotice />
             <p className="text-sm leading-relaxed">
               These Terms and Conditions govern your use of digitalmoonkey.travel and all purchases made through our platform.
             </p>

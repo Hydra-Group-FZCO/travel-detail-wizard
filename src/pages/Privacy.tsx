@@ -1,4 +1,5 @@
 import PageLayout from "@/components/PageLayout";
+import LegalLanguageNotice from "@/components/LegalLanguageNotice";
 
 const Privacy = () => {
   return (
@@ -13,6 +14,7 @@ const Privacy = () => {
       <section className="section-spacing">
         <div className="container-grid">
           <div className="max-w-3xl space-y-8">
+            <LegalLanguageNotice />
             <p className="text-sm leading-relaxed">
               This Privacy Policy explains how Digital Moonkey Limited collects, uses and protects your personal data in accordance with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.
             </p>
