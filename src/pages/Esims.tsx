@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useNavigate } from "react-router-dom";
 import { Search, Wifi, Clock, Globe, Smartphone, Info, ShoppingCart, CheckCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
