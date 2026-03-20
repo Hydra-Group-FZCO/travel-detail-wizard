@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
+import LegalLanguageNotice from "@/components/LegalLanguageNotice";
 import { useLanguage, localizedPath } from "@/i18n";
 
 const Pricing = () => {
@@ -17,6 +18,7 @@ const Pricing = () => {
       <section className="section-spacing">
         <div className="container-grid">
           <div className="max-w-3xl space-y-10">
+            <LegalLanguageNotice />
             {/* eSIM */}
             <div>
               <h2 className="text-lg font-bold mb-3">eSIM Data Plans</h2>

@@ -1,4 +1,5 @@
 import PageLayout from "@/components/PageLayout";
+import LegalLanguageNotice from "@/components/LegalLanguageNotice";
 
 const Refunds = () => {
   return (
@@ -13,6 +14,7 @@ const Refunds = () => {
       <section className="section-spacing">
         <div className="container-grid">
           <div className="max-w-3xl space-y-8">
+            <LegalLanguageNotice />
             <p className="text-sm leading-relaxed">
               Digital Moonkey Limited aims to ensure complete satisfaction with every purchase. This policy sets out the specific refund terms for each of our products and services.
             </p>
