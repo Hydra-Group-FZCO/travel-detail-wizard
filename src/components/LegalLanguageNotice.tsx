@@ -14,7 +14,7 @@ const LegalLanguageNotice = () => {
   if (!notice) return null;
 
   return (
-    <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 text-sm text-amber-900">
+    <div className="bg-secondary border border-border rounded-lg p-4 mb-6 text-sm text-foreground">
       <p className="font-medium">⚠ {notice}</p>
     </div>
   );
