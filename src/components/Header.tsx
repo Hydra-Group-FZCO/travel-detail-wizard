@@ -30,7 +30,7 @@ const Header = () => {
       <nav className="container-grid">
           <div className="flex items-center justify-between h-16 md:h-20">
           <Link to={localizedPath("/", lang)} className={`flex items-center gap-2.5 ${isHome ? "opacity-0 pointer-events-none" : ""}`}>
-            <Logo textClassName={isHome ? "text-primary-foreground" : "text-foreground"} />
+            <Logo variant="icon" textClassName={isHome ? "text-primary-foreground" : "text-foreground"} />
           </Link>
 
           {/* Desktop Nav */}
