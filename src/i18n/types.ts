@@ -76,6 +76,8 @@ export interface Translations {
     whatWeDoText: string;
     howWeWorkTitle: string;
     howWeWorkItems: string[];
+    numbersTitle: string;
+    numbersItems: { value: string; label: string }[];
     companyTitle: string;
     companyName: string;
     companyRegistered: string;
@@ -83,6 +85,12 @@ export interface Translations {
     companyDirector: string;
     companyWebsite: string;
     companyEmail: string;
+  };
+  experiences: {
+    heroTitle: string;
+    heroSubtitle: string;
+    browseButton: string;
+    cancellationNote: string;
   };
   contact: {
     title: string;
