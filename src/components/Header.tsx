@@ -15,11 +15,11 @@ const Header = () => {
 
   const navLinks = [
     { to: localizedPath("/", lang), label: t.nav.home },
-    { to: localizedPath("/services", lang), label: t.nav.services },
     { to: localizedPath("/experiences", lang), label: t.nav.experiences },
     { to: localizedPath("/esims", lang), label: "eSIM" },
     { to: localizedPath("/itinerary-generator", lang), label: "✨ AI Planner" },
     { to: localizedPath("/travel-guides", lang), label: "📖 Guides" },
+    { to: localizedPath("/services", lang), label: t.nav.services },
     { to: localizedPath("/pricing", lang), label: "Pricing" },
   ];
 
