@@ -111,6 +111,7 @@ const Esims = () => {
     }
     setSelectedPkg(pkg);
     setOrderSuccess(false);
+    setEsimConsent(false);
   };
 
   const handleConfirmOrder = async () => {
