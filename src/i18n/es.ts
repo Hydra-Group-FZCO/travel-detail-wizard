@@ -28,8 +28,8 @@ export const es: Translations = {
     languages: "EN · ES · FR",
   },
   intro: {
-    title: "Todo lo que tu viaje necesita, en un solo lugar",
-    text: "Itinerarios y guías de destino con IA, planes de datos eSIM para conectividad instantánea, experiencias seleccionadas en todo el mundo y asistencia experta con documentación de viaje · todo desde una sola plataforma.",
+    title: "Tu viaje completo, resuelto",
+    text: "Planifica con itinerarios y guías creados con IA, mantente conectado con planes de datos eSIM, reserva experiencias seleccionadas en todo el mundo y recibe ayuda experta con tu documentación · una sola plataforma, cero complicaciones.",
   },
   services: {
     pageTitle: "Nuestros Servicios",
