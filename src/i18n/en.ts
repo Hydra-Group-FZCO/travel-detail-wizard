@@ -28,8 +28,8 @@ export const en: Translations = {
     languages: "EN · ES · FR",
   },
   intro: {
-    title: "Everything your trip needs, in one place",
-    text: "AI-powered itineraries and destination guides, eSIM data plans for instant connectivity, curated experiences worldwide, and expert travel documentation assistance · all from a single platform.",
+    title: "Your entire trip, sorted",
+    text: "Plan with AI-powered itineraries and guides, stay connected with eSIM data plans, book curated experiences worldwide, and get expert help with travel documents · one platform, zero hassle.",
   },
   services: {
     pageTitle: "Our Services",
@@ -133,10 +133,10 @@ export const en: Translations = {
   trustSection: {
     title: "Why travellers trust us",
     items: [
-      { title: "Registered Company", desc: "Registered in England & Wales" },
-      { title: "Dedicated Team", desc: "Personal support at every step" },
-      { title: "No Hidden Fees", desc: "Transparent pricing always" },
-      { title: "Multilingual", desc: "English, Spanish, and French" },
+      { title: "UK-Registered Company", desc: "Incorporated in England & Wales · Company No. 15716386" },
+      { title: "Real Human Support", desc: "Dedicated team available within 24 hours" },
+      { title: "No Surprises", desc: "Clear pricing with no hidden fees or upsells" },
+      { title: "Multilingual Service", desc: "Full support in English, Spanish & French" },
     ],
   },
   cta: {
@@ -203,7 +203,7 @@ export const en: Translations = {
   },
   footer: {
     disclaimer: "Important: Digital Moonkey Ltd is a private service provider. We are not a government agency and are not affiliated with any embassy, consulate, or official body. Our service fees cover our personal assistance and are separate from any official government or application fees. Applicants may choose to apply directly through official government channels without using our services.",
-    description: "Personal assistance services for travellers · from documentation and applications to connectivity and travel preparation.",
+    description: "AI itineraries · destination guides · eSIM connectivity · curated experiences · travel documentation · your entire trip from a single platform.",
     servicesTitle: "Services",
     serviceLinks: [
       { label: "Documentation", hash: "documentation" },

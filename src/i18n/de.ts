@@ -28,8 +28,8 @@ export const de: Translations = {
     languages: "EN · ES · FR",
   },
   intro: {
-    title: "Alles, was Ihre Reise braucht, an einem Ort",
-    text: "KI-gestützte Reisepläne und Reiseführer, eSIM-Datentarife für sofortige Konnektivität, kuratierte Erlebnisse weltweit und fachkundige Unterstützung bei Reisedokumenten · alles auf einer einzigen Plattform.",
+    title: "Ihre gesamte Reise, organisiert",
+    text: "Planen Sie mit KI-gestützten Reiseplänen und Guides, bleiben Sie mit eSIM-Datentarifen verbunden, buchen Sie kuratierte Erlebnisse weltweit und erhalten Sie fachkundige Hilfe bei Reisedokumenten · eine Plattform, null Aufwand.",
   },
   services: {
     pageTitle: "Unsere Leistungen",
@@ -133,10 +133,10 @@ export const de: Translations = {
   trustSection: {
     title: "Warum Reisende uns vertrauen",
     items: [
-      { title: "Registriertes Unternehmen", desc: "Registriert in England & Wales" },
-      { title: "Engagiertes Team", desc: "Persönliche Unterstützung bei jedem Schritt" },
-      { title: "Keine versteckten Gebühren", desc: "Immer transparente Preise" },
-      { title: "Mehrsprachig", desc: "Englisch, Spanisch und Französisch" },
+      { title: "UK-registriertes Unternehmen", desc: "Eingetragen in England & Wales · Nr. 15716386" },
+      { title: "Echte menschliche Unterstützung", desc: "Engagiertes Team mit Antwort innerhalb von 24 Stunden" },
+      { title: "Keine Überraschungen", desc: "Klare Preise ohne versteckte Gebühren oder Extras" },
+      { title: "Mehrsprachiger Service", desc: "Vollständige Betreuung auf Englisch, Spanisch & Französisch" },
     ],
   },
   cta: {
@@ -203,7 +203,7 @@ export const de: Translations = {
   },
   footer: {
     disclaimer: "Wichtig: Digital Moonkey Ltd ist ein privater Dienstleister. Wir sind keine Regierungsbehörde und sind nicht mit einer Botschaft, einem Konsulat oder einer offiziellen Stelle verbunden. Unsere Gebühren decken unsere persönliche Unterstützung ab und sind getrennt von offiziellen Regierungsgebühren. Antragsteller können wählen, direkt über offizielle Regierungskanäle zu beantragen, ohne unsere Dienste zu nutzen.",
-    description: "Persönliche Assistenzdienste für Reisende · von Dokumentation und Anträgen bis hin zu Konnektivität und Reisevorbereitung.",
+    description: "KI-Reisepläne · Reiseführer · eSIM-Konnektivität · kuratierte Erlebnisse · Reisedokumentation · Ihre gesamte Reise auf einer Plattform.",
     servicesTitle: "Leistungen",
     serviceLinks: [
       { label: "Dokumentation", hash: "documentation" },

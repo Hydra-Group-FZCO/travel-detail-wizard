@@ -28,8 +28,8 @@ export const es: Translations = {
     languages: "EN · ES · FR",
   },
   intro: {
-    title: "Todo lo que tu viaje necesita, en un solo lugar",
-    text: "Itinerarios y guías de destino con IA, planes de datos eSIM para conectividad instantánea, experiencias seleccionadas en todo el mundo y asistencia experta con documentación de viaje · todo desde una sola plataforma.",
+    title: "Tu viaje completo, resuelto",
+    text: "Planifica con itinerarios y guías creados con IA, mantente conectado con planes de datos eSIM, reserva experiencias seleccionadas en todo el mundo y recibe ayuda experta con tu documentación · una sola plataforma, cero complicaciones.",
   },
   services: {
     pageTitle: "Nuestros Servicios",
@@ -133,10 +133,10 @@ export const es: Translations = {
   trustSection: {
     title: "Por qué los viajeros confían en nosotros",
     items: [
-      { title: "Empresa Registrada", desc: "Registrada en Inglaterra y Gales" },
-      { title: "Equipo Dedicado", desc: "Soporte personal en cada paso" },
-      { title: "Sin Costes Ocultos", desc: "Precios siempre transparentes" },
-      { title: "Multilingüe", desc: "Inglés, español y francés" },
+      { title: "Empresa Registrada en UK", desc: "Constituida en Inglaterra y Gales · Nº 15716386" },
+      { title: "Soporte Humano Real", desc: "Equipo dedicado con respuesta en 24 horas" },
+      { title: "Sin Sorpresas", desc: "Precios claros, sin costes ocultos ni extras" },
+      { title: "Servicio Multilingüe", desc: "Atención completa en inglés, español y francés" },
     ],
   },
   cta: {
@@ -203,7 +203,7 @@ export const es: Translations = {
   },
   footer: {
     disclaimer: "Importante: Digital Moonkey Ltd es un proveedor de servicios privado. No somos una agencia gubernamental y no estamos afiliados a ninguna embajada, consulado u organismo oficial. Nuestras tarifas cubren nuestra asistencia personal y son independientes de cualquier tasa gubernamental oficial. Los solicitantes pueden optar por solicitar directamente a través de los canales gubernamentales oficiales sin utilizar nuestros servicios.",
-    description: "Servicios de asistencia personal para viajeros · desde documentación y solicitudes hasta conectividad y preparación de viaje.",
+    description: "Itinerarios con IA · guías de destino · conectividad eSIM · experiencias seleccionadas · documentación de viaje · todo tu viaje desde una sola plataforma.",
     servicesTitle: "Servicios",
     serviceLinks: [
       { label: "Documentación", hash: "documentation" },
