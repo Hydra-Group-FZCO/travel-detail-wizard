@@ -11,8 +11,9 @@ import serviceAiPlanner from "@/assets/service-ai-planner.jpg";
 import serviceGuides from "@/assets/service-guides.jpg";
 import serviceEsim from "@/assets/service-esim.jpg";
 import serviceDocumentation from "@/assets/service-documentation.jpg";
+import serviceCorporate from "@/assets/service-corporate.jpg";
 
-const serviceImages = [serviceExperiences, serviceAiPlanner, serviceGuides, serviceEsim, serviceDocumentation];
+const serviceImages = [serviceExperiences, serviceAiPlanner, serviceGuides, serviceEsim, serviceDocumentation, serviceCorporate];
 
 const Index = () => {
   const t = useTranslations();
@@ -83,6 +84,7 @@ const Index = () => {
                 localizedPath("/travel-guides", lang),
                 localizedPath("/esims", lang),
                 localizedPath("/services", lang),
+                localizedPath("/contact", lang),
               ];
               return (
                 <Link

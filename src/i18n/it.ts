@@ -40,6 +40,7 @@ export const it: Translations = {
       { title: "Guide di Viaggio AI", description: "Guide di destinazione create con AI con informazioni locali, consigli e info pratiche per il tuo viaggio." },
       { title: "Connettività eSIM", description: "Piani dati istantanei per oltre 190 paesi · attiva in pochi minuti, resta connesso dall'atterraggio." },
       { title: "Documentazione di Viaggio", description: "Assistenza esperta con visti, ETA, autorizzazioni di viaggio e tutta la documentazione necessaria." },
+      { title: "Viaggi Aziendali", description: "Conformità, documentazione e soluzioni di duty of care per viaggiatori d'affari e team HR." },
     ],
     sections: [
       {

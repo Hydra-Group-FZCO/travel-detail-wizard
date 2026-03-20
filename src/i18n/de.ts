@@ -40,6 +40,7 @@ export const de: Translations = {
       { title: "AI-Reiseführer", description: "Von KI erstellte Reiseführer mit lokalen Einblicken, Tipps und praktischen Informationen für Ihre Reise." },
       { title: "eSIM-Konnektivität", description: "Sofortige Datenpläne für über 190 Länder · in Minuten aktivieren, ab der Landung verbunden bleiben." },
       { title: "Reisedokumentation", description: "Fachkundige Unterstützung bei Visa, ETAs, Reisegenehmigungen und allen erforderlichen Unterlagen." },
+      { title: "Geschäftsreisen", description: "Compliance, Dokumentation und Sorgfaltspflicht-Lösungen für Geschäftsreisende und HR-Teams." },
     ],
     sections: [
       {
