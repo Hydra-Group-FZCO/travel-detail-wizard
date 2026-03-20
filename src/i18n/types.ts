@@ -12,6 +12,7 @@ export interface Translations {
     heroTitle: string;
     heroSubtitle: string;
     browseButton: string;
+    cancellationNote: string;
   };
   hero: {
     badge: string;
