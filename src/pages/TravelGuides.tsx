@@ -378,6 +378,7 @@ const TravelGuides = () => {
   const [depth, setDepth] = useState("essential");
   const [language, setLanguage] = useState<string>(uiLang);
   const [season, setSeason] = useState("unknown");
+  const [digitalConsent, setDigitalConsent] = useState(false);
 
   const filteredDestinations = useMemo(() => {
     return DESTINATIONS.filter((d) => {
