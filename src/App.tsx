@@ -25,10 +25,17 @@ import MyOrders from "./pages/dashboard/MyOrders";
 import MyItineraries from "./pages/dashboard/MyItineraries";
 import MyGuides from "./pages/dashboard/MyGuides";
 import AdminLayout from "./pages/admin/AdminLayout";
-import AdminPackages from "./pages/admin/AdminPackages";
-import AdminBookings from "./pages/admin/AdminBookings";
-import AdminCustomers from "./pages/admin/AdminCustomers";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminUsers from "./pages/admin/AdminUsers";
+import AdminOrders from "./pages/admin/AdminOrders";
 import AdminEsims from "./pages/admin/AdminEsims";
+import AdminItineraries from "./pages/admin/AdminItineraries";
+import AdminGuides from "./pages/admin/AdminGuides";
+import AdminExperiences from "./pages/admin/AdminExperiences";
+import AdminEvisas from "./pages/admin/AdminEvisas";
+import AdminSettings from "./pages/admin/AdminSettings";
+import AdminNotifications from "./pages/admin/AdminNotifications";
+import AdminPackages from "./pages/admin/AdminPackages";
 import Esims from "./pages/Esims";
 import MyEsims from "./pages/dashboard/MyEsims";
 import ItineraryGenerator from "./pages/ItineraryGenerator";
@@ -64,10 +71,17 @@ const AppRoutes = () => {
 
         {/* Admin panel */}
         <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><AdminLayout /></ProtectedRoute>}>
-          <Route index element={<AdminPackages />} />
-          <Route path="bookings" element={<AdminBookings />} />
-          <Route path="customers" element={<AdminCustomers />} />
+          <Route index element={<AdminDashboard />} />
+          <Route path="users" element={<AdminUsers />} />
+          <Route path="orders" element={<AdminOrders />} />
           <Route path="esims" element={<AdminEsims />} />
+          <Route path="itineraries" element={<AdminItineraries />} />
+          <Route path="guides" element={<AdminGuides />} />
+          <Route path="experiences" element={<AdminExperiences />} />
+          <Route path="evisas" element={<AdminEvisas />} />
+          <Route path="packages" element={<AdminPackages />} />
+          <Route path="settings" element={<AdminSettings />} />
+          <Route path="notifications" element={<AdminNotifications />} />
         </Route>
 
         {/* Public pages */}
