@@ -8,7 +8,7 @@ import Logo from "@/components/Logo";
 const Header = () => {
   const t = useTranslations();
   const lang = useLanguage();
-  const { user, role } = useAuth();
+  const { user, role, loading } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const isHome = location.pathname === localizedPath("/", lang) || location.pathname === "/";
