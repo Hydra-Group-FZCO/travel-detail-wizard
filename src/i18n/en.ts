@@ -133,10 +133,10 @@ export const en: Translations = {
   trustSection: {
     title: "Why travellers trust us",
     items: [
-      { title: "Registered Company", desc: "Registered in England & Wales" },
-      { title: "Dedicated Team", desc: "Personal support at every step" },
-      { title: "No Hidden Fees", desc: "Transparent pricing always" },
-      { title: "Multilingual", desc: "English, Spanish, and French" },
+      { title: "UK-Registered Company", desc: "Incorporated in England & Wales · Company No. 15716386" },
+      { title: "Real Human Support", desc: "Dedicated team available within 24 hours" },
+      { title: "No Surprises", desc: "Clear pricing with no hidden fees or upsells" },
+      { title: "Multilingual Service", desc: "Full support in English, Spanish & French" },
     ],
   },
   cta: {
