@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import Logo from "@/components/Logo";
 import PageLayout from "@/components/PageLayout";
 import { Shield, Clock, Globe, Star } from "lucide-react";
 import { useTranslations, useLanguage, localizedPath } from "@/i18n";
