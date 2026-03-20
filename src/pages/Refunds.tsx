@@ -87,16 +87,7 @@ const Refunds = () => {
               </div>
 
               <div>
-                <h2 className="text-lg font-bold mb-3">6. Digital Moonkey Club Subscription</h2>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <p>You may cancel your subscription at any time from your account dashboard.</p>
-                  <p>Cancellation takes effect at the end of the current billing period. No partial refunds for unused days in the current period.</p>
-                  <p>If you believe you have been charged in error, contact us within 7 days and we will review your case.</p>
-                </div>
-              </div>
-
-              <div>
-                <h2 className="text-lg font-bold mb-3">7. How to Request a Refund</h2>
+                <h2 className="text-lg font-bold mb-3">6. How to Request a Refund</h2>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p>Email: <a href="mailto:hello@digitalmoonkey.travel" className="text-primary hover:underline">hello@digitalmoonkey.travel</a></p>
                   <p>Subject line: Refund Request · [your order number]</p>
