@@ -68,6 +68,9 @@ const Refunds = () => {
                   <p>Operator cancellation: full refund within 5-10 business days.</p>
                 </div>
                 <p className="text-sm text-muted-foreground mt-3">
+                  Digital Moonkey processes the booking and payment, but the experience is delivered by an independent operator. Refund eligibility for experiences is determined by the operator's cancellation policy displayed on each listing. We will assist you in processing refund requests with the operator.
+                </p>
+                <p className="text-sm text-muted-foreground mt-3">
                   For experience refund requests contact <a href="mailto:hello@digitalmoonkey.travel" className="text-primary hover:underline">hello@digitalmoonkey.travel</a> with your booking reference.
                 </p>
               </div>
@@ -103,9 +106,9 @@ const Refunds = () => {
               </div>
 
               <div>
-                <h2 className="text-lg font-bold mb-3">8. Consumer Rights</h2>
+                <h2 className="text-lg font-bold mb-3">8. Your Statutory Rights</h2>
                 <p className="text-sm leading-relaxed text-muted-foreground">
-                  If you are a consumer based in the UK or European Union, you may have additional rights under applicable consumer protection legislation, including the UK Consumer Rights Act 2015 and EU Consumer Rights Directive. Nothing in this policy affects your statutory rights.
+                  If you are a consumer based in the UK or European Union, you may have additional rights under the UK Consumer Rights Act 2015, the Consumer Contracts Regulations 2013, and/or the EU Consumer Rights Directive. Nothing in this Refund Policy affects your statutory rights. For guidance on your consumer rights, visit Citizens Advice at <a href="https://www.citizensadvice.org.uk" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">citizensadvice.org.uk</a>.
                 </p>
               </div>
 
