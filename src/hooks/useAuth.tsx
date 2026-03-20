@@ -43,6 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .eq("user_id", userId)
       .single();
     setRole((data?.role as AppRole) || "customer");
+    setRoleLoaded(true);
   };
 
   const refreshProfile = async () => {
