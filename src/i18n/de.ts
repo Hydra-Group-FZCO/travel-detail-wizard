@@ -203,7 +203,7 @@ export const de: Translations = {
   },
   footer: {
     disclaimer: "Wichtig: Digital Moonkey Ltd ist ein privater Dienstleister. Wir sind keine Regierungsbehörde und sind nicht mit einer Botschaft, einem Konsulat oder einer offiziellen Stelle verbunden. Unsere Gebühren decken unsere persönliche Unterstützung ab und sind getrennt von offiziellen Regierungsgebühren. Antragsteller können wählen, direkt über offizielle Regierungskanäle zu beantragen, ohne unsere Dienste zu nutzen.",
-    description: "Persönliche Assistenzdienste für Reisende · von Dokumentation und Anträgen bis hin zu Konnektivität und Reisevorbereitung.",
+    description: "KI-Reisepläne · Reiseführer · eSIM-Konnektivität · kuratierte Erlebnisse · Reisedokumentation · Ihre gesamte Reise auf einer Plattform.",
     servicesTitle: "Leistungen",
     serviceLinks: [
       { label: "Dokumentation", hash: "documentation" },

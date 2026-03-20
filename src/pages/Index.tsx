@@ -99,15 +99,19 @@ const Index = () => {
         <div className="container-grid text-center">
           <h2 className="mb-12">{t.trustSection.title}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl mx-auto">
-            {t.trustSection.items.map((item) => (
-              <div key={item.title} className="text-center">
-                <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Shield className="w-6 h-6 text-primary" strokeWidth={1.5} />
+            {t.trustSection.items.map((item, i) => {
+              const icons = [BadgeCheck, Headphones, Tag, Languages];
+              const Icon = icons[i] || BadgeCheck;
+              return (
+                <div key={item.title} className="text-center">
+                  <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <Icon className="w-6 h-6 text-primary" strokeWidth={1.5} />
+                  </div>
+                  <h4 className="text-sm font-bold mb-1">{item.title}</h4>
+                  <p className="text-xs text-muted-foreground">{item.desc}</p>
                 </div>
-                <h4 className="text-sm font-bold mb-1">{item.title}</h4>
-                <p className="text-xs text-muted-foreground">{item.desc}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

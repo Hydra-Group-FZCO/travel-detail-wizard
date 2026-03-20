@@ -203,7 +203,7 @@ export const en: Translations = {
   },
   footer: {
     disclaimer: "Important: Digital Moonkey Ltd is a private service provider. We are not a government agency and are not affiliated with any embassy, consulate, or official body. Our service fees cover our personal assistance and are separate from any official government or application fees. Applicants may choose to apply directly through official government channels without using our services.",
-    description: "Personal assistance services for travellers · from documentation and applications to connectivity and travel preparation.",
+    description: "AI itineraries · destination guides · eSIM connectivity · curated experiences · travel documentation · your entire trip from a single platform.",
     servicesTitle: "Services",
     serviceLinks: [
       { label: "Documentation", hash: "documentation" },
