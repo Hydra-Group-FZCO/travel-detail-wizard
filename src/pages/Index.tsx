@@ -34,7 +34,7 @@ const Index = () => {
           <div className="max-w-2xl animate-fade-up">
             <p className="text-primary-foreground/70 text-sm font-semibold tracking-widest uppercase mb-4">{t.hero.badge}</p>
             <h1 className="text-primary-foreground text-balance leading-[1.1]" style={{ fontSize: "clamp(2.2rem, 6vw, 3.5rem)" }}>
-              {t.hero.headline}{" "}<span className="text-primary">{t.hero.headlineAccent}</span>
+              {t.hero.headline}{" "}<span className="text-accent">{t.hero.headlineAccent}</span>
             </h1>
             <p className="mt-5 text-primary-foreground/80 text-base md:text-lg leading-relaxed max-w-lg">{t.hero.subheadline}</p>
             <div className="mt-8 flex flex-wrap gap-3 animate-fade-up [animation-delay:200ms] opacity-0">
