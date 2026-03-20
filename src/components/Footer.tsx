@@ -63,6 +63,18 @@ const Footer = () => {
                 >
                   {t.nav.experiences}
                 </Link>
+                <Link
+                  to={localizedPath("/about", lang)}
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {t.nav.about}
+                </Link>
+                <Link
+                  to={localizedPath("/contact", lang)}
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {t.nav.contact}
+                </Link>
               </div>
             </div>
           </div>
