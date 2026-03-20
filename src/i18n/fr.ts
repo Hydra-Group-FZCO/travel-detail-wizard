@@ -133,7 +133,7 @@ export const fr: Translations = {
   trustSection: {
     title: "Pourquoi les voyageurs nous font confiance",
     items: [
-      { title: "Entreprise Enregistrée au UK", desc: "Constituée en Angleterre et au Pays de Galles · Nº 15716386" },
+      { title: "Planification par IA", desc: "Itinéraires et guides intelligents adaptés à votre voyage" },
       { title: "Support Humain Réel", desc: "Équipe dédiée avec réponse sous 24 heures" },
       { title: "Sans Surprises", desc: "Tarifs clairs, sans frais cachés ni extras" },
       { title: "Service Multilingue", desc: "Assistance complète en anglais, espagnol et français" },
