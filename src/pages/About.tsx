@@ -36,8 +36,10 @@ const About = () => {
               <div className="space-y-2 text-sm">
                 <p className="font-bold text-foreground">{t.about.companyName}</p>
                 <p className="text-muted-foreground">{t.about.companyRegistered}</p>
+                <p className="text-muted-foreground">{t.about.companyAddress}</p>
                 <p className="text-muted-foreground">{t.about.companyDirector}</p>
                 <p className="text-muted-foreground">{t.about.companyWebsite}</p>
+                <p className="text-muted-foreground">{t.about.companyEmail}</p>
               </div>
             </div>
           </div>

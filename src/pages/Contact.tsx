@@ -86,6 +86,7 @@ const Contact = () => {
                   <div>
                     <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-0.5">{t.contact.officeLabel}</p>
                     <p className="text-sm font-semibold text-foreground">{t.contact.officeName}</p>
+                    <p className="text-sm text-muted-foreground mt-0.5">{t.contact.officeAddress}</p>
                     <p className="text-sm text-muted-foreground mt-0.5">{t.contact.officeLocation}</p>
                   </div>
                 </div>

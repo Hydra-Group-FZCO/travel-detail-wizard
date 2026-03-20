@@ -28,7 +28,7 @@ const Experiences = () => {
       <section className="bg-secondary border-b border-border">
         <div className="container-grid py-5">
           <p className="text-sm text-muted-foreground text-center leading-relaxed">
-            All experiences are sold and fulfilled by Digital Moonkey Limited. You will be charged by Digital Moonkey Limited. For any queries contact{" "}
+            All experience bookings are processed by Digital Moonkey Limited. Experiences are delivered and fulfilled by independent local operators and partners. Digital Moonkey acts as the booking platform — the experience itself is provided by the operator listed on each experience page. You will be charged by Digital Moonkey Limited. For any queries contact{" "}
             <a href="mailto:hello@digitalmoonkey.travel" className="text-primary hover:underline">hello@digitalmoonkey.travel</a>
           </p>
         </div>
