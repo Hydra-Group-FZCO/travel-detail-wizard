@@ -39,7 +39,6 @@ export const it: Translations = {
       { title: "Monitoraggio Domande", description: "Monitoriamo l'avanzamento della tua domanda e ti teniamo informato ad ogni fase." },
       { title: "Servizi Digitali di Viaggio", description: "Foto per visto, connettività eSIM e soluzioni digitali per viaggiatori moderni." },
       { title: "Preparazione Viaggio", description: "Checklist destinazione, avvisi di ingresso, informazioni sanitarie e pianificazione." },
-      { title: "Assicurazione & Protezione", description: "Confronta le opzioni di assicurazione viaggio e comprendi la copertura per il tuo viaggio." },
       { title: "Conformità Aziendale", description: "Documentazione e soluzioni di duty of care per i viaggiatori d'affari." },
     ],
     sections: [
