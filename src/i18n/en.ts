@@ -39,7 +39,6 @@ export const en: Translations = {
       { title: "Application Tracking", description: "We monitor your application's progress and keep you informed at every stage." },
       { title: "Digital Travel Services", description: "Visa photos, eSIM connectivity, and digital solutions for modern travellers." },
       { title: "Travel Preparation", description: "Destination checklists, entry alerts, health info, and timeline planning." },
-      { title: "Insurance & Protection", description: "Compare travel insurance options and understand coverage for your trip." },
       { title: "Corporate Compliance", description: "Documentation and duty-of-care solutions for business travellers." },
     ],
     sections: [
