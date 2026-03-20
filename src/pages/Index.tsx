@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/Logo";
 import PageLayout from "@/components/PageLayout";
-import { BadgeCheck, Headphones, Tag, Languages, Star } from "lucide-react";
+import { BadgeCheck, Headphones, Tag, Languages, Star, ShieldCheck, Clock, Globe } from "lucide-react";
 import { useTranslations, useLanguage, localizedPath } from "@/i18n";
 
 import heroImage from "@/assets/hero-travel.jpg";
