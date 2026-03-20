@@ -57,7 +57,7 @@ const AdminItineraries = () => {
           { label: "Total Generated", value: itineraries.length },
           { label: "Revenue", value: `€${totalRevenue.toFixed(2)}` },
           { label: "Avg Price", value: `€${itineraries.length > 0 ? (totalRevenue / itineraries.length).toFixed(2) : "0"}` },
-          { label: "Top Destination", value: topDest ? topDest[0] : "—" },
+          { label: "Top Destination", value: topDest ? topDest[0] : "–" },
         ].map(s => (
           <div key={s.label} className="bg-[hsl(220,20%,12%)] border border-[hsl(220,20%,18%)] rounded-xl p-4">
             <p className="text-xs text-[hsl(220,10%,45%)] uppercase tracking-wide">{s.label}</p>

@@ -47,7 +47,7 @@ const AdminGuides = () => {
         {[
           { label: "Total Sold", value: guides.length },
           { label: "Revenue", value: `€${totalRevenue.toFixed(2)}` },
-          { label: "Top Destination", value: topDest ? topDest[0] : "—" },
+          { label: "Top Destination", value: topDest ? topDest[0] : "–" },
           { label: "Avg Price", value: `€${guides.length > 0 ? (totalRevenue / guides.length).toFixed(2) : "0"}` },
         ].map(s => (
           <div key={s.label} className="bg-[hsl(220,20%,12%)] border border-[hsl(220,20%,18%)] rounded-xl p-4">
@@ -80,7 +80,7 @@ const AdminGuides = () => {
                   <td className="px-4 py-2.5 text-sm font-medium text-white">{g.destination}</td>
                   <td className="px-4 py-2.5"><Badge variant="outline" className="text-[10px] border-[hsl(220,20%,25%)] text-[hsl(220,10%,60%)] capitalize">{g.depth}</Badge></td>
                   <td className="px-4 py-2.5"><Badge variant="outline" className="text-[10px] border-[hsl(220,20%,25%)] text-[hsl(220,10%,60%)]">{g.language}</Badge></td>
-                  <td className="px-4 py-2.5 text-sm text-[hsl(220,10%,60%)]">{g.word_count || "—"}</td>
+                  <td className="px-4 py-2.5 text-sm text-[hsl(220,10%,60%)]">{g.word_count || "–"}</td>
                   <td className="px-4 py-2.5 text-sm font-medium text-white">€{(g.price_paid || 0).toFixed(2)}</td>
                   <td className="px-4 py-2.5">
                     <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${

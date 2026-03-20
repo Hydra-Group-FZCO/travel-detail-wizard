@@ -162,9 +162,9 @@ const AdminEsims = () => {
                     {packages.map((pkg) => (
                       <TableRow key={pkg.id}>
                         <TableCell className="font-medium text-sm">{pkg.name}</TableCell>
-                        <TableCell>{pkg.location_code || "—"}</TableCell>
-                        <TableCell>{pkg.data_gb ? `${pkg.data_gb} GB` : "—"}</TableCell>
-                        <TableCell>{pkg.duration_days ? `${pkg.duration_days}d` : "—"}</TableCell>
+                        <TableCell>{pkg.location_code || "–"}</TableCell>
+                        <TableCell>{pkg.data_gb ? `${pkg.data_gb} GB` : "–"}</TableCell>
+                        <TableCell>{pkg.duration_days ? `${pkg.duration_days}d` : "–"}</TableCell>
                         <TableCell className="text-muted-foreground">
                           {(pkg.price_wholesale / 10000).toFixed(4)}
                         </TableCell>
@@ -241,8 +241,8 @@ const AdminEsims = () => {
                             {new Date(order.created_at).toLocaleDateString()}
                           </TableCell>
                           <TableCell className="font-medium text-sm">{order.package_code}</TableCell>
-                          <TableCell className="font-mono text-xs">{order.order_no || "—"}</TableCell>
-                          <TableCell className="font-mono text-xs">{order.iccid || "—"}</TableCell>
+                          <TableCell className="font-mono text-xs">{order.order_no || "–"}</TableCell>
+                          <TableCell className="font-mono text-xs">{order.iccid || "–"}</TableCell>
                           <TableCell>
                             <Badge variant="outline">{order.status}</Badge>
                           </TableCell>

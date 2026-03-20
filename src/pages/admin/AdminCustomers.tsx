@@ -78,9 +78,9 @@ const AdminCustomers = () => {
             <tbody>
               {customers.map(c => (
                 <tr key={c.user_id} className="border-b border-border last:border-0">
-                  <td className="px-4 py-3 text-sm text-foreground font-medium">{c.full_name || "—"}</td>
-                  <td className="px-4 py-3 text-sm text-muted-foreground">{c.country || "—"}</td>
-                  <td className="px-4 py-3 text-sm text-muted-foreground">{c.phone || "—"}</td>
+                  <td className="px-4 py-3 text-sm text-foreground font-medium">{c.full_name || "–"}</td>
+                  <td className="px-4 py-3 text-sm text-muted-foreground">{c.country || "–"}</td>
+                  <td className="px-4 py-3 text-sm text-muted-foreground">{c.phone || "–"}</td>
                   <td className="px-4 py-3 text-sm text-muted-foreground">{new Date(c.created_at).toLocaleDateString()}</td>
                   <td className="px-4 py-3">
                     <Select value={c.role} onValueChange={v => updateRole(c.user_id, v)}>

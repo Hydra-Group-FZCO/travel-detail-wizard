@@ -101,10 +101,10 @@ const AdminSettings = () => {
         <TabsContent value="integrations" className="mt-4">
           <div className="bg-[hsl(220,20%,12%)] border border-[hsl(220,20%,18%)] rounded-xl p-6 space-y-3">
             <h3 className="text-sm font-semibold text-[hsl(220,10%,70%)] mb-3">Integration Status</h3>
-            <StatusDot ok={true} label="eSIM Access API — Connected" />
-            <StatusDot ok={true} label="Lovable AI — Connected" />
-            <StatusDot ok={true} label="Travelpayouts — Script loaded" />
-            <StatusDot ok={false} label="Stripe — Not configured" />
+            <StatusDot ok={true} label="eSIM Access API – Connected" />
+            <StatusDot ok={true} label="Lovable AI – Connected" />
+            <StatusDot ok={true} label="Travelpayouts – Script loaded" />
+            <StatusDot ok={false} label="Stripe – Not configured" />
           </div>
         </TabsContent>
       </Tabs>
