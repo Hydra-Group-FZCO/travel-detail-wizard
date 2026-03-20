@@ -29,7 +29,7 @@ const Footer = () => {
                 {t.footer.description}
               </p>
               <div className="mt-4 text-xs text-muted-foreground leading-relaxed space-y-0.5">
-                <p>Digital Moonkey Limited · Registered in England & Wales</p>
+                <p>Digital Moonkey Ltd · Registered in England & Wales</p>
                 <p>71-75 Shelton Street, Covent Garden, London, WC2H 9JQ</p>
               </div>
             </div>

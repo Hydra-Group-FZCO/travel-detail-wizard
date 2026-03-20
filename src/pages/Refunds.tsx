@@ -87,16 +87,7 @@ const Refunds = () => {
               </div>
 
               <div>
-                <h2 className="text-lg font-bold mb-3">6. Digital Moonkey Club Subscription</h2>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <p>You may cancel your subscription at any time from your account dashboard.</p>
-                  <p>Cancellation takes effect at the end of the current billing period. No partial refunds for unused days in the current period.</p>
-                  <p>If you believe you have been charged in error, contact us within 7 days and we will review your case.</p>
-                </div>
-              </div>
-
-              <div>
-                <h2 className="text-lg font-bold mb-3">7. How to Request a Refund</h2>
+                <h2 className="text-lg font-bold mb-3">6. How to Request a Refund</h2>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p>Email: <a href="mailto:hello@digitalmoonkey.travel" className="text-primary hover:underline">hello@digitalmoonkey.travel</a></p>
                   <p>Subject line: Refund Request · [your order number]</p>
@@ -106,14 +97,14 @@ const Refunds = () => {
               </div>
 
               <div>
-                <h2 className="text-lg font-bold mb-3">8. Your Statutory Rights</h2>
+                <h2 className="text-lg font-bold mb-3">7. Your Statutory Rights</h2>
                 <p className="text-sm leading-relaxed text-muted-foreground">
                   If you are a consumer based in the UK or European Union, you may have additional rights under the UK Consumer Rights Act 2015, the Consumer Contracts Regulations 2013, and/or the EU Consumer Rights Directive. Nothing in this Refund Policy affects your statutory rights. For guidance on your consumer rights, visit Citizens Advice at <a href="https://www.citizensadvice.org.uk" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">citizensadvice.org.uk</a>.
                 </p>
               </div>
 
               <div>
-                <h2 className="text-lg font-bold mb-3">9. Contact</h2>
+                <h2 className="text-lg font-bold mb-3">8. Contact</h2>
                 <div className="space-y-1 text-sm text-muted-foreground">
                   <p><a href="mailto:hello@digitalmoonkey.travel" className="text-primary hover:underline">hello@digitalmoonkey.travel</a></p>
                   <p>Digital Moonkey Limited</p>

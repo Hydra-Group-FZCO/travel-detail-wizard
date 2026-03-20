@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useNavigate } from "react-router-dom";
 import { Search, Wifi, Clock, Globe, Smartphone, Info, ShoppingCart, CheckCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -70,6 +71,7 @@ const Esims = () => {
   const [selectedPkg, setSelectedPkg] = useState<EsimPackage | null>(null);
   const [ordering, setOrdering] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
+  const [esimConsent, setEsimConsent] = useState(false);
   const { toast } = useToast();
 
   const regions = useMemo(() => [
@@ -109,6 +111,7 @@ const Esims = () => {
     }
     setSelectedPkg(pkg);
     setOrderSuccess(false);
+    setEsimConsent(false);
   };
 
   const handleConfirmOrder = async () => {
@@ -220,6 +223,11 @@ const Esims = () => {
               </TooltipContent>
             </Tooltip>
           </div>
+
+          {/* Third-party provider note */}
+          <p className="text-xs text-muted-foreground text-center mt-4 max-w-lg mx-auto leading-relaxed">
+            eSIM data plans are provided by our connectivity partner. Digital Moonkey facilitates the purchase — the data service is delivered by the network provider.
+          </p>
         </div>
       </section>
 
@@ -372,11 +380,23 @@ const Esims = () => {
                   </div>
                 </div>
               </div>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setSelectedPkg(null)}>Cancel</Button>
-                <Button onClick={handleConfirmOrder} disabled={ordering}>
-                  {ordering ? "Processing..." : `Pay €${selectedPkg.price_retail_eur.toFixed(2)}`}
-                </Button>
+              <DialogFooter className="flex-col gap-3 sm:flex-col">
+                <label className="flex items-start gap-2.5 cursor-pointer text-left">
+                  <Checkbox
+                    checked={esimConsent}
+                    onCheckedChange={(checked) => setEsimConsent(checked === true)}
+                    className="mt-0.5"
+                  />
+                  <span className="text-xs text-muted-foreground leading-relaxed">
+                    I consent to immediate delivery of this digital content and acknowledge that I lose my right to cancel once the eSIM is delivered.
+                  </span>
+                </label>
+                <div className="flex gap-2 justify-end w-full">
+                  <Button variant="outline" onClick={() => setSelectedPkg(null)}>Cancel</Button>
+                  <Button onClick={handleConfirmOrder} disabled={ordering || !esimConsent}>
+                    {ordering ? "Processing..." : `Pay €${selectedPkg.price_retail_eur.toFixed(2)}`}
+                  </Button>
+                </div>
               </DialogFooter>
             </>
           )}

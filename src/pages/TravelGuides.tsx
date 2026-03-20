@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { SampleGuidePreview } from "@/components/SampleItineraryPreview";
 import PageLayout from "@/components/PageLayout";
@@ -378,6 +379,7 @@ const TravelGuides = () => {
   const [depth, setDepth] = useState("essential");
   const [language, setLanguage] = useState<string>(uiLang);
   const [season, setSeason] = useState("unknown");
+  const [digitalConsent, setDigitalConsent] = useState(false);
 
   const filteredDestinations = useMemo(() => {
     return DESTINATIONS.filter((d) => {
@@ -576,20 +578,37 @@ const TravelGuides = () => {
                 <ChevronLeft className="w-4 h-4 mr-1" /> {copy.form.back}
               </Button>
 
-              {step < formSteps.length - 1 ? (
-                <Button onClick={() => setStep(step + 1)} disabled={!canProceed()}>
-                  {copy.form.next} <ChevronRight className="w-4 h-4 ml-1" />
-                </Button>
-              ) : (
-                <Button variant="cta" size="lg" onClick={handleGenerate} disabled={isGenerating}>
+            {step < formSteps.length - 1 ? (
+              <Button onClick={() => setStep(step + 1)} disabled={!canProceed()}>
+                {copy.form.next} <ChevronRight className="w-4 h-4 ml-1" />
+              </Button>
+            ) : (
+              <div className="space-y-3 text-right">
+                <label className="flex items-start gap-2.5 cursor-pointer text-left max-w-md ml-auto">
+                  <Checkbox
+                    checked={digitalConsent}
+                    onCheckedChange={(checked) => setDigitalConsent(checked === true)}
+                    className="mt-0.5"
+                  />
+                  <span className="text-xs text-muted-foreground leading-relaxed">
+                    I consent to immediate delivery of this digital content and acknowledge that I lose my right to cancel once the guide is generated.
+                  </span>
+                </label>
+                <Button variant="cta" size="lg" onClick={handleGenerate} disabled={isGenerating || !digitalConsent}>
                   {isGenerating ? (
                     <><Loader2 className="w-4 h-4 animate-spin mr-2" /> {copy.form.creating}</>
                   ) : (
                     <><Sparkles className="w-4 h-4 mr-2" /> {copy.form.generate} · €{selectedDepth.price}</>
                   )}
                 </Button>
-              )}
-            </div>
+              </div>
+            )}
+          </div>
+
+          {/* AI content disclaimer */}
+          <p className="text-xs text-muted-foreground text-center mt-4 max-w-lg mx-auto leading-relaxed">
+            AI-generated content. While we strive for accuracy, always verify critical information (opening hours, prices, availability) independently before travel.
+          </p>
           </div>
         </section>
       </PageLayout>
