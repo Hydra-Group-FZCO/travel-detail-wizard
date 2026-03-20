@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import Logo from "@/components/Logo";
 import PageLayout from "@/components/PageLayout";
 import { Shield, Clock, Globe, Star } from "lucide-react";
 import { useTranslations, useLanguage, localizedPath } from "@/i18n";
@@ -32,6 +33,9 @@ const Index = () => {
         <div className="hero-overlay absolute inset-0" />
         <div className="relative z-10 container-grid w-full">
           <div className="max-w-2xl animate-fade-up">
+            <div className="mb-6">
+              <Logo size="lg" />
+            </div>
             <p className="text-primary-foreground/70 text-sm font-semibold tracking-widest uppercase mb-4">{t.hero.badge}</p>
             <h1 className="text-primary-foreground text-balance leading-[1.1]" style={{ fontSize: "clamp(2.2rem, 6vw, 3.5rem)" }}>
               {t.hero.headline}{" "}<span className="text-accent">{t.hero.headlineAccent}</span>
