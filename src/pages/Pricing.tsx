@@ -75,12 +75,12 @@ const Pricing = () => {
             {/* Travel Auth */}
             <div>
               <h2 className="text-lg font-bold mb-3">Travel Authorisation Assistance</h2>
-              <div className="space-y-2 text-sm text-muted-foreground">
-                <p><strong className="text-foreground">ESTA (USA):</strong> €49</p>
-                <p><strong className="text-foreground">ETIAS (Europe):</strong> €49</p>
-                <p><strong className="text-foreground">eVisa (other destinations):</strong> from €25</p>
-              </div>
-              <p className="text-xs text-muted-foreground mt-2">Price includes government fees and our assistance service.</p>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-2">
+                Prices vary by destination country and type of authorisation. Includes government fees and our assistance service.
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Contact <a href="mailto:hello@digitalmoonkey.travel" className="text-primary hover:underline">hello@digitalmoonkey.travel</a> for a quote.
+              </p>
             </div>
 
 
