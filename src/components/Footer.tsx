@@ -53,24 +53,15 @@ const Footer = () => {
             <div>
               <h4 className="text-sm font-bold text-foreground mb-4">{t.footer.companyTitle}</h4>
               <div className="flex flex-col gap-2.5">
-                <Link
-                  to={localizedPath("/experiences", lang)}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {t.nav.experiences}
-                </Link>
-                <Link
-                  to={localizedPath("/about", lang)}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {t.nav.about}
-                </Link>
-                <Link
-                  to={localizedPath("/contact", lang)}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {t.nav.contact}
-                </Link>
+                {t.footer.companyLinks.map((link) => (
+                  <Link
+                    key={link.label}
+                    to={localizedPath(link.to, lang)}
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
               </div>
             </div>
           </div>
@@ -79,12 +70,15 @@ const Footer = () => {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
               <p className="text-xs text-muted-foreground">{t.footer.copyright}</p>
               <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
-                <Link to="/terms" className="hover:text-primary transition-colors">Terms & Conditions</Link>
-                <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
-                <Link to="/refunds" className="hover:text-primary transition-colors">Refund Policy</Link>
-                <Link to="/cookies" className="hover:text-primary transition-colors">Cookie Policy</Link>
-                <Link to={localizedPath("/pricing", lang)} className="hover:text-primary transition-colors">Pricing</Link>
-                <Link to={localizedPath("/legal", lang)} className="hover:text-primary transition-colors">Disclaimer</Link>
+                {t.footer.bottomLinks.map((link) => (
+                  <Link
+                    key={link.label}
+                    to={localizedPath(link.to, lang)}
+                    className="hover:text-primary transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
               </div>
             </div>
             <p className="text-[11px] text-muted-foreground mt-2 opacity-50">
