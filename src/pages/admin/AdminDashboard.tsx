@@ -133,7 +133,7 @@ const AdminDashboard = () => {
     { label: "Orders Today", value: kpi.ordersToday.toString(), icon: ShoppingCart, color: "hsl(280,60%,55%)" },
     { label: "Orders This Week", value: kpi.ordersWeek.toString(), icon: ShoppingCart, color: "hsl(200,60%,55%)" },
     { label: "Orders This Month", value: kpi.ordersMonth.toString(), icon: ShoppingCart, color: "hsl(160,60%,45%)" },
-    { label: "eSIM Revenue", value: `€${kpi.esimRevenue.toFixed(2)}`, icon: Wifi, color: "hsl(345,82%,60%)" },
+    { label: "eSIM Revenue", value: `€${kpi.esimRevenue.toFixed(2)}`, icon: Wifi, color: "hsl(207,94%,29%)" },
   ];
 
   const pieData = [

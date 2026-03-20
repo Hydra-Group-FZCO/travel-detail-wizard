@@ -165,7 +165,7 @@ const AdminLayout = () => {
               end={item.end}
               className={({ isActive }) =>
                 `flex flex-col items-center gap-0.5 px-2 py-1 text-[10px] font-medium rounded-lg ${
-                  isActive ? "text-[hsl(345,82%,65%)]" : "text-[hsl(220,10%,50%)]"
+                  isActive ? "text-[hsl(207,85%,50%)]" : "text-[hsl(210,15%,50%)]"
                 }`
               }
             >

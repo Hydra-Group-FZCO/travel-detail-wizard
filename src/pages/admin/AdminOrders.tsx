@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Download, Search, ShoppingCart } from "lucide-react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 
-const COLORS = ["hsl(345,82%,60%)", "hsl(210,70%,55%)", "hsl(142,71%,45%)", "hsl(38,92%,50%)"];
+const COLORS = ["hsl(207,94%,29%)", "hsl(45,98%,53%)", "hsl(142,71%,45%)", "hsl(207,70%,55%)"];
 
 interface UnifiedOrder {
   id: string;
