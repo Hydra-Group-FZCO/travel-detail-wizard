@@ -183,6 +183,7 @@ export const es: Translations = {
       { label: "Clientes corporativos", value: "corporate@digitalmoonkey.travel" },
       { label: "Horario de oficina", value: "Lunes a viernes, 9:00 · 18:00 (GMT)" },
       { label: "Tiempo de respuesta", value: "Dentro de 24 horas en días laborables" },
+      { label: "WhatsApp", value: "Disponible próximamente" },
     ],
     officeLabel: "Oficina Registrada",
     officeName: "Digital Moonkey Ltd",

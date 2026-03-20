@@ -183,6 +183,7 @@ export const de: Translations = {
       { label: "Unternehmenskunden", value: "corporate@digitalmoonkey.travel" },
       { label: "Bürozeiten", value: "Montag bis Freitag, 9:00 · 18:00 (GMT)" },
       { label: "Antwortzeit", value: "Innerhalb von 24 Stunden an Werktagen" },
+      { label: "WhatsApp", value: "Demnächst verfügbar" },
     ],
     officeLabel: "Eingetragener Sitz",
     officeName: "Digital Moonkey Ltd",
