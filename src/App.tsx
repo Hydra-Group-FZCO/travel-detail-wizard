@@ -71,10 +71,17 @@ const AppRoutes = () => {
 
         {/* Admin panel */}
         <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><AdminLayout /></ProtectedRoute>}>
-          <Route index element={<AdminPackages />} />
-          <Route path="bookings" element={<AdminBookings />} />
-          <Route path="customers" element={<AdminCustomers />} />
+          <Route index element={<AdminDashboard />} />
+          <Route path="users" element={<AdminUsers />} />
+          <Route path="orders" element={<AdminOrders />} />
           <Route path="esims" element={<AdminEsims />} />
+          <Route path="itineraries" element={<AdminItineraries />} />
+          <Route path="guides" element={<AdminGuides />} />
+          <Route path="experiences" element={<AdminExperiences />} />
+          <Route path="evisas" element={<AdminEvisas />} />
+          <Route path="packages" element={<AdminPackages />} />
+          <Route path="settings" element={<AdminSettings />} />
+          <Route path="notifications" element={<AdminNotifications />} />
         </Route>
 
         {/* Public pages */}

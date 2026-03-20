@@ -18,9 +18,9 @@ const AdminGuides = () => {
     setLoading(false);
   };
 
-  const totalRevenue = guides.reduce((s, g) => s + (g.price_paid || 0), 0);
-  const destinations = guides.reduce((acc: Record<string, number>, g) => { acc[g.destination] = (acc[g.destination] || 0) + 1; return acc; }, {});
-  const topDest = Object.entries(destinations).sort((a, b) => b[1] - a[1])[0];
+  const totalRevenue = guides.reduce((s: number, g: any) => s + (g.price_paid || 0), 0);
+  const destinations = guides.reduce((acc: Record<string, number>, g: any) => { acc[g.destination] = (acc[g.destination] || 0) + 1; return acc; }, {});
+  const topDest = Object.entries(destinations).sort((a, b) => (b[1] as number) - (a[1] as number))[0];
 
   const filtered = guides.filter(g => !search || g.destination.toLowerCase().includes(search.toLowerCase()));
 

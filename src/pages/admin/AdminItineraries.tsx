@@ -26,7 +26,7 @@ const AdminItineraries = () => {
     acc[i.destination] = (acc[i.destination] || 0) + 1;
     return acc;
   }, {});
-  const topDest = Object.entries(destinations).sort((a, b) => b[1] - a[1])[0];
+  const topDest = Object.entries(destinations).sort((a, b) => (b[1] as number) - (a[1] as number))[0];
 
   const filtered = itineraries.filter(i =>
     !search || i.destination.toLowerCase().includes(search.toLowerCase()) || i.id.includes(search)
