@@ -166,9 +166,14 @@ const Terms = () => {
               {/* 13. Limitation of Liability */}
               <div>
                 <h2 className="text-lg font-bold mb-3">13. Limitation of Liability</h2>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  To the maximum extent permitted by applicable law, Digital Moonkey Limited shall not be liable for any indirect, incidental, special or consequential damages arising from your use of our services. Our total liability shall not exceed the amount paid by you for the specific service giving rise to the claim.
-                </p>
+                <div className="space-y-3 text-sm leading-relaxed text-muted-foreground">
+                  <p>
+                    To the maximum extent permitted by applicable law, Digital Moonkey Limited shall not be liable for any indirect, incidental, special or consequential damages arising from your use of our services. Our total liability shall not exceed the amount paid by you for the specific service giving rise to the claim.
+                  </p>
+                  <p>
+                    Nothing in these Terms excludes or limits our liability for: (a) death or personal injury caused by our negligence; (b) fraud or fraudulent misrepresentation; or (c) any other liability that cannot be excluded or limited by applicable law.
+                  </p>
+                </div>
               </div>
 
               {/* 14. Third-Party Services and Partners */}
