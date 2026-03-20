@@ -90,6 +90,7 @@ export interface Translations {
     items: { label: string; value: string }[];
     officeLabel: string;
     officeName: string;
+    officeAddress: string;
     officeLocation: string;
     form: {
       title: string;
