@@ -87,12 +87,6 @@ export interface Translations {
     companyWebsite: string;
     companyEmail: string;
   };
-  experiences: {
-    heroTitle: string;
-    heroSubtitle: string;
-    browseButton: string;
-    cancellationNote: string;
-  };
   contact: {
     title: string;
     subtitle: string;
