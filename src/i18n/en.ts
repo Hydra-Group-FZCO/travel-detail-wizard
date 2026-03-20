@@ -39,7 +39,6 @@ export const en: Translations = {
       { title: "Application Tracking", description: "We monitor your application's progress and keep you informed at every stage." },
       { title: "Digital Travel Services", description: "Visa photos, eSIM connectivity, and digital solutions for modern travellers." },
       { title: "Travel Preparation", description: "Destination checklists, entry alerts, health info, and timeline planning." },
-      { title: "Insurance & Protection", description: "Compare travel insurance options and understand coverage for your trip." },
       { title: "Corporate Compliance", description: "Documentation and duty-of-care solutions for business travellers." },
     ],
     sections: [
@@ -108,19 +107,6 @@ export const en: Translations = {
         ],
       },
       {
-        id: "insurance",
-        title: "Insurance Comparison & Referral",
-        intro: "Travel insurance is essential but choosing the right policy can be confusing. We help you understand your options.",
-        subtitle: "Our service includes:",
-        items: [
-          "Comparison of travel insurance options relevant to your destination and trip type",
-          "Explanation of key coverage areas: medical, cancellation, luggage, liability",
-          "Referral to vetted insurance providers",
-          "Assistance with claims documentation if needed",
-        ],
-        note: "Note: Digital Moonkey is not an insurance provider or broker. We provide information and referral services to help you make an informed decision.",
-      },
-      {
         id: "corporate",
         title: "Corporate Travel Compliance",
         badge: "B2B",
@@ -163,7 +149,7 @@ export const en: Translations = {
     subtitle: "A UK-registered company specialising in personal assistance services for travellers and the tourism sector.",
     introText: "We started with a simple observation: preparing for international travel involves navigating complex requirements that change frequently, vary by nationality, and are spread across multiple official sources. We built Digital Moonkey to bring clarity and personal support to that process.",
     whatWeDoTitle: "What we do",
-    whatWeDoText: "We help individual and corporate travellers with the practical aspects of travel preparation — from documentation and applications to connectivity and insurance. Our team combines travel industry knowledge with a commitment to accuracy and customer service.",
+    whatWeDoText: "We help individual and corporate travellers with the practical aspects of travel preparation — from documentation and applications to connectivity and digital travel tools. Our team combines travel industry knowledge with a commitment to accuracy and customer service.",
     howWeWorkTitle: "How we work",
     howWeWorkItems: [
       "We provide guidance and assistance — we do not make decisions for you",

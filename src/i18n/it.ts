@@ -39,7 +39,6 @@ export const it: Translations = {
       { title: "Monitoraggio Domande", description: "Monitoriamo l'avanzamento della tua domanda e ti teniamo informato ad ogni fase." },
       { title: "Servizi Digitali di Viaggio", description: "Foto per visto, connettività eSIM e soluzioni digitali per viaggiatori moderni." },
       { title: "Preparazione Viaggio", description: "Checklist destinazione, avvisi di ingresso, informazioni sanitarie e pianificazione." },
-      { title: "Assicurazione & Protezione", description: "Confronta le opzioni di assicurazione viaggio e comprendi la copertura per il tuo viaggio." },
       { title: "Conformità Aziendale", description: "Documentazione e soluzioni di duty of care per i viaggiatori d'affari." },
     ],
     sections: [
@@ -108,19 +107,6 @@ export const it: Translations = {
         ],
       },
       {
-        id: "insurance",
-        title: "Confronto & Orientamento Assicurativo",
-        intro: "L'assicurazione viaggio è essenziale ma scegliere la polizza giusta può essere confuso. Ti aiutiamo a capire le tue opzioni.",
-        subtitle: "Il nostro servizio include:",
-        items: [
-          "Confronto delle opzioni di assicurazione viaggio rilevanti per la tua destinazione e tipo di viaggio",
-          "Spiegazione delle aree chiave di copertura: medica, cancellazione, bagagli, responsabilità",
-          "Orientamento verso fornitori di assicurazione verificati",
-          "Assistenza con la documentazione dei reclami se necessario",
-        ],
-        note: "Nota: Digital Moonkey non è un fornitore né un broker assicurativo. Forniamo servizi di informazione e orientamento per aiutarti a prendere una decisione informata.",
-      },
-      {
         id: "corporate",
         title: "Conformità Viaggi Aziendali",
         badge: "B2B",
@@ -163,7 +149,7 @@ export const it: Translations = {
     subtitle: "Un'azienda registrata nel Regno Unito specializzata in servizi di assistenza personale per viaggiatori e il settore turistico.",
     introText: "Siamo partiti da una semplice osservazione: preparare un viaggio internazionale implica navigare requisiti complessi che cambiano frequentemente, variano per nazionalità e sono sparsi su molteplici fonti ufficiali. Abbiamo creato Digital Moonkey per portare chiarezza e supporto personale a questo processo.",
     whatWeDoTitle: "Cosa facciamo",
-    whatWeDoText: "Aiutiamo viaggiatori individuali e aziendali con gli aspetti pratici della preparazione del viaggio — dalla documentazione e le domande alla connettività e l'assicurazione. Il nostro team combina conoscenza dell'industria turistica con un impegno per precisione e servizio clienti.",
+    whatWeDoText: "Aiutiamo viaggiatori individuali e aziendali con gli aspetti pratici della preparazione del viaggio — dalla documentazione e le domande alla connettività e gli strumenti digitali di viaggio. Il nostro team combina conoscenza dell'industria turistica con un impegno per precisione e servizio clienti.",
     howWeWorkTitle: "Come lavoriamo",
     howWeWorkItems: [
       "Forniamo orientamento e assistenza — non prendiamo decisioni al posto tuo",

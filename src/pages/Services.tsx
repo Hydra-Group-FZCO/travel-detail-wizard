@@ -7,10 +7,9 @@ import serviceDocs from "@/assets/service-docs.jpg";
 import serviceTracking from "@/assets/service-tracking.jpg";
 import serviceDigital from "@/assets/service-digital.jpg";
 import servicePreparation from "@/assets/service-preparation.jpg";
-import serviceInsurance from "@/assets/service-insurance.jpg";
 import serviceCorporate from "@/assets/service-corporate.jpg";
 
-const sectionImages = [serviceDocs, serviceTracking, serviceDigital, servicePreparation, serviceInsurance, serviceCorporate];
+const sectionImages = [serviceDocs, serviceTracking, serviceDigital, servicePreparation, serviceCorporate];
 
 const Services = () => {
   const t = useTranslations();

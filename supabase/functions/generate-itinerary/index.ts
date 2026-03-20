@@ -128,7 +128,7 @@ ${extras.includes("restaurants") ? `### 🍽️ Must-Try Restaurants
 
 ` : ""}### ⚡ Digital Moonkey Travel Tips
 - eSIM recommendation: "Stay connected in ${itinerary.destination} — check our eSIM plans at /esims"
-- Travel services: "Need visa assistance or travel insurance? Visit /services"
+- Travel services: "Need visa assistance? Visit /services"
 
 ---
 

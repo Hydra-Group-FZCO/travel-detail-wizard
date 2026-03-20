@@ -28,6 +28,11 @@ const Footer = () => {
               <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
                 {t.footer.description}
               </p>
+              <div className="mt-4 text-xs text-muted-foreground leading-relaxed space-y-0.5">
+                <p>Digital Moonkey Limited · Registered in England & Wales</p>
+                <p>Company No. 15716386</p>
+                <p>71-75 Shelton Street, Covent Garden, London, WC2H 9JQ</p>
+              </div>
             </div>
 
             <div>
@@ -48,15 +53,6 @@ const Footer = () => {
             <div>
               <h4 className="text-sm font-bold text-foreground mb-4">{t.footer.companyTitle}</h4>
               <div className="flex flex-col gap-2.5">
-                {t.footer.companyLinks.map((link) => (
-                  <Link
-                    key={link.to}
-                    to={localizedPath(link.to, lang)}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
                 <Link
                   to={localizedPath("/experiences", lang)}
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
@@ -83,15 +79,10 @@ const Footer = () => {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
               <p className="text-xs text-muted-foreground">{t.footer.copyright}</p>
               <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
-                {t.footer.bottomLinks.map((link) => (
-                  <Link
-                    key={link.label}
-                    to={localizedPath(link.to, lang)}
-                    className="hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+                <Link to="/terms" className="hover:text-primary transition-colors">Terms & Conditions</Link>
+                <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+                <Link to="/refunds" className="hover:text-primary transition-colors">Refund Policy</Link>
+                <Link to={localizedPath("/pricing", lang)} className="hover:text-primary transition-colors">Pricing</Link>
               </div>
             </div>
             <p className="text-[11px] text-muted-foreground mt-2 opacity-50">
