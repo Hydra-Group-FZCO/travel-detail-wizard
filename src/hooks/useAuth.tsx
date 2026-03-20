@@ -50,21 +50,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    let initialSessionHandled = false;
-
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
         if (session?.user) {
-          // Avoid double-loading on initial mount
-          if (initialSessionHandled && _event === 'INITIAL_SESSION') return;
-          setLoading(true);
-          await Promise.all([
-            fetchProfile(session.user.id),
-            fetchRole(session.user.id),
-          ]);
-          setLoading(false);
+          // Use setTimeout to avoid blocking the auth state change callback
+          setTimeout(async () => {
+            await Promise.all([
+              fetchProfile(session.user.id),
+              fetchRole(session.user.id),
+            ]);
+            setLoading(false);
+          }, 0);
         } else {
           setProfile(null);
           setRole("customer");
@@ -74,7 +72,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     );
 
     supabase.auth.getSession().then(({ data: { session } }) => {
-      initialSessionHandled = true;
       setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {
