@@ -8,7 +8,7 @@ import Logo from "@/components/Logo";
 const Header = () => {
   const t = useTranslations();
   const lang = useLanguage();
-  const { user, role } = useAuth();
+  const { user, role, loading } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const isHome = location.pathname === localizedPath("/", lang) || location.pathname === "/";
@@ -80,7 +80,9 @@ const Header = () => {
             </div>
 
             {/* Auth Button */}
-            {user ? (
+            {loading ? (
+              <div className="w-24 h-9 rounded-full bg-muted animate-pulse" />
+            ) : user ? (
               <Link
                 to={role === "admin" ? "/admin" : "/dashboard"}
                 className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
@@ -88,7 +90,7 @@ const Header = () => {
                 }`}
               >
                 <User size={14} />
-                Dashboard
+                {role === "admin" ? "Admin Panel" : "Dashboard"}
               </Link>
             ) : (
               <Link
