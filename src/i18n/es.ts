@@ -225,7 +225,7 @@ export const es: Translations = {
       { label: "Contacto", to: "/contact" },
       { label: "Términos y Condiciones", to: "/legal" },
     ],
-    copyright: "© 2026 Digital Moonkey Ltd · Registrada en Inglaterra y Gales",
+    copyright: "© 2026 Digital Moonkey Ltd · Registrada en Inglaterra y Gales · Company No. 15716386",
     bottomLinks: [
       { label: "Términos", to: "/legal" },
       { label: "Privacidad", to: "/legal" },

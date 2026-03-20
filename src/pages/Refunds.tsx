@@ -16,7 +16,7 @@ const Refunds = () => {
           <div className="max-w-3xl space-y-8">
             <LegalLanguageNotice />
             <p className="text-sm leading-relaxed">
-              Digital Moonkey Limited aims to ensure complete satisfaction with every purchase. This policy sets out the specific refund terms for each of our products and services.
+              Digital Moonkey Limited is committed to transparency and fairness in all purchases. This policy sets out the specific refund terms for each of our products and services.
             </p>
 
             <div className="bg-secondary rounded-xl p-6 space-y-1 text-sm">
