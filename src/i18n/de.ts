@@ -149,7 +149,7 @@ export const de: Translations = {
     subtitle: "Ein in Großbritannien registriertes Unternehmen, spezialisiert auf persönliche Assistenzdienste für Reisende und den Tourismussektor.",
     introText: "Wir begannen mit einer einfachen Beobachtung: Die Vorbereitung internationaler Reisen beinhaltet die Navigation komplexer Anforderungen, die sich häufig ändern, je nach Staatsangehörigkeit variieren und über mehrere offizielle Quellen verteilt sind. Wir haben Digital Moonkey gegründet, um Klarheit und persönliche Unterstützung in diesen Prozess zu bringen.",
     whatWeDoTitle: "Was wir tun",
-    whatWeDoText: "Wir helfen Einzel- und Geschäftsreisenden mit den praktischen Aspekten der Reisevorbereitung — von Dokumentation und Anträgen bis hin zu Konnektivität und Versicherung. Unser Team verbindet Branchenwissen mit einem Engagement für Genauigkeit und Kundenservice.",
+    whatWeDoText: "Wir helfen Einzel- und Geschäftsreisenden mit den praktischen Aspekten der Reisevorbereitung — von Dokumentation und Anträgen bis hin zu Konnektivität und digitalen Reise-Tools. Unser Team verbindet Branchenwissen mit einem Engagement für Genauigkeit und Kundenservice.",
     howWeWorkTitle: "Wie wir arbeiten",
     howWeWorkItems: [
       "Wir bieten Orientierung und Unterstützung — wir treffen keine Entscheidungen für Sie",
