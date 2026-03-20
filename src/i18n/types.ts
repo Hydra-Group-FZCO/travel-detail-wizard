@@ -110,7 +110,9 @@ export interface Translations {
     companyTitle: string;
     companyName: string;
     companyRegistered: string;
+    companyAddress: string;
     companyDirector: string;
+    companyEmail: string;
   };
   footer: {
     disclaimer: string;
