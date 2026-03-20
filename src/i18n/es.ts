@@ -39,7 +39,6 @@ export const es: Translations = {
       { title: "Seguimiento de Solicitudes", description: "Monitorizamos el progreso de tu solicitud y te mantenemos informado en cada etapa." },
       { title: "Servicios Digitales de Viaje", description: "Fotos para visado, conectividad eSIM y soluciones digitales para viajeros modernos." },
       { title: "Preparación de Viaje", description: "Listas de destino, alertas de entrada, información sanitaria y planificación." },
-      { title: "Seguros y Protección", description: "Compara opciones de seguro de viaje y entiende la cobertura para tu viaje." },
       { title: "Cumplimiento Corporativo", description: "Documentación y soluciones de deber de cuidado para viajeros de negocios." },
     ],
     sections: [
