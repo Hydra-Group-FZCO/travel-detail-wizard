@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PageLayout from "@/components/PageLayout";
-import { Mail, Clock, MapPin, Send } from "lucide-react";
+import { Mail, Clock, MapPin, Send, MessageCircle } from "lucide-react";
 import { useTranslations } from "@/i18n";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
