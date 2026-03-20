@@ -35,11 +35,11 @@ export const de: Translations = {
     pageTitle: "Unsere Leistungen",
     pageIntro: "Wir bieten eine umfassende Palette persönlicher Assistenzleistungen, die darauf ausgelegt sind, jeden Aspekt der Reisevorbereitung zu vereinfachen. Von der Dokumentation bis zur Konnektivität begleiten wir Sie bei jedem Schritt.",
     cards: [
-      { title: "Dokumentationsassistenz", description: "Fachkundige Unterstützung bei Reisedokumenten, Antragsformularen und Einreichungsanforderungen." },
-      { title: "Antragsverfolgung", description: "Wir überwachen den Fortschritt Ihres Antrags und halten Sie in jeder Phase informiert." },
-      { title: "Digitale Reisedienste", description: "Visafotos, eSIM-Konnektivität und digitale Lösungen für moderne Reisende." },
-      { title: "Reisevorbereitung", description: "Ziel-Checklisten, Einreisewarnungen, Gesundheitsinformationen und Zeitplanung." },
-      { title: "Unternehmens-Compliance", description: "Dokumentation und Sorgfaltspflicht-Lösungen für Geschäftsreisende." },
+      { title: "Globale Erlebnisse", description: "Touren, Tagesausflüge und Aktivitäten an Reisezielen weltweit · direkt über die Plattform buchen." },
+      { title: "AI-Reiseplaner", description: "Erstellen Sie einen personalisierten Tag-für-Tag-Reiseplan mit KI, angepasst an Ihre Daten, Interessen und Ihr Budget." },
+      { title: "AI-Reiseführer", description: "Von KI erstellte Reiseführer mit lokalen Einblicken, Tipps und praktischen Informationen für Ihre Reise." },
+      { title: "eSIM-Konnektivität", description: "Sofortige Datenpläne für über 190 Länder · in Minuten aktivieren, ab der Landung verbunden bleiben." },
+      { title: "Reisedokumentation", description: "Fachkundige Unterstützung bei Visa, ETAs, Reisegenehmigungen und allen erforderlichen Unterlagen." },
     ],
     sections: [
       {
