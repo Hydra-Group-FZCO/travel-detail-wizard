@@ -12,6 +12,10 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Experiences from "./pages/Experiences";
 import Legal from "./pages/Legal";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
+import Refunds from "./pages/Refunds";
+import Pricing from "./pages/Pricing";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -91,6 +95,10 @@ const AppRoutes = () => {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/legal" element={<Legal />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/refunds" element={<Refunds />} />
+        <Route path="/pricing" element={<Pricing />} />
         <Route path="/esims" element={<Esims />} />
         <Route path="/itinerary-generator" element={<ItineraryGenerator />} />
         <Route path="/itinerary/:id" element={<ItineraryView />} />
@@ -106,6 +114,10 @@ const AppRoutes = () => {
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
             <Route path="legal" element={<Legal />} />
+            <Route path="terms" element={<Terms />} />
+            <Route path="privacy" element={<Privacy />} />
+            <Route path="refunds" element={<Refunds />} />
+            <Route path="pricing" element={<Pricing />} />
             <Route path="esims" element={<Esims />} />
             <Route path="itinerary-generator" element={<ItineraryGenerator />} />
             <Route path="itinerary/:id" element={<ItineraryView />} />

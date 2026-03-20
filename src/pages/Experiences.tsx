@@ -24,6 +24,16 @@ const Experiences = () => {
         </div>
       </section>
 
+      {/* Merchant of Record Notice */}
+      <section className="bg-secondary border-b border-border">
+        <div className="container-grid py-5">
+          <p className="text-sm text-muted-foreground text-center leading-relaxed">
+            All experiences are sold and fulfilled by Digital Moonkey Limited. You will be charged by Digital Moonkey Limited. For any queries contact{" "}
+            <a href="mailto:hello@digitalmoonkey.travel" className="text-primary hover:underline">hello@digitalmoonkey.travel</a>
+          </p>
+        </div>
+      </section>
+
       {/* Bókun Widget */}
       <section className="section-spacing">
         <div className="container-grid">
