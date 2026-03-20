@@ -69,7 +69,7 @@ const Footer = () => {
 
           <div className="mt-12 pt-6 border-t border-border">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <p className="text-xs text-muted-foreground">{t.footer.copyright}</p>
+              <p className="text-xs text-muted-foreground font-semibold">{t.footer.copyright}</p>
               <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
                 {t.footer.bottomLinks.map((link) => (
                   <Link
