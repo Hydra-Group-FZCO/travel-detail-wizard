@@ -133,10 +133,10 @@ export const it: Translations = {
   trustSection: {
     title: "Perché i viaggiatori si fidano di noi",
     items: [
-      { title: "Azienda Registrata", desc: "Registrata in Inghilterra e Galles" },
-      { title: "Team Dedicato", desc: "Supporto personale ad ogni passo" },
-      { title: "Nessun Costo Nascosto", desc: "Prezzi sempre trasparenti" },
-      { title: "Multilingue", desc: "Inglese, spagnolo e francese" },
+      { title: "Azienda Registrata nel UK", desc: "Costituita in Inghilterra e Galles · Nº 15716386" },
+      { title: "Supporto Umano Reale", desc: "Team dedicato con risposta entro 24 ore" },
+      { title: "Nessuna Sorpresa", desc: "Prezzi chiari, senza costi nascosti o extra" },
+      { title: "Servizio Multilingue", desc: "Assistenza completa in inglese, spagnolo e francese" },
     ],
   },
   cta: {
