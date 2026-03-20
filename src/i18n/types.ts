@@ -79,8 +79,10 @@ export interface Translations {
     companyTitle: string;
     companyName: string;
     companyRegistered: string;
+    companyAddress: string;
     companyDirector: string;
     companyWebsite: string;
+    companyEmail: string;
   };
   contact: {
     title: string;
@@ -88,6 +90,7 @@ export interface Translations {
     items: { label: string; value: string }[];
     officeLabel: string;
     officeName: string;
+    officeAddress: string;
     officeLocation: string;
     form: {
       title: string;
@@ -107,13 +110,15 @@ export interface Translations {
     companyTitle: string;
     companyName: string;
     companyRegistered: string;
+    companyAddress: string;
     companyDirector: string;
+    companyEmail: string;
   };
   footer: {
     disclaimer: string;
     description: string;
     servicesTitle: string;
-    serviceLinks: { label: string; hash: string }[];
+    serviceLinks: { label: string; hash?: string; to?: string }[];
     companyTitle: string;
     companyLinks: { label: string; to: string }[];
     copyright: string;

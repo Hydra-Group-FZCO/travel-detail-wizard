@@ -24,7 +24,9 @@ const Legal = () => {
               <div className="space-y-2 text-sm">
                 <p className="font-bold text-foreground">{t.legal.companyName}</p>
                 <p className="text-muted-foreground">{t.legal.companyRegistered}</p>
+                <p className="text-muted-foreground">{t.legal.companyAddress}</p>
                 <p className="text-muted-foreground">{t.legal.companyDirector}</p>
+                <p className="text-muted-foreground">{t.legal.companyEmail}</p>
               </div>
             </div>
           </div>

@@ -40,8 +40,8 @@ const Footer = () => {
               <div className="flex flex-col gap-2.5">
                 {t.footer.serviceLinks.map((link) => (
                   <Link
-                    key={link.hash}
-                    to={`${localizedPath("/services", lang)}#${link.hash}`}
+                    key={link.label}
+                    to={link.to ? localizedPath(link.to, lang) : `${localizedPath("/services", lang)}#${link.hash}`}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
                     {link.label}
@@ -82,7 +82,9 @@ const Footer = () => {
                 <Link to="/terms" className="hover:text-primary transition-colors">Terms & Conditions</Link>
                 <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
                 <Link to="/refunds" className="hover:text-primary transition-colors">Refund Policy</Link>
+                <Link to="/privacy#cookies" className="hover:text-primary transition-colors">Cookie Policy</Link>
                 <Link to={localizedPath("/pricing", lang)} className="hover:text-primary transition-colors">Pricing</Link>
+                <Link to={localizedPath("/legal", lang)} className="hover:text-primary transition-colors">Disclaimer</Link>
               </div>
             </div>
             <p className="text-[11px] text-muted-foreground mt-2 opacity-50">
