@@ -35,11 +35,11 @@ export const fr: Translations = {
     pageTitle: "Nos Services",
     pageIntro: "Nous offrons une gamme complète de services d'assistance personnelle conçus pour simplifier chaque aspect de la préparation de votre voyage. De la documentation à la connectivité, nous sommes à vos côtés à chaque étape.",
     cards: [
-      { title: "Assistance Documentaire", description: "Support expert pour la documentation de voyage, les formulaires de demande et les exigences de soumission." },
-      { title: "Suivi des Demandes", description: "Nous surveillons l'avancement de votre demande et vous tenons informé à chaque étape." },
-      { title: "Services Numériques de Voyage", description: "Photos de visa, connectivité eSIM et solutions numériques pour les voyageurs modernes." },
-      { title: "Préparation de Voyage", description: "Listes de destination, alertes d'entrée, informations sanitaires et planification." },
-      { title: "Conformité Entreprise", description: "Documentation et solutions de devoir de vigilance pour les voyageurs d'affaires." },
+      { title: "Expériences Mondiales", description: "Visites, excursions et activités dans des destinations du monde entier · réservez directement depuis la plateforme." },
+      { title: "Planificateur AI d'Itinéraires", description: "Générez un plan de voyage jour par jour personnalisé par IA, adapté à vos dates, intérêts et budget." },
+      { title: "Guides de Voyage AI", description: "Guides de destination créés par IA avec des informations locales, conseils et infos pratiques pour votre voyage." },
+      { title: "Connectivité eSIM", description: "Forfaits data instantanés pour plus de 190 pays · activez en minutes, restez connecté dès l'atterrissage." },
+      { title: "Documentation de Voyage", description: "Assistance experte pour les visas, ETAs, autorisations de voyage et toutes les formalités de votre voyage." },
     ],
     sections: [
       {
