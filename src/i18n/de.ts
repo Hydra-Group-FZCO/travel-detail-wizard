@@ -12,6 +12,7 @@ export const de: Translations = {
     heroTitle: "Erlebnisse Weltweit Entdecken",
     heroSubtitle: "Touren, Tagesausflüge und Aktivitäten von ausgewählten lokalen Partnern an Reisezielen weltweit",
     browseButton: "Erlebnisse Entdecken",
+    cancellationNote: "Jedes Erlebnis hat seine eigene Stornierungsrichtlinie, die vom lokalen Anbieter festgelegt wird. Bitte überprüfen Sie die Stornierungsbedingungen auf der Erlebnisseite vor der Buchung.",
   },
   hero: {
     badge: "Smartes Reisen, Vereinfacht",
