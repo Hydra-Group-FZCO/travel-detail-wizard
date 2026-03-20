@@ -107,19 +107,6 @@ export const es: Translations = {
         ],
       },
       {
-        id: "insurance",
-        title: "Comparación y Referencia de Seguros",
-        intro: "El seguro de viaje es esencial pero elegir la póliza adecuada puede ser confuso. Te ayudamos a entender tus opciones.",
-        subtitle: "Nuestro servicio incluye:",
-        items: [
-          "Comparación de opciones de seguro de viaje relevantes para tu destino y tipo de viaje",
-          "Explicación de áreas clave de cobertura: médica, cancelación, equipaje, responsabilidad",
-          "Referencia a proveedores de seguros verificados",
-          "Asistencia con documentación de reclamaciones si es necesario",
-        ],
-        note: "Nota: Digital Moonkey no es un proveedor ni corredor de seguros. Proporcionamos servicios de información y referencia para ayudarte a tomar una decisión informada.",
-      },
-      {
         id: "corporate",
         title: "Cumplimiento de Viajes Corporativos",
         badge: "B2B",
