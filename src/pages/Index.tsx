@@ -41,12 +41,9 @@ const Index = () => {
               {t.hero.headline}{" "}<span className="text-accent">{t.hero.headlineAccent}</span>
             </h1>
             <p className="mt-5 text-primary-foreground/80 text-base md:text-lg leading-relaxed max-w-lg">{t.hero.subheadline}</p>
-            <div className="mt-8 flex flex-wrap gap-3 animate-fade-up [animation-delay:200ms] opacity-0">
+            <div className="mt-8 animate-fade-up [animation-delay:200ms] opacity-0">
               <Button variant="hero" size="lg" asChild>
-                <Link to={localizedPath("/services", lang)}>{t.hero.cta}</Link>
-              </Button>
-              <Button variant="hero-outline" size="lg" asChild>
-                <Link to={localizedPath("/contact", lang)}>{t.hero.ctaSecondary}</Link>
+                <Link to={localizedPath("/experiences", lang)}>{t.hero.cta}</Link>
               </Button>
             </div>
           </div>
