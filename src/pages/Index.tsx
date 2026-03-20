@@ -6,13 +6,13 @@ import { BadgeCheck, Headphones, Tag, Languages, Star, ShieldCheck, Clock, Globe
 import { useTranslations, useLanguage, localizedPath } from "@/i18n";
 
 import heroImage from "@/assets/hero-travel.jpg";
-import serviceDocs from "@/assets/service-docs.jpg";
-import serviceTracking from "@/assets/service-tracking.jpg";
-import serviceDigital from "@/assets/service-digital.jpg";
-import servicePreparation from "@/assets/service-preparation.jpg";
-import serviceCorporate from "@/assets/service-corporate.jpg";
+import serviceExperiences from "@/assets/service-experiences.jpg";
+import serviceAiPlanner from "@/assets/service-ai-planner.jpg";
+import serviceGuides from "@/assets/service-guides.jpg";
+import serviceEsim from "@/assets/service-esim.jpg";
+import serviceDocumentation from "@/assets/service-documentation.jpg";
 
-const serviceImages = [serviceDocs, serviceTracking, serviceDigital, servicePreparation, serviceCorporate];
+const serviceImages = [serviceExperiences, serviceAiPlanner, serviceGuides, serviceEsim, serviceDocumentation];
 
 const Index = () => {
   const t = useTranslations();

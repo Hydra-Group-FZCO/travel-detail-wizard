@@ -35,11 +35,11 @@ export const en: Translations = {
     pageTitle: "Our Services",
     pageIntro: "We offer a comprehensive range of personal assistance services designed to simplify every aspect of travel preparation. From documentation to connectivity, we are with you at every step.",
     cards: [
-      { title: "Documentation Assistance", description: "Expert support with travel documentation, application forms, and submission requirements." },
-      { title: "Application Tracking", description: "We monitor your application's progress and keep you informed at every stage." },
-      { title: "Digital Travel Services", description: "Visa photos, eSIM connectivity, and digital solutions for modern travellers." },
-      { title: "Travel Preparation", description: "Destination checklists, entry alerts, health info, and timeline planning." },
-      { title: "Corporate Compliance", description: "Documentation and duty-of-care solutions for business travellers." },
+      { title: "Global Experiences", description: "Curated tours, day trips and activities in destinations worldwide · book directly from the platform." },
+      { title: "AI Itinerary Planner", description: "Generate a personalised day-by-day travel plan powered by AI, tailored to your dates, interests and budget." },
+      { title: "AI Travel Guides", description: "Destination guides built by AI with local insights, tips and practical information for your trip." },
+      { title: "eSIM Connectivity", description: "Instant data plans for 190+ countries · activate in minutes, stay connected from landing." },
+      { title: "Travel Documentation", description: "Expert assistance with visas, ETAs, travel authorisations and all the paperwork your trip requires." },
     ],
     sections: [
       {
