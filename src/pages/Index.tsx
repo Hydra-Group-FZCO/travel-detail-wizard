@@ -29,7 +29,7 @@ const Index = () => {
   return (
     <PageLayout>
       {/* Hero */}
-      <section className="relative min-h-[85vh] md:min-h-[90vh] flex items-center pb-36 md:pb-0">
+      <section className="relative min-h-[85vh] md:min-h-[90vh] flex items-center pb-44 md:pb-0">
         <img src={heroImage} alt="Mediterranean coastal city at golden hour" className="absolute inset-0 w-full h-full object-cover" loading="eager" />
         <div className="hero-overlay absolute inset-0" />
         <div className="relative z-10 container-grid w-full">
