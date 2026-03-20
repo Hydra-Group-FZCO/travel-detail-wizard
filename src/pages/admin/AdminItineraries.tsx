@@ -22,7 +22,7 @@ const AdminItineraries = () => {
   };
 
   const totalRevenue = itineraries.reduce((s, i) => s + (i.price_paid || 0), 0);
-  const destinations = itineraries.reduce((acc: Record<string, number>, i) => {
+  const destinations = itineraries.reduce((acc: Record<string, number>, i: any) => {
     acc[i.destination] = (acc[i.destination] || 0) + 1;
     return acc;
   }, {});
