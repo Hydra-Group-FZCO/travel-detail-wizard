@@ -53,24 +53,15 @@ const Footer = () => {
             <div>
               <h4 className="text-sm font-bold text-foreground mb-4">{t.footer.companyTitle}</h4>
               <div className="flex flex-col gap-2.5">
-                <Link
-                  to={localizedPath("/experiences", lang)}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {t.nav.experiences}
-                </Link>
-                <Link
-                  to={localizedPath("/about", lang)}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {t.nav.about}
-                </Link>
-                <Link
-                  to={localizedPath("/contact", lang)}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {t.nav.contact}
-                </Link>
+                {t.footer.companyLinks.map((link) => (
+                  <Link
+                    key={link.label}
+                    to={localizedPath(link.to, lang)}
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
               </div>
             </div>
           </div>
