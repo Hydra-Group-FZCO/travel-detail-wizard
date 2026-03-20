@@ -55,14 +55,14 @@ const Privacy = () => {
                 <h2 className="text-lg font-bold mb-3">3. How We Use Your Data</h2>
                 <p className="text-sm leading-relaxed text-muted-foreground mb-3">We use your personal data for the following purposes and legal bases:</p>
                 <div className="space-y-2 text-sm text-muted-foreground">
-                  <p>To fulfil your orders and deliver products and services · <em>Legal basis: Contract performance</em></p>
-                  <p>To manage your account · <em>Legal basis: Contract performance</em></p>
-                  <p>To process payments · <em>Legal basis: Contract performance</em></p>
-                  <p>To send order confirmations and service updates · <em>Legal basis: Contract performance</em></p>
-                  <p>To send marketing communications (only with your consent) · <em>Legal basis: Consent</em></p>
-                  <p>To improve our platform and services · <em>Legal basis: Legitimate interests</em></p>
-                  <p>To comply with legal obligations · <em>Legal basis: Legal obligation</em></p>
-                  <p>To detect and prevent fraud · <em>Legal basis: Legitimate interests</em></p>
+                  <p>To fulfil your orders and deliver products and services · <em>Legal basis: Contract performance (Art. 6(1)(b))</em></p>
+                  <p>To manage your account · <em>Legal basis: Contract performance (Art. 6(1)(b))</em></p>
+                  <p>To process payments · <em>Legal basis: Contract performance (Art. 6(1)(b))</em></p>
+                  <p>To send order confirmations and service updates · <em>Legal basis: Contract performance (Art. 6(1)(b))</em></p>
+                  <p>To send marketing communications (only with your consent) · <em>Legal basis: Consent (Art. 6(1)(a))</em></p>
+                  <p>To improve our platform and services · <em>Legal basis: Legitimate interests (Art. 6(1)(f))</em></p>
+                  <p>To comply with legal obligations · <em>Legal basis: Legal obligation (Art. 6(1)(c))</em></p>
+                  <p>To detect and prevent fraud · <em>Legal basis: Legitimate interests (Art. 6(1)(f))</em></p>
                 </div>
               </div>
 

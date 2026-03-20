@@ -106,9 +106,9 @@ const Refunds = () => {
               </div>
 
               <div>
-                <h2 className="text-lg font-bold mb-3">8. Consumer Rights</h2>
+                <h2 className="text-lg font-bold mb-3">8. Your Statutory Rights</h2>
                 <p className="text-sm leading-relaxed text-muted-foreground">
-                  If you are a consumer based in the UK or European Union, you may have additional rights under applicable consumer protection legislation, including the UK Consumer Rights Act 2015 and EU Consumer Rights Directive. Nothing in this policy affects your statutory rights.
+                  If you are a consumer based in the UK or European Union, you may have additional rights under the UK Consumer Rights Act 2015, the Consumer Contracts Regulations 2013, and/or the EU Consumer Rights Directive. Nothing in this Refund Policy affects your statutory rights. For guidance on your consumer rights, visit Citizens Advice at <a href="https://www.citizensadvice.org.uk" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">citizensadvice.org.uk</a>.
                 </p>
               </div>
 
