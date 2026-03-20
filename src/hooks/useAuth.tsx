@@ -12,6 +12,7 @@ interface AuthContextType {
   profile: Profile | null;
   role: AppRole;
   loading: boolean;
+  roleLoaded: boolean;
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>;
 }
@@ -24,6 +25,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [role, setRole] = useState<AppRole>("customer");
   const [loading, setLoading] = useState(true);
+  const [roleLoaded, setRoleLoaded] = useState(false);
 
   const fetchProfile = async (userId: string) => {
     const { data } = await supabase
