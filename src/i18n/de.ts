@@ -28,8 +28,8 @@ export const de: Translations = {
     languages: "EN · ES · FR",
   },
   intro: {
-    title: "Wie können wir Ihnen helfen?",
-    text: "Jede Reise beginnt lange vor dem Einsteigen ins Flugzeug. Digital Moonkey bietet personalisierte Unterstützung in jeder Phase Ihrer Reisevorbereitung.",
+    title: "Alles, was Ihre Reise braucht, an einem Ort",
+    text: "KI-gestützte Reisepläne und Reiseführer, eSIM-Datentarife für sofortige Konnektivität, kuratierte Erlebnisse weltweit und fachkundige Unterstützung bei Reisedokumenten — alles auf einer einzigen Plattform.",
   },
   services: {
     pageTitle: "Unsere Leistungen",
