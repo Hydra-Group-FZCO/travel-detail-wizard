@@ -133,7 +133,7 @@ export const de: Translations = {
   trustSection: {
     title: "Warum Reisende uns vertrauen",
     items: [
-      { title: "UK-registriertes Unternehmen", desc: "Eingetragen in England & Wales · Nr. 15716386" },
+      { title: "KI-gestützte Planung", desc: "Intelligente Reisepläne und Guides für Ihre Reise" },
       { title: "Echte menschliche Unterstützung", desc: "Engagiertes Team mit Antwort innerhalb von 24 Stunden" },
       { title: "Keine Überraschungen", desc: "Klare Preise ohne versteckte Gebühren oder Extras" },
       { title: "Mehrsprachiger Service", desc: "Vollständige Betreuung auf Englisch, Spanisch & Französisch" },

@@ -100,7 +100,7 @@ const Index = () => {
           <h2 className="mb-12">{t.trustSection.title}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl mx-auto">
             {t.trustSection.items.map((item, i) => {
-              const icons = [BadgeCheck, Headphones, Tag, Languages];
+              const icons = [Star, Headphones, Tag, Languages];
               const Icon = icons[i] || BadgeCheck;
               return (
                 <div key={item.title} className="text-center">
