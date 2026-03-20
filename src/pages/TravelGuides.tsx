@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { SampleGuidePreview } from "@/components/SampleItineraryPreview";
 import PageLayout from "@/components/PageLayout";
