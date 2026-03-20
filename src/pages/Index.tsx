@@ -84,6 +84,7 @@ const Index = () => {
                 localizedPath("/travel-guides", lang),
                 localizedPath("/esims", lang),
                 localizedPath("/services", lang),
+                localizedPath("/contact", lang),
               ];
               return (
                 <Link

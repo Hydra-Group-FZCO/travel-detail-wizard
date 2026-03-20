@@ -40,6 +40,7 @@ export const en: Translations = {
       { title: "AI Travel Guides", description: "Destination guides built by AI with local insights, tips and practical information for your trip." },
       { title: "eSIM Connectivity", description: "Instant data plans for 190+ countries · activate in minutes, stay connected from landing." },
       { title: "Travel Documentation", description: "Expert assistance with visas, ETAs, travel authorisations and all the paperwork your trip requires." },
+      { title: "Corporate Travel", description: "Compliance, documentation and duty-of-care solutions tailored for business travellers and HR teams." },
     ],
     sections: [
       {
