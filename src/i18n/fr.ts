@@ -228,7 +228,7 @@ export const fr: Translations = {
     ],
     copyright: "© 2026 Digital Moonkey Ltd · Company No. 15716386",
     bottomLinks: [
-      { label: "Conditions Générales", to: "/terms" },
+      { label: "T&C", to: "/terms" },
       { label: "Politique de Confidentialité", to: "/privacy" },
       { label: "Politique de Remboursement", to: "/refunds" },
       { label: "Politique de Cookies", to: "/cookies" },
