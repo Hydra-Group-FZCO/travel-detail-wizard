@@ -28,8 +28,8 @@ export const en: Translations = {
     languages: "EN · ES · FR",
   },
   intro: {
-    title: "How can we help you?",
-    text: "Every trip starts long before you board the plane. Digital Moonkey provides personalised assistance at every stage of your travel preparation.",
+    title: "Everything your trip needs, in one place",
+    text: "AI-powered itineraries and destination guides, eSIM data plans for instant connectivity, curated experiences worldwide, and expert travel documentation assistance — all from a single platform.",
   },
   services: {
     pageTitle: "Our Services",
