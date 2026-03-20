@@ -107,19 +107,6 @@ export const de: Translations = {
         ],
       },
       {
-        id: "insurance",
-        title: "Versicherungsvergleich & Vermittlung",
-        intro: "Eine Reiseversicherung ist unerlässlich, aber die Wahl der richtigen Police kann verwirrend sein. Wir helfen Ihnen, Ihre Optionen zu verstehen.",
-        subtitle: "Unser Service umfasst:",
-        items: [
-          "Vergleich von Reiseversicherungsoptionen relevant für Ihr Ziel und Ihren Reisetyp",
-          "Erklärung der wichtigsten Deckungsbereiche: Medizin, Stornierung, Gepäck, Haftung",
-          "Vermittlung an geprüfte Versicherungsanbieter",
-          "Unterstützung bei der Schadendokumentation bei Bedarf",
-        ],
-        note: "Hinweis: Digital Moonkey ist kein Versicherungsanbieter oder -makler. Wir bieten Informations- und Vermittlungsdienste, um Ihnen bei einer informierten Entscheidung zu helfen.",
-      },
-      {
         id: "corporate",
         title: "Unternehmens-Reise-Compliance",
         badge: "B2B",
