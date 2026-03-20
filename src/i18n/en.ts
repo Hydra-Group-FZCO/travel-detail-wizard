@@ -28,8 +28,8 @@ export const en: Translations = {
     languages: "EN · ES · FR",
   },
   intro: {
-    title: "Everything your trip needs, in one place",
-    text: "AI-powered itineraries and destination guides, eSIM data plans for instant connectivity, curated experiences worldwide, and expert travel documentation assistance · all from a single platform.",
+    title: "Your entire trip, sorted",
+    text: "Plan with AI-powered itineraries and guides, stay connected with eSIM data plans, book curated experiences worldwide, and get expert help with travel documents · one platform, zero hassle.",
   },
   services: {
     pageTitle: "Our Services",
