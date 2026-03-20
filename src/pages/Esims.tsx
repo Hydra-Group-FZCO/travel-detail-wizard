@@ -71,6 +71,7 @@ const Esims = () => {
   const [selectedPkg, setSelectedPkg] = useState<EsimPackage | null>(null);
   const [ordering, setOrdering] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
+  const [esimConsent, setEsimConsent] = useState(false);
   const { toast } = useToast();
 
   const regions = useMemo(() => [
