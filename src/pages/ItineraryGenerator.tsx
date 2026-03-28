@@ -534,30 +534,33 @@ const ItineraryGenerator = () => {
 
     setIsGenerating(true);
     try {
-      const { data: itinerary, error: insertError } = await supabase
-        .from("itineraries")
-        .insert({
-          user_id: user.id,
-          destination,
-          departure_city: departureCity || null,
-          start_date: format(startDate!, "yyyy-MM-dd"),
-          end_date: format(endDate!, "yyyy-MM-dd"),
-          num_days: numDays,
-          trip_type: tripType,
-          travelers_adults: adults,
-          travelers_children: children,
-          children_ages: childrenAges,
-          interests,
-          budget_level: budgetLevel,
-          language,
-          extras,
-          status: "pending",
-        })
-        .select()
-        .single();
+      const { data, error } = await supabase.functions.invoke("create-payment", {
+        body: {
+          type: "itinerary",
+          metadata: {
+            destination,
+            departure_city: departureCity || "",
+            start_date: format(startDate!, "yyyy-MM-dd"),
+            end_date: format(endDate!, "yyyy-MM-dd"),
+            num_days: String(numDays),
+            trip_type: tripType,
+            travelers_adults: String(adults),
+            travelers_children: String(children),
+            children_ages: JSON.stringify(childrenAges),
+            interests: JSON.stringify(interests),
+            budget_level: budgetLevel,
+            language,
+            extras: JSON.stringify(extras),
+          },
+        },
+      });
 
-      if (insertError) throw insertError;
-      navigate(localizedPath(`/itinerary/${itinerary.id}`, uiLang));
+      if (error) throw error;
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("No checkout URL returned");
+      }
     } catch (err: any) {
       toast({ title: copy.error.title, description: err.message || copy.error.description, variant: "destructive" });
       setIsGenerating(false);

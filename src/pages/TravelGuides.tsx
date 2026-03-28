@@ -427,24 +427,25 @@ const TravelGuides = () => {
 
     setIsGenerating(true);
     try {
-      const { data: guide, error } = await supabase
-        .from("travel_guides")
-        .insert({
-          user_id: user.id,
-          destination,
-          destination_slug: slugify(destination),
-          focus_areas: focusAreas,
-          depth,
-          language,
-          season,
-          price_paid: selectedDepth.price,
-          status: "pending",
-        })
-        .select()
-        .single();
+      const { data, error } = await supabase.functions.invoke("create-payment", {
+        body: {
+          type: "guide",
+          metadata: {
+            destination,
+            focus_areas: JSON.stringify(focusAreas),
+            depth,
+            language,
+            season,
+          },
+        },
+      });
 
       if (error) throw error;
-      navigate(localizedPath(`/travel-guides/view/${guide.id}`, uiLang));
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("No checkout URL returned");
+      }
     } catch (err: any) {
       toast({ title: copy.error.title, description: err.message || copy.error.description, variant: "destructive" });
       setIsGenerating(false);
