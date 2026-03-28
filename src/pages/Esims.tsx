@@ -119,18 +119,25 @@ const Esims = () => {
     setOrdering(true);
 
     try {
-      const { error } = await supabase.from("esim_orders").insert({
-        user_id: user.id,
-        package_code: selectedPkg.package_code,
-        price_paid_eur: selectedPkg.price_retail_eur,
-        status: "pending",
+      const { data, error } = await supabase.functions.invoke("create-payment", {
+        body: {
+          type: "esim",
+          metadata: {
+            package_code: selectedPkg.package_code,
+            package_name: selectedPkg.name,
+            price_eur: selectedPkg.price_retail_eur,
+          },
+        },
       });
 
       if (error) throw error;
-      setOrderSuccess(true);
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("No checkout URL returned");
+      }
     } catch (err: any) {
-      toast({ title: "Order failed", description: err.message, variant: "destructive" });
-    } finally {
+      toast({ title: "Payment failed", description: err.message, variant: "destructive" });
       setOrdering(false);
     }
   };
