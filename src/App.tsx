@@ -47,6 +47,7 @@ import ItineraryGenerator from "./pages/ItineraryGenerator";
 import ItineraryView from "./pages/ItineraryView";
 import TravelGuides from "./pages/TravelGuides";
 import GuideView from "./pages/GuideView";
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 const queryClient = new QueryClient();
 
@@ -106,6 +107,7 @@ const AppRoutes = () => {
         <Route path="/itinerary/:id" element={<ItineraryView />} />
         <Route path="/travel-guides" element={<TravelGuides />} />
         <Route path="/travel-guides/view/:id" element={<GuideView />} />
+        <Route path="/payment-success" element={<PaymentSuccess />} />
 
         {/* Localized routes */}
         {["es", "fr", "it", "de"].map((l) => (
