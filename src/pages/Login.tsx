@@ -64,7 +64,10 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     setGoogleLoading(true);
     const { error } = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
+      redirect_uri: `${window.location.origin}/~oauth`,
+      extraParams: {
+        prompt: "select_account",
+      },
     });
     setGoogleLoading(false);
     if (error) {
