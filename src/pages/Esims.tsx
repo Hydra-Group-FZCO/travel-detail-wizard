@@ -105,6 +105,7 @@ const Esims = () => {
 
   const handleBuyClick = (pkg: EsimPackage) => {
     if (!user) {
+      sessionStorage.setItem("auth_return_to", "/esims");
       toast({ title: "Sign in required", description: "Please sign in to purchase an eSIM.", variant: "destructive" });
       navigate("/login");
       return;

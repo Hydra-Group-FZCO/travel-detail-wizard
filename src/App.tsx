@@ -48,6 +48,7 @@ import ItineraryView from "./pages/ItineraryView";
 import TravelGuides from "./pages/TravelGuides";
 import GuideView from "./pages/GuideView";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import OAuthCallback from "./pages/OAuthCallback";
 
 const queryClient = new QueryClient();
 
@@ -61,6 +62,7 @@ const AppRoutes = () => {
         {/* Auth routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/~oauth" element={<OAuthCallback />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 
