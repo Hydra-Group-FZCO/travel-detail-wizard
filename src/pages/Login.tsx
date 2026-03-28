@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
@@ -11,10 +11,26 @@ import Logo from "@/components/Logo";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { user, role, roleLoaded } = useAuth();
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // Redirect if already logged in (e.g. after OAuth callback)
+  useEffect(() => {
+    if (user && roleLoaded) {
+      const returnTo = sessionStorage.getItem("auth_return_to");
+      sessionStorage.removeItem("auth_return_to");
+      if (returnTo) {
+        navigate(returnTo, { replace: true });
+      } else if (role === "admin") {
+        navigate("/admin", { replace: true });
+      } else {
+        navigate("/dashboard", { replace: true });
+      }
+    }
+  }, [user, roleLoaded, role, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
