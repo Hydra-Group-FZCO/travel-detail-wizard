@@ -16,7 +16,7 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [agreed, setAgreed] = useState(false);
-  const [form, setForm] = useState({ fullName: "", email: "", password: "", country: "" });
+  const [form, setForm] = useState({ fullName: "", email: "", password: "", country: "", street: "" });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ const Register = () => {
       toast.error("Please accept the Terms & Conditions and Privacy Policy to continue");
       return;
     }
-    if (!form.fullName.trim() || !form.email.trim() || !form.password || !form.country) {
+    if (!form.fullName.trim() || !form.email.trim() || !form.password || !form.country || !form.street.trim()) {
       toast.error("Please fill in all fields");
       return;
     }
@@ -37,7 +37,7 @@ const Register = () => {
       email: form.email.trim(),
       password: form.password,
       options: {
-        data: { full_name: form.fullName.trim(), country: form.country },
+        data: { full_name: form.fullName.trim(), country: form.country, street: form.street.trim() },
         emailRedirectTo: window.location.origin,
       },
     });
@@ -45,6 +45,7 @@ const Register = () => {
     if (error) {
       toast.error(error.message);
     } else {
+      // Create Stripe customer in background (don't block registration)
       toast.success("Account created! Check your email to confirm.");
       navigate("/login");
     }
@@ -96,7 +97,11 @@ const Register = () => {
               <SelectContent className="max-h-60">
                 {countries.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
               </SelectContent>
-            </Select>
+           </Select>
+          </div>
+          <div>
+            <Label htmlFor="street">Street Address</Label>
+            <Input id="street" value={form.street} onChange={e => setForm(f => ({ ...f, street: e.target.value }))} placeholder="123 Main Street" />
           </div>
 
           <div className="flex items-start gap-2.5 pt-1">

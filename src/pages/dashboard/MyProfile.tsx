@@ -12,7 +12,7 @@ import { Camera } from "lucide-react";
 
 const MyProfile = () => {
   const { user, profile, refreshProfile } = useAuth();
-  const [form, setForm] = useState({ full_name: "", phone: "", country: "" });
+  const [form, setForm] = useState({ full_name: "", phone: "", country: "", street: "" });
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
 
@@ -22,6 +22,7 @@ const MyProfile = () => {
         full_name: profile.full_name || "",
         phone: profile.phone || "",
         country: profile.country || "",
+        street: (profile as any).street || "",
       });
     }
   }, [profile]);
@@ -32,7 +33,7 @@ const MyProfile = () => {
     setSaving(true);
     const { error } = await supabase
       .from("profiles")
-      .update({ full_name: form.full_name.trim(), phone: form.phone.trim(), country: form.country })
+      .update({ full_name: form.full_name.trim(), phone: form.phone.trim(), country: form.country, street: form.street.trim() } as any)
       .eq("user_id", user.id);
     setSaving(false);
     if (error) { toast.error(error.message); return; }
@@ -96,7 +97,11 @@ const MyProfile = () => {
               <SelectContent className="max-h-60">
                 {countries.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
               </SelectContent>
-            </Select>
+           </Select>
+          </div>
+          <div>
+            <Label htmlFor="street">Street Address</Label>
+            <Input id="street" value={form.street} onChange={e => setForm(f => ({ ...f, street: e.target.value }))} placeholder="123 Main Street" />
           </div>
           <Button type="submit" disabled={saving}>{saving ? "Saving..." : "Save Changes"}</Button>
         </form>
