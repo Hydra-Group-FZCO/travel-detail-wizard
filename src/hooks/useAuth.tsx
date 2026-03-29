@@ -34,6 +34,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .eq("user_id", userId)
       .single();
     setProfile(data);
+    return data;
   };
 
   const fetchRole = async (userId: string) => {
@@ -44,6 +45,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .single();
     setRole((data?.role as AppRole) || "customer");
     setRoleLoaded(true);
+  };
+
+  const ensureStripeCustomer = async () => {
+    try {
+      await supabase.functions.invoke("create-stripe-customer");
+    } catch (e) {
+      console.error("Stripe customer creation failed:", e);
+    }
   };
 
   const refreshProfile = async () => {
@@ -58,12 +67,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setSession(session);
         setUser(session?.user ?? null);
         if (session?.user) {
-          // Use setTimeout to avoid blocking the auth state change callback
           setTimeout(async () => {
-            await Promise.all([
+            const [profileData] = await Promise.all([
               fetchProfile(session.user.id),
               fetchRole(session.user.id),
             ]);
+            // Create Stripe customer if not yet linked
+            if (profileData && !(profileData as any).stripe_customer_id) {
+              ensureStripeCustomer();
+            }
             setLoading(false);
           }, 0);
         } else {
