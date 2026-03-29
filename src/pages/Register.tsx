@@ -97,7 +97,11 @@ const Register = () => {
               <SelectContent className="max-h-60">
                 {countries.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
               </SelectContent>
-            </Select>
+           </Select>
+          </div>
+          <div>
+            <Label htmlFor="street">Street Address</Label>
+            <Input id="street" value={form.street} onChange={e => setForm(f => ({ ...f, street: e.target.value }))} placeholder="123 Main Street" />
           </div>
 
           <div className="flex items-start gap-2.5 pt-1">
