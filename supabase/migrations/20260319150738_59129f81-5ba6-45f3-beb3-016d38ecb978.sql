@@ -1,5 +1,5 @@
 
-CREATE TABLE public.travel_guides (
+CREATE TABLE IF NOT EXISTS public.travel_guides (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id uuid NOT NULL,
   destination text NOT NULL,
@@ -20,6 +20,12 @@ CREATE TABLE public.travel_guides (
 );
 
 ALTER TABLE public.travel_guides ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Users can view own guides" ON public.travel_guides;
+DROP POLICY IF EXISTS "Users can insert own guides" ON public.travel_guides;
+DROP POLICY IF EXISTS "Service role can manage guides" ON public.travel_guides;
+DROP POLICY IF EXISTS "Public can view shared guides" ON public.travel_guides;
+DROP POLICY IF EXISTS "Admins can view all guides" ON public.travel_guides;
 
 CREATE POLICY "Users can view own guides" ON public.travel_guides
   FOR SELECT TO authenticated
@@ -42,6 +48,7 @@ CREATE POLICY "Admins can view all guides" ON public.travel_guides
   FOR SELECT TO authenticated
   USING (public.has_role(auth.uid(), 'admin'));
 
+DROP TRIGGER IF EXISTS update_travel_guides_updated_at ON public.travel_guides;
 CREATE TRIGGER update_travel_guides_updated_at
   BEFORE UPDATE ON public.travel_guides
   FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();

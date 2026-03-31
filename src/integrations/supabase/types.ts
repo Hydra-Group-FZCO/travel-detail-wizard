@@ -476,6 +476,7 @@ export type Database = {
           season: string | null
           status: string
           stripe_payment_id: string | null
+          token_budget: number | null
           updated_at: string
           user_id: string
           word_count: number | null
@@ -495,6 +496,7 @@ export type Database = {
           season?: string | null
           status?: string
           stripe_payment_id?: string | null
+          token_budget?: number | null
           updated_at?: string
           user_id: string
           word_count?: number | null
@@ -514,6 +516,7 @@ export type Database = {
           season?: string | null
           status?: string
           stripe_payment_id?: string | null
+          token_budget?: number | null
           updated_at?: string
           user_id?: string
           word_count?: number | null

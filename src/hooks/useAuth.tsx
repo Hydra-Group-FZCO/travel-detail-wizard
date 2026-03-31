@@ -47,9 +47,53 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setRoleLoaded(true);
   };
 
-  const ensureStripeCustomer = async () => {
+  /** Links a Stripe customer when the profile has no stripe_customer_id (idempotent on the server). */
+  const ensureStripeCustomer = async (userId: string, profileSnapshot: Profile | null) => {
+    if (profileSnapshot?.stripe_customer_id) return;
     try {
-      await supabase.functions.invoke("create-stripe-customer");
+      // supabase-js uses the publishable/anon key as Bearer when there is no session — that is not a user JWT
+      // and triggers "Invalid JWT" on the functions gateway when verify_jwt is on. Always send a real access token.
+      const accessTokenLooksLikeJwt = (t: string) => t.split(".").length === 3;
+      const invoke = async () => {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+        let token = session?.access_token;
+        if (!token || !accessTokenLooksLikeJwt(token)) {
+          const { data: refreshed } = await supabase.auth.refreshSession();
+          token = refreshed.session?.access_token;
+        }
+        if (!token || !accessTokenLooksLikeJwt(token)) {
+          return {
+            data: null,
+            error: Object.assign(new Error("No valid access token"), { name: "AuthSessionMissing" }),
+          };
+        }
+        return supabase.functions.invoke("create-stripe-customer", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      };
+
+      let { data, error } = await invoke();
+      if (error) {
+        await supabase.auth.refreshSession();
+        await new Promise((r) => setTimeout(r, 400));
+        ({ data, error } = await invoke());
+      }
+      // Retry once more: profile row can lag behind auth (trigger race) or transient edge errors.
+      if (error) {
+        await new Promise((r) => setTimeout(r, 1200));
+        ({ data, error } = await invoke());
+      }
+      if (error) {
+        const msg =
+          data && typeof data === "object" && "error" in data
+            ? String((data as { error: unknown }).error)
+            : error.message;
+        console.error("create-stripe-customer:", msg);
+        return;
+      }
+      await fetchProfile(userId);
     } catch (e) {
       console.error("Stripe customer creation failed:", e);
     }
@@ -72,10 +116,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               fetchProfile(session.user.id),
               fetchRole(session.user.id),
             ]);
-            // Create Stripe customer if not yet linked
-            if (profileData && !(profileData as any).stripe_customer_id) {
-              ensureStripeCustomer();
-            }
+            await ensureStripeCustomer(session.user.id, profileData);
             setLoading(false);
           }, 0);
         } else {
@@ -87,14 +128,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     );
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {
-        Promise.all([
+        const [profileData] = await Promise.all([
           fetchProfile(session.user.id),
           fetchRole(session.user.id),
-        ]).then(() => setLoading(false));
+        ]);
+        await ensureStripeCustomer(session.user.id, profileData);
+        setLoading(false);
       } else {
         setLoading(false);
       }

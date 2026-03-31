@@ -48,7 +48,7 @@ import ItineraryView from "./pages/ItineraryView";
 import TravelGuides from "./pages/TravelGuides";
 import GuideView from "./pages/GuideView";
 import PaymentSuccess from "./pages/PaymentSuccess";
-import OAuthCallback from "./pages/OAuthCallback";
+import GuidePayment from "./pages/GuidePayment";
 
 const queryClient = new QueryClient();
 
@@ -62,7 +62,6 @@ const AppRoutes = () => {
         {/* Auth routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/~oauth" element={<OAuthCallback />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 
@@ -109,6 +108,7 @@ const AppRoutes = () => {
         <Route path="/itinerary/:id" element={<ItineraryView />} />
         <Route path="/travel-guides" element={<TravelGuides />} />
         <Route path="/travel-guides/view/:id" element={<GuideView />} />
+        <Route path="/guide-payment" element={<ProtectedRoute><GuidePayment /></ProtectedRoute>} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
 
         {/* Localized routes */}
@@ -130,6 +130,8 @@ const AppRoutes = () => {
             <Route path="itinerary/:id" element={<ItineraryView />} />
             <Route path="travel-guides" element={<TravelGuides />} />
             <Route path="travel-guides/view/:id" element={<GuideView />} />
+            <Route path="guide-payment" element={<ProtectedRoute><GuidePayment /></ProtectedRoute>} />
+            <Route path="payment-success" element={<PaymentSuccess />} />
           </Route>
         ))}
 

@@ -12,6 +12,10 @@ const PaymentSuccess = () => {
   const navigate = useNavigate();
   const lang = useLanguage();
   const sessionId = searchParams.get("session_id");
+  const paymentIntentId =
+    searchParams.get("payment_intent_id") ||
+    searchParams.get("payment_intent") ||
+    null;
   const type = searchParams.get("type");
 
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
@@ -19,16 +23,18 @@ const PaymentSuccess = () => {
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
-    if (!sessionId) {
+    if (!sessionId && !paymentIntentId) {
       setStatus("error");
-      setErrorMsg("No payment session found.");
+      setErrorMsg("No payment reference found.");
       return;
     }
 
     const verify = async () => {
       try {
         const { data, error } = await supabase.functions.invoke("verify-payment", {
-          body: { session_id: sessionId },
+          body: paymentIntentId
+            ? { payment_intent_id: paymentIntentId }
+            : { session_id: sessionId },
         });
 
         if (error) throw error;
@@ -39,14 +45,14 @@ const PaymentSuccess = () => {
           setStatus("error");
           setErrorMsg("Payment has not been completed yet.");
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         setStatus("error");
-        setErrorMsg(err.message || "Failed to verify payment.");
+        setErrorMsg(err instanceof Error ? err.message : "Failed to verify payment.");
       }
     };
 
     verify();
-  }, [sessionId]);
+  }, [sessionId, paymentIntentId]);
 
   const getRedirectPath = () => {
     if (type === "esim") return "/dashboard/esims";

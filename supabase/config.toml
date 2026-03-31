@@ -1,10 +1,19 @@
-project_id = "mmnjjmcivgimhatdlrjc"
+# Align with the project you deploy/link (see Dashboard → Settings → General).
+project_id = "gsacladuvfrwbqfnpsxv"
 
+# JWT verification at the Edge gateway is disabled. Each function must enforce auth
+# in code (e.g. supabase.auth.getUser, service role + internal checks) as appropriate.
 [functions]
+  [functions.create-payment-intent]
+    verify_jwt = false
+  [functions.verify-payment]
+    verify_jwt = false
+  [functions.create-stripe-customer]
+    verify_jwt = false
   [functions.auth-email-hook]
     verify_jwt = false
   [functions.process-email-queue]
-    verify_jwt = true
+    verify_jwt = false
   [functions.send-transactional-email]
     verify_jwt = false
   [functions.sync-bokun-bookings]
@@ -12,4 +21,14 @@ project_id = "mmnjjmcivgimhatdlrjc"
   [functions.generate-itinerary]
     verify_jwt = false
   [functions.generate-guide]
+    verify_jwt = false
+  [functions.create-payment]
+    verify_jwt = false
+  [functions.esim-topup]
+    verify_jwt = false
+  [functions.esim-query]
+    verify_jwt = false
+  [functions.esim-packages]
+    verify_jwt = false
+  [functions.esim-order]
     verify_jwt = false
