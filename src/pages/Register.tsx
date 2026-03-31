@@ -9,12 +9,23 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { COUNTRY_OPTIONS } from "@/data/countries";
 import { toast } from "sonner";
 import Logo from "@/components/Logo";
+import { PasswordStrengthMeter } from "@/components/PasswordStrengthMeter";
 
 const Register = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [agreed, setAgreed] = useState(false);
-  const [form, setForm] = useState({ fullName: "", email: "", password: "", country: "", street: "" });
+  const [form, setForm] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    country: "",
+    street: "",
+  });
+
+  const passwordsMatch =
+    form.confirmPassword.length === 0 || form.password === form.confirmPassword;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,8 +33,19 @@ const Register = () => {
       toast.error("Please accept the Terms & Conditions and Privacy Policy to continue");
       return;
     }
-    if (!form.fullName.trim() || !form.email.trim() || !form.password || !form.country || !form.street.trim()) {
+    if (
+      !form.fullName.trim() ||
+      !form.email.trim() ||
+      !form.password ||
+      !form.confirmPassword ||
+      !form.country ||
+      !form.street.trim()
+    ) {
       toast.error("Please fill in all fields");
+      return;
+    }
+    if (form.password !== form.confirmPassword) {
+      toast.error("Passwords do not match");
       return;
     }
     if (form.password.length < 6) {
@@ -71,7 +93,37 @@ const Register = () => {
           </div>
           <div>
             <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" value={form.password} onChange={e => setForm(f => ({ ...f, password: e.target.value }))} placeholder="Min 6 characters" />
+            <Input
+              id="password"
+              type="password"
+              value={form.password}
+              onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
+              placeholder="Choose a secure password"
+              autoComplete="new-password"
+              aria-describedby="password-strength-hint"
+            />
+            <div id="password-strength-hint">
+              <PasswordStrengthMeter password={form.password} className="mt-3" />
+            </div>
+          </div>
+          <div>
+            <Label htmlFor="confirmPassword">Confirm password</Label>
+            <Input
+              id="confirmPassword"
+              type="password"
+              value={form.confirmPassword}
+              onChange={(e) => setForm((f) => ({ ...f, confirmPassword: e.target.value }))}
+              placeholder="Re-enter your password"
+              autoComplete="new-password"
+              aria-invalid={!passwordsMatch}
+              aria-describedby={!passwordsMatch ? "confirm-password-error" : undefined}
+              className={!passwordsMatch ? "border-destructive focus-visible:ring-destructive" : undefined}
+            />
+            {!passwordsMatch && (
+              <p id="confirm-password-error" className="text-xs text-destructive mt-1.5" role="alert">
+                Passwords do not match.
+              </p>
+            )}
           </div>
           <div>
             <Label>Country</Label>
