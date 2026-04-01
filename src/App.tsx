@@ -43,6 +43,9 @@ import AdminNotifications from "./pages/admin/AdminNotifications";
 import AdminPackages from "./pages/admin/AdminPackages";
 import Esims from "./pages/Esims";
 import MyEsims from "./pages/dashboard/MyEsims";
+import TravelConsultancy from "./pages/dashboard/TravelConsultancy";
+import TravelConsultancyPayment from "./pages/dashboard/TravelConsultancyPayment";
+import TravelConsultancySuccess from "./pages/dashboard/TravelConsultancySuccess";
 import ItineraryGenerator from "./pages/ItineraryGenerator";
 import ItineraryView from "./pages/ItineraryView";
 import TravelGuides from "./pages/TravelGuides";
@@ -76,6 +79,9 @@ const AppRoutes = () => {
           <Route path="wishlist" element={<MyWishlist />} />
           <Route path="orders" element={<MyOrders />} />
           <Route path="esims" element={<MyEsims />} />
+          <Route path="consultancy" element={<TravelConsultancy />} />
+          <Route path="consultancy-payment" element={<TravelConsultancyPayment />} />
+          <Route path="consultancy-success" element={<TravelConsultancySuccess />} />
         </Route>
 
         {/* Admin panel */}

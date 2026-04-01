@@ -39,6 +39,7 @@ serve(async (req) => {
     const payment_intent_id = body?.payment_intent_id as string | undefined;
     const requestedType = body?.type as string | undefined;
     const itineraryPayload = body?.itinerary_payload as Record<string, unknown> | undefined;
+    const consultancyPayload = body?.consultancy_payload as Record<string, unknown> | undefined;
 
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
       apiVersion: "2025-08-27.basil",
@@ -272,6 +273,20 @@ serve(async (req) => {
       } else {
         result.record_id = existing.id;
       }
+    } else if (type === "consultancy") {
+      const safePlan = typeof consultancyPayload?.plan === "string" ? consultancyPayload.plan : null;
+      const safeAdults =
+        typeof consultancyPayload?.adults === "number"
+          ? consultancyPayload.adults
+          : parseInt(String(consultancyPayload?.adults ?? "0"), 10);
+      const safeChildren =
+        typeof consultancyPayload?.children === "number"
+          ? consultancyPayload.children
+          : parseInt(String(consultancyPayload?.children ?? "0"), 10);
+      result.plan = safePlan;
+      result.adults = Number.isFinite(safeAdults) && safeAdults >= 1 ? safeAdults : null;
+      result.children = Number.isFinite(safeChildren) && safeChildren >= 0 ? safeChildren : null;
+      result.amount_usd = paymentIntentAmountCents != null ? paymentIntentAmountCents / 100 : null;
     }
 
     return new Response(JSON.stringify(result), {

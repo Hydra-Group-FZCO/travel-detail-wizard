@@ -194,6 +194,66 @@ serve(async (req) => {
       );
     }
 
+    if (body.type === "consultancy") {
+      const plan = String(body.plan ?? "").trim();
+      const adultsRaw = body.adults;
+      const childrenRaw = body.children;
+      const adults = typeof adultsRaw === "number" ? adultsRaw : parseInt(String(adultsRaw ?? "0"), 10);
+      const children = typeof childrenRaw === "number" ? childrenRaw : parseInt(String(childrenRaw ?? "0"), 10);
+      const planMap: Record<string, { amountUsd: number; label: string }> = {
+        "2-weeks": { amountUsd: 40, label: "Ready in 2 weeks" },
+        "1-week": { amountUsd: 50, label: "Ready in 1 week" },
+        "3-days": { amountUsd: 60, label: "Ready in 3 days" },
+        "2-days": { amountUsd: 70, label: "Ready in 2 days" },
+      };
+      const selected = planMap[plan];
+      if (!selected) throw new Error("Invalid consultancy plan");
+      if (!Number.isFinite(adults) || adults < 1 || !Number.isFinite(children) || children < 0) {
+        throw new Error("Invalid travelers selection");
+      }
+      const travelers = adults + children;
+
+      const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
+        apiVersion: "2025-08-27.basil",
+      });
+      const amountUsd = selected.amountUsd * travelers;
+      const amountCents = amountUsd * 100;
+
+      const { data: profile, error: profileError } = await supabaseAdmin
+        .from("profiles")
+        .select("stripe_customer_id, full_name, phone, country, street")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      if (profileError) throw profileError;
+      if (!profile) throw new Error("Profile not found for user");
+
+      const customerId = await resolveOrCreateStripeCustomer(
+        stripe,
+        supabaseAdmin,
+        user.id,
+        user.email,
+        profile.stripe_customer_id,
+        profile as ProfileBilling,
+      );
+
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: amountCents,
+        currency: "usd",
+        customer: customerId,
+        payment_method_types: ["card"],
+      });
+
+      return new Response(
+        JSON.stringify({
+          clientSecret: paymentIntent.client_secret,
+          paymentIntentId: paymentIntent.id,
+          amountUsd,
+        }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 },
+      );
+    }
+
     if (body.type === "itinerary") {
       const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
         apiVersion: "2025-08-27.basil",
