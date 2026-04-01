@@ -43,12 +43,17 @@ import AdminNotifications from "./pages/admin/AdminNotifications";
 import AdminPackages from "./pages/admin/AdminPackages";
 import Esims from "./pages/Esims";
 import MyEsims from "./pages/dashboard/MyEsims";
+import TravelConsultancy from "./pages/dashboard/TravelConsultancy";
+import TravelConsultancyPayment from "./pages/dashboard/TravelConsultancyPayment";
+import TravelConsultancySuccess from "./pages/dashboard/TravelConsultancySuccess";
 import ItineraryGenerator from "./pages/ItineraryGenerator";
 import ItineraryView from "./pages/ItineraryView";
 import TravelGuides from "./pages/TravelGuides";
 import GuideView from "./pages/GuideView";
 import PaymentSuccess from "./pages/PaymentSuccess";
-import OAuthCallback from "./pages/OAuthCallback";
+import GuidePayment from "./pages/GuidePayment";
+import EsimPayment from "./pages/EsimPayment";
+import ItineraryPayment from "./pages/ItineraryPayment";
 
 const queryClient = new QueryClient();
 
@@ -62,7 +67,6 @@ const AppRoutes = () => {
         {/* Auth routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/~oauth" element={<OAuthCallback />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 
@@ -75,6 +79,9 @@ const AppRoutes = () => {
           <Route path="wishlist" element={<MyWishlist />} />
           <Route path="orders" element={<MyOrders />} />
           <Route path="esims" element={<MyEsims />} />
+          <Route path="consultancy" element={<TravelConsultancy />} />
+          <Route path="consultancy-payment" element={<TravelConsultancyPayment />} />
+          <Route path="consultancy-success" element={<TravelConsultancySuccess />} />
         </Route>
 
         {/* Admin panel */}
@@ -109,6 +116,9 @@ const AppRoutes = () => {
         <Route path="/itinerary/:id" element={<ItineraryView />} />
         <Route path="/travel-guides" element={<TravelGuides />} />
         <Route path="/travel-guides/view/:id" element={<GuideView />} />
+        <Route path="/guide-payment" element={<ProtectedRoute><GuidePayment /></ProtectedRoute>} />
+        <Route path="/esim-payment" element={<ProtectedRoute><EsimPayment /></ProtectedRoute>} />
+        <Route path="/itinerary-payment" element={<ProtectedRoute><ItineraryPayment /></ProtectedRoute>} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
 
         {/* Localized routes */}
@@ -130,6 +140,10 @@ const AppRoutes = () => {
             <Route path="itinerary/:id" element={<ItineraryView />} />
             <Route path="travel-guides" element={<TravelGuides />} />
             <Route path="travel-guides/view/:id" element={<GuideView />} />
+            <Route path="guide-payment" element={<ProtectedRoute><GuidePayment /></ProtectedRoute>} />
+            <Route path="esim-payment" element={<ProtectedRoute><EsimPayment /></ProtectedRoute>} />
+            <Route path="itinerary-payment" element={<ProtectedRoute><ItineraryPayment /></ProtectedRoute>} />
+            <Route path="payment-success" element={<PaymentSuccess />} />
           </Route>
         ))}
 

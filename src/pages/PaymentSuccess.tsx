@@ -6,12 +6,17 @@ import { Card, CardContent } from "@/components/ui/card";
 import PageLayout from "@/components/PageLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { localizedPath, useLanguage } from "@/i18n";
+import { ITINERARY_CHECKOUT_STORAGE_KEY, type ItineraryCheckoutPayload } from "@/lib/itineraryCheckoutStorage";
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const lang = useLanguage();
   const sessionId = searchParams.get("session_id");
+  const paymentIntentId =
+    searchParams.get("payment_intent_id") ||
+    searchParams.get("payment_intent") ||
+    null;
   const type = searchParams.get("type");
 
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
@@ -19,34 +24,51 @@ const PaymentSuccess = () => {
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
-    if (!sessionId) {
+    if (!sessionId && !paymentIntentId) {
       setStatus("error");
-      setErrorMsg("No payment session found.");
+      setErrorMsg("No payment reference found.");
       return;
     }
 
     const verify = async () => {
       try {
+        let itineraryPayload: ItineraryCheckoutPayload | null = null;
+        if (type === "itinerary") {
+          try {
+            const raw = sessionStorage.getItem(ITINERARY_CHECKOUT_STORAGE_KEY);
+            if (raw) itineraryPayload = JSON.parse(raw) as ItineraryCheckoutPayload;
+          } catch {
+            itineraryPayload = null;
+          }
+        }
+
         const { data, error } = await supabase.functions.invoke("verify-payment", {
-          body: { session_id: sessionId },
+          body: paymentIntentId
+            ? {
+                payment_intent_id: paymentIntentId,
+                type,
+                itinerary_payload: itineraryPayload,
+              }
+            : { session_id: sessionId, type },
         });
 
         if (error) throw error;
         if (data.status === "paid") {
+          if (type === "itinerary") sessionStorage.removeItem(ITINERARY_CHECKOUT_STORAGE_KEY);
           setStatus("success");
           setRecordId(data.record_id || data.order_id || null);
         } else {
           setStatus("error");
           setErrorMsg("Payment has not been completed yet.");
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         setStatus("error");
-        setErrorMsg(err.message || "Failed to verify payment.");
+        setErrorMsg(err instanceof Error ? err.message : "Failed to verify payment.");
       }
     };
 
     verify();
-  }, [sessionId]);
+  }, [sessionId, paymentIntentId]);
 
   const getRedirectPath = () => {
     if (type === "esim") return "/dashboard/esims";

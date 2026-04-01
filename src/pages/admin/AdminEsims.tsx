@@ -130,8 +130,8 @@ const AdminEsims = () => {
         </Card>
         <Card>
           <CardContent className="pt-6">
-            <p className="text-sm text-muted-foreground">Total Revenue</p>
-            <p className="text-2xl font-bold">€{totalRevenue.toFixed(2)}</p>
+            <p className="text-sm text-muted-foreground">Total Revenue (USD)</p>
+            <p className="text-2xl font-bold">${totalRevenue.toFixed(2)}</p>
           </CardContent>
         </Card>
       </div>
@@ -154,7 +154,7 @@ const AdminEsims = () => {
                       <TableHead>Data</TableHead>
                       <TableHead>Duration</TableHead>
                       <TableHead>Wholesale</TableHead>
-                      <TableHead>Retail (€)</TableHead>
+                      <TableHead>Retail (USD)</TableHead>
                       <TableHead>Actions</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -178,7 +178,7 @@ const AdminEsims = () => {
                               step="0.01"
                             />
                           ) : (
-                            <span className="font-semibold">€{pkg.price_retail_eur.toFixed(2)}</span>
+                            <span className="font-semibold">${pkg.price_retail_eur.toFixed(2)}</span>
                           )}
                         </TableCell>
                         <TableCell>
@@ -246,7 +246,7 @@ const AdminEsims = () => {
                           <TableCell>
                             <Badge variant="outline">{order.status}</Badge>
                           </TableCell>
-                          <TableCell className="font-semibold">€{order.price_paid_eur.toFixed(2)}</TableCell>
+                          <TableCell className="font-semibold">${order.price_paid_eur.toFixed(2)}</TableCell>
                           <TableCell>
                             <Button size="icon" variant="ghost" className="h-7 w-7" title="Re-send QR by email">
                               <Mail size={14} />

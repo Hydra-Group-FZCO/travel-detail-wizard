@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
 import { SampleItineraryPreview } from "@/components/SampleItineraryPreview";
@@ -13,10 +13,11 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/useAuth";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { localizedPath, useLanguage } from "@/i18n";
-import { format, differenceInDays } from "date-fns";
+import { ITINERARY_CHECKOUT_STORAGE_KEY } from "@/lib/itineraryCheckoutStorage";
+import type { DateRange } from "react-day-picker";
+import { format, differenceInDays, startOfToday } from "date-fns";
 import {
   CalendarIcon,
   MapPin,
@@ -33,49 +34,8 @@ import {
   Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const POPULAR_DESTINATIONS: Record<string, string[]> = {
-  en: [
-    "Paris, France", "Tokyo, Japan", "Barcelona, Spain", "Rome, Italy",
-    "New York, USA", "London, UK", "Bali, Indonesia", "Dubai, UAE",
-    "Lisbon, Portugal", "Amsterdam, Netherlands", "Bangkok, Thailand",
-    "Istanbul, Turkey", "Prague, Czech Republic", "Marrakech, Morocco",
-    "Santorini, Greece", "Buenos Aires, Argentina", "Sydney, Australia",
-    "Seoul, South Korea", "Vienna, Austria", "Cape Town, South Africa",
-  ],
-  es: [
-    "París, Francia", "Tokio, Japón", "Barcelona, España", "Roma, Italia",
-    "Nueva York, EE.UU.", "Londres, Reino Unido", "Bali, Indonesia", "Dubái, EAU",
-    "Lisboa, Portugal", "Ámsterdam, Países Bajos", "Bangkok, Tailandia",
-    "Estambul, Turquía", "Praga, República Checa", "Marrakech, Marruecos",
-    "Santorini, Grecia", "Buenos Aires, Argentina", "Sídney, Australia",
-    "Seúl, Corea del Sur", "Viena, Austria", "Ciudad del Cabo, Sudáfrica",
-  ],
-  fr: [
-    "Paris, France", "Tokyo, Japon", "Barcelone, Espagne", "Rome, Italie",
-    "New York, États-Unis", "Londres, Royaume-Uni", "Bali, Indonésie", "Dubaï, ÉAU",
-    "Lisbonne, Portugal", "Amsterdam, Pays-Bas", "Bangkok, Thaïlande",
-    "Istanbul, Turquie", "Prague, République tchèque", "Marrakech, Maroc",
-    "Santorin, Grèce", "Buenos Aires, Argentine", "Sydney, Australie",
-    "Séoul, Corée du Sud", "Vienne, Autriche", "Le Cap, Afrique du Sud",
-  ],
-  it: [
-    "Parigi, Francia", "Tokyo, Giappone", "Barcellona, Spagna", "Roma, Italia",
-    "New York, USA", "Londra, Regno Unito", "Bali, Indonesia", "Dubai, EAU",
-    "Lisbona, Portogallo", "Amsterdam, Paesi Bassi", "Bangkok, Thailandia",
-    "Istanbul, Turchia", "Praga, Repubblica Ceca", "Marrakech, Marocco",
-    "Santorini, Grecia", "Buenos Aires, Argentina", "Sydney, Australia",
-    "Seul, Corea del Sud", "Vienna, Austria", "Città del Capo, Sudafrica",
-  ],
-  de: [
-    "Paris, Frankreich", "Tokio, Japan", "Barcelona, Spanien", "Rom, Italien",
-    "New York, USA", "London, Vereinigtes Königreich", "Bali, Indonesien", "Dubai, VAE",
-    "Lissabon, Portugal", "Amsterdam, Niederlande", "Bangkok, Thailand",
-    "Istanbul, Türkei", "Prag, Tschechien", "Marrakesch, Marokko",
-    "Santorin, Griechenland", "Buenos Aires, Argentinien", "Sydney, Australien",
-    "Seoul, Südkorea", "Wien, Österreich", "Kapstadt, Südafrika",
-  ],
-};
+import { loadDestinationIndex } from "@/lib/destinationSuggestions";
+import { useDestinationSuggestions } from "@/lib/useDestinationSuggestions";
 
 const OUTPUT_LANGUAGES = [
   { code: "es", flag: "🇪🇸", label: "Español" },
@@ -134,7 +94,8 @@ const ITINERARY_UI = {
       destinationPlaceholder: "e.g. Paris, France",
       departureDate: "Departure date",
       returnDate: "Return date",
-      pickDate: "Pick a date",
+      pickDate: "Pick travel dates",
+      pickReturnDate: "select return",
       day: "day",
       days: "days",
       departureCity: "Departure city (optional)",
@@ -198,7 +159,8 @@ const ITINERARY_UI = {
       destinationPlaceholder: "ej. París, Francia",
       departureDate: "Fecha de salida",
       returnDate: "Fecha de regreso",
-      pickDate: "Elige una fecha",
+      pickDate: "Elige las fechas del viaje",
+      pickReturnDate: "elige la vuelta",
       day: "día",
       days: "días",
       departureCity: "Ciudad de salida (opcional)",
@@ -262,7 +224,8 @@ const ITINERARY_UI = {
       destinationPlaceholder: "ex. Paris, France",
       departureDate: "Date de départ",
       returnDate: "Date de retour",
-      pickDate: "Choisir une date",
+      pickDate: "Choisir les dates du voyage",
+      pickReturnDate: "puis le retour",
       day: "jour",
       days: "jours",
       departureCity: "Ville de départ (optionnel)",
@@ -326,7 +289,8 @@ const ITINERARY_UI = {
       destinationPlaceholder: "es. Parigi, Francia",
       departureDate: "Data di partenza",
       returnDate: "Data di ritorno",
-      pickDate: "Scegli una data",
+      pickDate: "Scegli le date del viaggio",
+      pickReturnDate: "poi il ritorno",
       day: "giorno",
       days: "giorni",
       departureCity: "Città di partenza (opzionale)",
@@ -390,7 +354,8 @@ const ITINERARY_UI = {
       destinationPlaceholder: "z. B. Paris, Frankreich",
       departureDate: "Abreisedatum",
       returnDate: "Rückreisedatum",
-      pickDate: "Datum wählen",
+      pickDate: "Reisedaten wählen",
+      pickReturnDate: "dann Rückreise",
       day: "Tag",
       days: "Tage",
       departureCity: "Abflugstadt (optional)",
@@ -476,6 +441,8 @@ const ItineraryGenerator = () => {
   const [destSearch, setDestSearch] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [departureCity, setDepartureCity] = useState("");
+  const [departureCitySearch, setDepartureCitySearch] = useState("");
+  const [showDepartureSuggestions, setShowDepartureSuggestions] = useState(false);
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const [adults, setAdults] = useState(2);
@@ -489,8 +456,12 @@ const ItineraryGenerator = () => {
   const [digitalConsent, setDigitalConsent] = useState(false);
 
   const numDays = startDate && endDate ? differenceInDays(endDate, startDate) + 1 : 0;
-  const destinations = POPULAR_DESTINATIONS[uiLang] || POPULAR_DESTINATIONS.en;
-  const filteredDestinations = destinations.filter((d) => d.toLowerCase().includes(destSearch.toLowerCase())).slice(0, 6);
+  const destinationSuggestions = useDestinationSuggestions(destSearch);
+  const departureCitySuggestions = useDestinationSuggestions(departureCitySearch);
+
+  useEffect(() => {
+    if (step === 0) void loadDestinationIndex();
+  }, [step]);
 
   const toggleInterest = (id: string) => {
     setInterests((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
@@ -526,7 +497,25 @@ const ItineraryGenerator = () => {
   };
 
   const handleGenerate = async () => {
+    const checkoutPayload = {
+      destination,
+      departure_city: departureCity || "",
+      start_date: format(startDate!, "yyyy-MM-dd"),
+      end_date: format(endDate!, "yyyy-MM-dd"),
+      num_days: numDays,
+      trip_type: tripType,
+      travelers_adults: adults,
+      travelers_children: children,
+      children_ages: childrenAges,
+      interests,
+      budget_level: budgetLevel,
+      language,
+      extras,
+    };
+
     if (!user) {
+      sessionStorage.setItem(ITINERARY_CHECKOUT_STORAGE_KEY, JSON.stringify(checkoutPayload));
+      sessionStorage.setItem("auth_return_to", localizedPath("/itinerary-payment", uiLang));
       toast({ title: copy.auth.title, description: copy.auth.description, variant: "destructive" });
       navigate("/login");
       return;
@@ -534,35 +523,12 @@ const ItineraryGenerator = () => {
 
     setIsGenerating(true);
     try {
-      const { data, error } = await supabase.functions.invoke("create-payment", {
-        body: {
-          type: "itinerary",
-          metadata: {
-            destination,
-            departure_city: departureCity || "",
-            start_date: format(startDate!, "yyyy-MM-dd"),
-            end_date: format(endDate!, "yyyy-MM-dd"),
-            num_days: String(numDays),
-            trip_type: tripType,
-            travelers_adults: String(adults),
-            travelers_children: String(children),
-            children_ages: JSON.stringify(childrenAges),
-            interests: JSON.stringify(interests),
-            budget_level: budgetLevel,
-            language,
-            extras: JSON.stringify(extras),
-          },
-        },
-      });
-
-      if (error) throw error;
-      if (data?.url) {
-        window.location.href = data.url;
-      } else {
-        throw new Error("No checkout URL returned");
-      }
-    } catch (err: any) {
-      toast({ title: copy.error.title, description: err.message || copy.error.description, variant: "destructive" });
+      sessionStorage.setItem(ITINERARY_CHECKOUT_STORAGE_KEY, JSON.stringify(checkoutPayload));
+      navigate(localizedPath("/itinerary-payment", uiLang));
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : copy.error.description;
+      toast({ title: copy.error.title, description: message, variant: "destructive" });
+    } finally {
       setIsGenerating(false);
     }
   };
@@ -630,9 +596,9 @@ const ItineraryGenerator = () => {
                       className="pl-10"
                     />
                   </div>
-                  {showSuggestions && destSearch && filteredDestinations.length > 0 && (
+                  {showSuggestions && destSearch && destinationSuggestions.length > 0 && (
                     <div className="absolute z-20 w-full bg-popover border rounded-lg shadow-lg mt-1">
-                      {filteredDestinations.map((item) => (
+                      {destinationSuggestions.map((item) => (
                         <button
                           key={item}
                           className="w-full px-4 py-2.5 text-left hover:bg-muted text-sm transition-colors"
@@ -649,31 +615,47 @@ const ItineraryGenerator = () => {
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label>{copy.form.departureDate}</Label>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !startDate && "text-muted-foreground")}>
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {startDate ? format(startDate, "PPP") : copy.form.pickDate}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0"><Calendar mode="single" selected={startDate} onSelect={setStartDate} disabled={(date) => date < new Date()} /></PopoverContent>
-                    </Popover>
-                  </div>
-                  <div className="space-y-2">
-                    <Label>{copy.form.returnDate}</Label>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !endDate && "text-muted-foreground")}>
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {endDate ? format(endDate, "PPP") : copy.form.pickDate}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0"><Calendar mode="single" selected={endDate} onSelect={setEndDate} disabled={(date) => date < (startDate || new Date())} /></PopoverContent>
-                    </Popover>
-                  </div>
+                <div className="space-y-2">
+                  <Label className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                    <span>{copy.form.departureDate}</span>
+                    <span className="text-muted-foreground font-normal" aria-hidden>
+                      ·
+                    </span>
+                    <span>{copy.form.returnDate}</span>
+                  </Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-full justify-start text-left font-normal min-h-11 h-auto py-2",
+                          !startDate && !endDate && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4 shrink-0" />
+                        <span className="text-left leading-snug">
+                          {startDate && endDate
+                            ? `${format(startDate, "PPP")} – ${format(endDate, "PPP")}`
+                            : startDate
+                              ? `${format(startDate, "PPP")} — ${copy.form.pickReturnDate}`
+                              : copy.form.pickDate}
+                        </span>
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="range"
+                        defaultMonth={startDate ?? new Date()}
+                        selected={{ from: startDate, to: endDate }}
+                        onSelect={(range: DateRange | undefined) => {
+                          setStartDate(range?.from);
+                          setEndDate(range?.to);
+                        }}
+                        numberOfMonths={2}
+                        disabled={{ before: startOfToday() }}
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </div>
 
                 {numDays > 0 && (
@@ -682,12 +664,42 @@ const ItineraryGenerator = () => {
                   </Badge>
                 )}
 
-                <div className="space-y-2">
+                <div className="space-y-2 relative">
                   <Label>{copy.form.departureCity}</Label>
                   <div className="relative">
-                    <Plane className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <Input value={departureCity} onChange={(e) => setDepartureCity(e.target.value)} placeholder={copy.form.departureCityPlaceholder} className="pl-10" />
+                    <Plane className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground z-10" />
+                    <Input
+                      value={departureCitySearch || departureCity}
+                      onChange={(e) => {
+                        const v = e.target.value;
+                        setDepartureCitySearch(v);
+                        setDepartureCity(v);
+                        setShowDepartureSuggestions(true);
+                      }}
+                      onFocus={() => setShowDepartureSuggestions(true)}
+                      placeholder={copy.form.departureCityPlaceholder}
+                      className="pl-10"
+                      autoComplete="off"
+                    />
                   </div>
+                  {showDepartureSuggestions && departureCitySearch && departureCitySuggestions.length > 0 && (
+                    <div className="absolute z-20 w-full bg-popover border rounded-lg shadow-lg mt-1">
+                      {departureCitySuggestions.map((item) => (
+                        <button
+                          key={item}
+                          type="button"
+                          className="w-full px-4 py-2.5 text-left hover:bg-muted text-sm transition-colors"
+                          onClick={() => {
+                            setDepartureCity(item);
+                            setDepartureCitySearch(item);
+                            setShowDepartureSuggestions(false);
+                          }}
+                        >
+                          {item}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>

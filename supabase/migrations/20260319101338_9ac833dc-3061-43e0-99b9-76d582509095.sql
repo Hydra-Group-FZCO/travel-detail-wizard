@@ -1,9 +1,13 @@
 
--- Create enum for roles FIRST
-CREATE TYPE public.app_role AS ENUM ('customer', 'admin');
+-- Base schema (idempotent: safe if objects already exist)
 
--- Create user_roles table
-CREATE TABLE public.user_roles (
+DO $$ BEGIN
+  CREATE TYPE public.app_role AS ENUM ('customer', 'admin');
+EXCEPTION
+  WHEN duplicate_object THEN NULL;
+END $$;
+
+CREATE TABLE IF NOT EXISTS public.user_roles (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   role app_role NOT NULL,
@@ -11,7 +15,6 @@ CREATE TABLE public.user_roles (
 );
 ALTER TABLE public.user_roles ENABLE ROW LEVEL SECURITY;
 
--- Security definer function
 CREATE OR REPLACE FUNCTION public.has_role(_user_id UUID, _role app_role)
 RETURNS BOOLEAN
 LANGUAGE sql
@@ -24,15 +27,19 @@ AS $$
   )
 $$;
 
--- user_roles policies
+DROP POLICY IF EXISTS "Users can view their own role" ON public.user_roles;
+DROP POLICY IF EXISTS "Admins can view all roles" ON public.user_roles;
+DROP POLICY IF EXISTS "Admins can insert roles" ON public.user_roles;
+DROP POLICY IF EXISTS "Admins can update roles" ON public.user_roles;
+DROP POLICY IF EXISTS "Admins can delete roles" ON public.user_roles;
+
 CREATE POLICY "Users can view their own role" ON public.user_roles FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Admins can view all roles" ON public.user_roles FOR SELECT USING (public.has_role(auth.uid(), 'admin'));
 CREATE POLICY "Admins can insert roles" ON public.user_roles FOR INSERT WITH CHECK (public.has_role(auth.uid(), 'admin'));
 CREATE POLICY "Admins can update roles" ON public.user_roles FOR UPDATE USING (public.has_role(auth.uid(), 'admin'));
 CREATE POLICY "Admins can delete roles" ON public.user_roles FOR DELETE USING (public.has_role(auth.uid(), 'admin'));
 
--- Profiles table
-CREATE TABLE public.profiles (
+CREATE TABLE IF NOT EXISTS public.profiles (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL UNIQUE REFERENCES auth.users(id) ON DELETE CASCADE,
   full_name TEXT NOT NULL DEFAULT '',
@@ -44,14 +51,20 @@ CREATE TABLE public.profiles (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Users can view their own profile" ON public.profiles;
+DROP POLICY IF EXISTS "Users can update their own profile" ON public.profiles;
+DROP POLICY IF EXISTS "Users can insert their own profile" ON public.profiles;
+DROP POLICY IF EXISTS "Admins can view all profiles" ON public.profiles;
+DROP POLICY IF EXISTS "Admins can update all profiles" ON public.profiles;
+
 CREATE POLICY "Users can view their own profile" ON public.profiles FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Users can update their own profile" ON public.profiles FOR UPDATE USING (auth.uid() = user_id);
 CREATE POLICY "Users can insert their own profile" ON public.profiles FOR INSERT WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "Admins can view all profiles" ON public.profiles FOR SELECT USING (public.has_role(auth.uid(), 'admin'));
 CREATE POLICY "Admins can update all profiles" ON public.profiles FOR UPDATE USING (public.has_role(auth.uid(), 'admin'));
 
--- Bookings table
-CREATE TABLE public.bookings (
+CREATE TABLE IF NOT EXISTS public.bookings (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   experience_name TEXT NOT NULL,
@@ -65,13 +78,18 @@ CREATE TABLE public.bookings (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 ALTER TABLE public.bookings ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Users can view own bookings" ON public.bookings;
+DROP POLICY IF EXISTS "Users can create bookings" ON public.bookings;
+DROP POLICY IF EXISTS "Admins can view all bookings" ON public.bookings;
+DROP POLICY IF EXISTS "Admins can update bookings" ON public.bookings;
+
 CREATE POLICY "Users can view own bookings" ON public.bookings FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Users can create bookings" ON public.bookings FOR INSERT WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "Admins can view all bookings" ON public.bookings FOR SELECT USING (public.has_role(auth.uid(), 'admin'));
 CREATE POLICY "Admins can update bookings" ON public.bookings FOR UPDATE USING (public.has_role(auth.uid(), 'admin'));
 
--- Wishlists table
-CREATE TABLE public.wishlists (
+CREATE TABLE IF NOT EXISTS public.wishlists (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   experience_name TEXT NOT NULL,
@@ -80,12 +98,16 @@ CREATE TABLE public.wishlists (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 ALTER TABLE public.wishlists ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Users can view own wishlist" ON public.wishlists;
+DROP POLICY IF EXISTS "Users can add to wishlist" ON public.wishlists;
+DROP POLICY IF EXISTS "Users can remove from wishlist" ON public.wishlists;
+
 CREATE POLICY "Users can view own wishlist" ON public.wishlists FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Users can add to wishlist" ON public.wishlists FOR INSERT WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "Users can remove from wishlist" ON public.wishlists FOR DELETE USING (auth.uid() = user_id);
 
--- Orders table
-CREATE TABLE public.orders (
+CREATE TABLE IF NOT EXISTS public.orders (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   booking_id UUID REFERENCES public.bookings(id),
@@ -96,11 +118,14 @@ CREATE TABLE public.orders (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Users can view own orders" ON public.orders;
+DROP POLICY IF EXISTS "Admins can view all orders" ON public.orders;
+
 CREATE POLICY "Users can view own orders" ON public.orders FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Admins can view all orders" ON public.orders FOR SELECT USING (public.has_role(auth.uid(), 'admin'));
 
--- Packages table
-CREATE TABLE public.packages (
+CREATE TABLE IF NOT EXISTS public.packages (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title TEXT NOT NULL,
   description TEXT,
@@ -114,10 +139,13 @@ CREATE TABLE public.packages (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 ALTER TABLE public.packages ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Anyone can view active packages" ON public.packages;
+DROP POLICY IF EXISTS "Admins can manage packages" ON public.packages;
+
 CREATE POLICY "Anyone can view active packages" ON public.packages FOR SELECT USING (is_active = true);
 CREATE POLICY "Admins can manage packages" ON public.packages FOR ALL USING (public.has_role(auth.uid(), 'admin'));
 
--- Auto-create profile and role on signup
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER
 LANGUAGE plpgsql
@@ -133,12 +161,12 @@ BEGIN
 END;
 $$;
 
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW
   EXECUTE FUNCTION public.handle_new_user();
 
--- Updated_at trigger
 CREATE OR REPLACE FUNCTION public.update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -147,12 +175,40 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SET search_path = public;
 
+DROP TRIGGER IF EXISTS update_profiles_updated_at ON public.profiles;
+DROP TRIGGER IF EXISTS update_bookings_updated_at ON public.bookings;
+DROP TRIGGER IF EXISTS update_packages_updated_at ON public.packages;
+
 CREATE TRIGGER update_profiles_updated_at BEFORE UPDATE ON public.profiles FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
 CREATE TRIGGER update_bookings_updated_at BEFORE UPDATE ON public.bookings FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
 CREATE TRIGGER update_packages_updated_at BEFORE UPDATE ON public.packages FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
 
 -- Storage bucket for avatars
-INSERT INTO storage.buckets (id, name, public) VALUES ('avatars', 'avatars', true);
+-- Local/preview Storage images sometimes ship without a `public` column on `storage.buckets`.
+DO $avatar_bucket$
+BEGIN
+  IF EXISTS (SELECT 1 FROM storage.buckets WHERE id = 'avatars') THEN
+    RETURN;
+  END IF;
+  IF EXISTS (
+    SELECT 1
+    FROM information_schema.columns
+    WHERE table_schema = 'storage'
+      AND table_name = 'buckets'
+      AND column_name = 'public'
+  ) THEN
+    INSERT INTO storage.buckets (id, name, "public")
+    VALUES ('avatars', 'avatars', true);
+  ELSE
+    INSERT INTO storage.buckets (id, name)
+    VALUES ('avatars', 'avatars');
+  END IF;
+END $avatar_bucket$;
+
+DROP POLICY IF EXISTS "Avatar images are publicly accessible" ON storage.objects;
+DROP POLICY IF EXISTS "Users can upload their own avatar" ON storage.objects;
+DROP POLICY IF EXISTS "Users can update their own avatar" ON storage.objects;
+
 CREATE POLICY "Avatar images are publicly accessible" ON storage.objects FOR SELECT USING (bucket_id = 'avatars');
 CREATE POLICY "Users can upload their own avatar" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'avatars' AND auth.uid()::text = (storage.foldername(name))[1]);
 CREATE POLICY "Users can update their own avatar" ON storage.objects FOR UPDATE USING (bucket_id = 'avatars' AND auth.uid()::text = (storage.foldername(name))[1]);

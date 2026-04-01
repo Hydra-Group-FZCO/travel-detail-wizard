@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { countries } from "@/data/countries";
+import { COUNTRY_OPTIONS, countryCodeFromStored } from "@/data/countries";
 import { toast } from "sonner";
 import { Camera } from "lucide-react";
 
@@ -21,7 +21,7 @@ const MyProfile = () => {
       setForm({
         full_name: profile.full_name || "",
         phone: profile.phone || "",
-        country: profile.country || "",
+        country: countryCodeFromStored(profile.country),
         street: (profile as any).street || "",
       });
     }
@@ -95,7 +95,11 @@ const MyProfile = () => {
             <Select value={form.country} onValueChange={v => setForm(f => ({ ...f, country: v }))}>
               <SelectTrigger><SelectValue placeholder="Select country" /></SelectTrigger>
               <SelectContent className="max-h-60">
-                {countries.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                {COUNTRY_OPTIONS.map((c) => (
+                  <SelectItem key={c.code} value={c.code}>
+                    {c.name}
+                  </SelectItem>
+                ))}
               </SelectContent>
            </Select>
           </div>

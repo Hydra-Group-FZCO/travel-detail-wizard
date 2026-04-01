@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useNavigate } from "react-router-dom";
-import { Search, Wifi, Clock, Globe, Smartphone, Info, ShoppingCart, CheckCircle } from "lucide-react";
+import { Search, Wifi, Clock, Globe, Smartphone, Info, ShoppingCart } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,7 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import PageLayout from "@/components/PageLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { useTranslations } from "@/i18n";
+import { useLanguage, useTranslations, localizedPath } from "@/i18n";
 import { useAuth } from "@/hooks/useAuth";
 
 type EsimPackage = {
@@ -62,6 +62,7 @@ const countryNames: Record<string, string> = {
 
 const Esims = () => {
   const t = useTranslations();
+  const lang = useLanguage();
   const navigate = useNavigate();
   const { user } = useAuth();
   const [packages, setPackages] = useState<EsimPackage[]>([]);
@@ -69,8 +70,6 @@ const Esims = () => {
   const [search, setSearch] = useState("");
   const [region, setRegion] = useState("all");
   const [selectedPkg, setSelectedPkg] = useState<EsimPackage | null>(null);
-  const [ordering, setOrdering] = useState(false);
-  const [orderSuccess, setOrderSuccess] = useState(false);
   const [esimConsent, setEsimConsent] = useState(false);
   const { toast } = useToast();
 
@@ -111,36 +110,15 @@ const Esims = () => {
       return;
     }
     setSelectedPkg(pkg);
-    setOrderSuccess(false);
     setEsimConsent(false);
   };
 
-  const handleConfirmOrder = async () => {
-    if (!selectedPkg || !user) return;
-    setOrdering(true);
-
-    try {
-      const { data, error } = await supabase.functions.invoke("create-payment", {
-        body: {
-          type: "esim",
-          metadata: {
-            package_code: selectedPkg.package_code,
-            package_name: selectedPkg.name,
-            price_eur: selectedPkg.price_retail_eur,
-          },
-        },
-      });
-
-      if (error) throw error;
-      if (data?.url) {
-        window.location.href = data.url;
-      } else {
-        throw new Error("No checkout URL returned");
-      }
-    } catch (err: any) {
-      toast({ title: "Payment failed", description: err.message, variant: "destructive" });
-      setOrdering(false);
-    }
+  const goToCardPayment = () => {
+    if (!selectedPkg || !user || !esimConsent) return;
+    const q = new URLSearchParams({ package_code: selectedPkg.package_code });
+    navigate(`${localizedPath("/esim-payment", lang)}?${q.toString()}`);
+    setSelectedPkg(null);
+    setEsimConsent(false);
   };
 
   // Group packages by location_code
@@ -299,7 +277,7 @@ const Esims = () => {
                               </div>
                               <div className="flex items-center justify-between">
                                 <span className="text-2xl font-bold text-foreground">
-                                  €{pkg.price_retail_eur.toFixed(2)}
+                                  ${pkg.price_retail_eur.toFixed(2)} USD
                                 </span>
                                 <Button size="sm" className="rounded-full" onClick={(e) => { e.stopPropagation(); handleBuyClick(pkg); }}>
                                   {t.esims.buyNow}
@@ -317,29 +295,9 @@ const Esims = () => {
       </section>
 
       {/* Order Confirmation Dialog */}
-      <Dialog open={!!selectedPkg} onOpenChange={(open) => { if (!open) { setSelectedPkg(null); setOrderSuccess(false); } }}>
+      <Dialog open={!!selectedPkg} onOpenChange={(open) => { if (!open) setSelectedPkg(null); }}>
         <DialogContent className="sm:max-w-md">
-          {orderSuccess ? (
-            <>
-              <DialogHeader>
-                <DialogTitle className="flex items-center gap-2">
-                  <CheckCircle className="text-green-500" size={22} />
-                  Order Confirmed!
-                </DialogTitle>
-                <DialogDescription>
-                  Your eSIM order has been placed. You can view it in your dashboard under "My eSIMs".
-                </DialogDescription>
-              </DialogHeader>
-              <DialogFooter className="gap-2">
-                <Button variant="outline" onClick={() => { setSelectedPkg(null); setOrderSuccess(false); }}>
-                  Continue Shopping
-                </Button>
-                <Button onClick={() => navigate("/dashboard/esims")}>
-                  View My eSIMs
-                </Button>
-              </DialogFooter>
-            </>
-          ) : selectedPkg && (
+          {selectedPkg && (
             <>
               <DialogHeader>
                 <DialogTitle className="flex items-center gap-2">
@@ -384,7 +342,7 @@ const Esims = () => {
                   )}
                   <div className="border-t border-border pt-3 flex justify-between items-center">
                     <span className="font-semibold">Total</span>
-                    <span className="text-2xl font-bold text-primary">€{selectedPkg.price_retail_eur.toFixed(2)}</span>
+                    <span className="text-2xl font-bold text-primary">${selectedPkg.price_retail_eur.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
@@ -401,8 +359,8 @@ const Esims = () => {
                 </label>
                 <div className="flex gap-2 justify-end w-full">
                   <Button variant="outline" onClick={() => setSelectedPkg(null)}>Cancel</Button>
-                  <Button onClick={handleConfirmOrder} disabled={ordering || !esimConsent}>
-                    {ordering ? "Processing..." : `Pay €${selectedPkg.price_retail_eur.toFixed(2)}`}
+                  <Button onClick={goToCardPayment} disabled={!esimConsent}>
+                    Continue to payment · ${selectedPkg.price_retail_eur.toFixed(2)}
                   </Button>
                 </div>
               </DialogFooter>

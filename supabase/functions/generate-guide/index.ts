@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { tokensFromLegacyDepth } from "../_shared/guide_token_pricing.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -55,9 +56,25 @@ serve(async (req) => {
       ultimate: "Write 60+ pages worth of content. Cover absolutely everything with insider secrets, hidden gems, and exhaustive detail.",
     };
 
+    const tokenBudget =
+      typeof guide.token_budget === "number" && guide.token_budget > 0
+        ? guide.token_budget
+        : tokensFromLegacyDepth(
+            typeof guide.depth === "string" ? guide.depth : "essential",
+          );
+
+    const lengthByTokens =
+      tokenBudget < 120_000
+        ? "Concise but complete: prioritize the most useful sections, best stops, and clear practical advice. Do not pad."
+        : tokenBudget < 250_000
+          ? "Balanced guide: strong detail in every major section, solid neighborhood and practical coverage."
+          : "Exhaustive guide: go deep in every section, more options per category, insider angles, and thorough coverage without unnecessary filler.";
+
     const focusAreas = (guide.focus_areas || []).join(", ") || "General overview";
     const year = new Date().getFullYear();
     const depthText = depthInstruction[guide.depth] || depthInstruction.essential;
+    const lengthText =
+      typeof guide.token_budget === "number" && guide.token_budget > 0 ? lengthByTokens : depthText;
 
     const systemPrompt = `You are Digital Moonkey Travel's expert travel writer.
 
@@ -66,7 +83,8 @@ Generate a comprehensive, detailed travel guide.
 Output language: ${guide.language}
 Destination: ${guide.destination}
 Focus areas: ${focusAreas}
-Guide depth: ${guide.depth}
+Guide depth tier: ${guide.depth}
+Approximate AI token budget for this generation: ${tokenBudget} tokens (scale thoroughness to match this budget).
 Travel season: ${guide.season || "All seasons"}
 
 IMPORTANT — LINKS & REFERENCES:
@@ -182,14 +200,17 @@ Use real places, real neighborhoods, real prices.
 Be honest about downsides and tourist traps.
 Write like a knowledgeable friend, not a brochure.
 ALL links must be real, functional URLs (Google Maps search links are always valid).
-Length: ${depthText}`;
+Length / detail: ${lengthText}`;
 
     await supabase
       .from("travel_guides")
       .update({ status: "generating" })
       .eq("id", guide_id);
 
-    const model = guide.depth === "ultimate" ? "google/gemini-2.5-pro" : "google/gemini-2.5-flash";
+    const usePro =
+      guide.depth === "ultimate" ||
+      (typeof guide.token_budget === "number" && guide.token_budget >= 280_000);
+    const model = usePro ? "google/gemini-2.5-pro" : "google/gemini-2.5-flash";
 
     const aiResponse = await fetch(
       "https://ai.gateway.lovable.dev/v1/chat/completions",
@@ -205,7 +226,7 @@ Length: ${depthText}`;
             { role: "system", content: systemPrompt },
             {
               role: "user",
-              content: `Generate my complete ${guide.depth} travel guide for ${guide.destination}. Make it comprehensive, practical, and amazing!`,
+              content: `Generate my travel guide for ${guide.destination} using the requested token budget (~${tokenBudget} tokens). Tier: ${guide.depth}. Make it comprehensive, practical, and amazing!`,
             },
           ],
           stream: true,

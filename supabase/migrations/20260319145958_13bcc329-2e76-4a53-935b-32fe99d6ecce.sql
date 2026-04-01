@@ -1,5 +1,5 @@
 
-CREATE TABLE public.itineraries (
+CREATE TABLE IF NOT EXISTS public.itineraries (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id uuid NOT NULL,
   destination text NOT NULL,
@@ -27,6 +27,12 @@ CREATE TABLE public.itineraries (
 
 ALTER TABLE public.itineraries ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Users can view own itineraries" ON public.itineraries;
+DROP POLICY IF EXISTS "Users can insert own itineraries" ON public.itineraries;
+DROP POLICY IF EXISTS "Service role can manage itineraries" ON public.itineraries;
+DROP POLICY IF EXISTS "Public can view shared itineraries" ON public.itineraries;
+DROP POLICY IF EXISTS "Admins can view all itineraries" ON public.itineraries;
+
 CREATE POLICY "Users can view own itineraries" ON public.itineraries
   FOR SELECT TO authenticated
   USING (auth.uid() = user_id);
@@ -48,6 +54,7 @@ CREATE POLICY "Admins can view all itineraries" ON public.itineraries
   FOR SELECT TO authenticated
   USING (public.has_role(auth.uid(), 'admin'));
 
+DROP TRIGGER IF EXISTS update_itineraries_updated_at ON public.itineraries;
 CREATE TRIGGER update_itineraries_updated_at
   BEFORE UPDATE ON public.itineraries
   FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();

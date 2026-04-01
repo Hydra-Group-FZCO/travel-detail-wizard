@@ -1,6 +1,6 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { CalendarDays, User, Heart, FileText, LogOut, Home, Wifi, MapPin, BookOpen } from "lucide-react";
+import { CalendarDays, User, Heart, FileText, LogOut, Home, Wifi, MapPin, BookOpen, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/Logo";
 
@@ -9,6 +9,7 @@ const navItems = [
   { to: "/dashboard/itineraries", icon: MapPin, label: "My Itineraries", end: false },
   { to: "/dashboard/guides", icon: BookOpen, label: "My Guides", end: false },
   { to: "/dashboard/esims", icon: Wifi, label: "My eSIMs", end: false },
+  { to: "/dashboard/consultancy", icon: Briefcase, label: "Travel Consultancy", end: false },
   { to: "/dashboard/profile", icon: User, label: "My Profile", end: false },
   { to: "/dashboard/wishlist", icon: Heart, label: "My Wishlist", end: false },
   { to: "/dashboard/orders", icon: FileText, label: "My Orders", end: false },
