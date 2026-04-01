@@ -4,6 +4,7 @@ import { Minus, Plus } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CONSULTANCY_PLANS } from "@/lib/consultancyPlans";
 import { CONSULTANCY_CHECKOUT_STORAGE_KEY } from "@/lib/consultancyCheckoutStorage";
 
@@ -11,6 +12,7 @@ const TravelConsultancy = () => {
   const navigate = useNavigate();
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
+  const [destination, setDestination] = useState<"Aruba" | "Canada" | "United Kingdom">("Aruba");
   const travelers = adults + children;
 
   return (
@@ -24,6 +26,19 @@ const TravelConsultancy = () => {
 
       <div className="rounded-xl border border-border bg-card p-5 space-y-4 w-full">
         <h2 className="text-base font-semibold">Travelers</h2>
+        <div className="space-y-2">
+          <span className="text-sm text-muted-foreground">Destination</span>
+          <Select value={destination} onValueChange={(v: "Aruba" | "Canada" | "United Kingdom") => setDestination(v)}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select destination" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Aruba">Aruba</SelectItem>
+              <SelectItem value="Canada">Canada</SelectItem>
+              <SelectItem value="United Kingdom">United Kingdom</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="flex items-center gap-4">
             <span className="text-sm text-muted-foreground min-w-16">Adults</span>
@@ -65,7 +80,7 @@ const TravelConsultancy = () => {
                 onClick={() => {
                   sessionStorage.setItem(
                     CONSULTANCY_CHECKOUT_STORAGE_KEY,
-                    JSON.stringify({ plan: plan.id, adults, children })
+                    JSON.stringify({ plan: plan.id, adults, children, destination })
                   );
                   navigate("/dashboard/consultancy-payment");
                 }}

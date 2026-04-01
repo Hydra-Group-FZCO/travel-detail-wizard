@@ -6,6 +6,7 @@ export type ConsultancyCheckoutPayload = {
   plan: ConsultancyPlanId;
   adults: number;
   children: number;
+  destination?: "Aruba" | "Canada" | "United Kingdom";
 };
 
 export function readConsultancyCheckoutPayload(): ConsultancyCheckoutPayload | null {
@@ -18,7 +19,11 @@ export function readConsultancyCheckoutPayload(): ConsultancyCheckoutPayload | n
     const children = Number(payload.children);
     if (!Number.isFinite(adults) || !Number.isFinite(children)) return null;
     if (adults < 1 || children < 0) return null;
-    return { plan: payload.plan, adults, children };
+    const destination =
+      payload.destination === "Aruba" || payload.destination === "Canada" || payload.destination === "United Kingdom"
+        ? payload.destination
+        : undefined;
+    return { plan: payload.plan, adults, children, destination };
   } catch {
     return null;
   }
