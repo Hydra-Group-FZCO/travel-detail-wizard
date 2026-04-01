@@ -172,7 +172,9 @@ const AdminOrders = () => {
                       <td className="px-4 py-2.5 text-sm text-[hsl(220,10%,55%)]">{new Date(o.date).toLocaleDateString()}</td>
                       <td className="px-4 py-2.5"><Badge variant="outline" className="text-[10px] border-[hsl(220,20%,25%)] text-[hsl(220,10%,60%)]">{o.type}</Badge></td>
                       <td className="px-4 py-2.5 text-sm text-white max-w-[250px] truncate">{o.name}</td>
-                      <td className="px-4 py-2.5 text-sm font-medium text-white">€{o.amount.toFixed(2)}</td>
+                      <td className="px-4 py-2.5 text-sm font-medium text-white">
+                        {o.type === "eSIM" ? `$${o.amount.toFixed(2)}` : `€${o.amount.toFixed(2)}`}
+                      </td>
                       <td className="px-4 py-2.5">
                         <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
                           o.status === "completed" || o.status === "Confirmed" ? "bg-[hsl(142,71%,45%,0.15)] text-[hsl(142,71%,55%)]" :

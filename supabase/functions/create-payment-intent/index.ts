@@ -127,6 +127,73 @@ serve(async (req) => {
     if (authError || !user?.email) throw new Error("User not authenticated");
 
     const body = await req.json();
+
+    if (body.type === "esim") {
+      const package_code = String(body.package_code ?? "").trim();
+      if (!package_code) throw new Error("Missing package_code");
+
+      const { data: esimPkg, error: esimPkgError } = await supabaseAdmin
+        .from("esim_packages_cache")
+        .select("package_code, name, price_retail_eur")
+        .eq("package_code", package_code)
+        .maybeSingle();
+
+      if (esimPkgError) throw esimPkgError;
+      if (!esimPkg?.price_retail_eur || esimPkg.price_retail_eur <= 0) {
+        throw new Error("Unknown or unavailable eSIM package");
+      }
+
+      const priceUsd = Number(esimPkg.price_retail_eur);
+      const amountCents = Math.round(priceUsd * 100);
+      if (amountCents < 50) throw new Error("Invalid package price");
+
+      const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
+        apiVersion: "2025-08-27.basil",
+      });
+
+      const { data: profile, error: profileError } = await supabaseAdmin
+        .from("profiles")
+        .select("stripe_customer_id, full_name, phone, country, street")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      if (profileError) throw profileError;
+      if (!profile) throw new Error("Profile not found for user");
+
+      const customerId = await resolveOrCreateStripeCustomer(
+        stripe,
+        supabaseAdmin,
+        user.id,
+        user.email,
+        profile.stripe_customer_id,
+        profile as ProfileBilling,
+      );
+
+      const safeName = String(esimPkg.name ?? "").trim().slice(0, 450);
+
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: amountCents,
+        currency: "usd",
+        customer: customerId,
+        payment_method_types: ["card"],
+        metadata: {
+          user_id: user.id,
+          type: "esim",
+          package_code: esimPkg.package_code,
+          price_usd: String(priceUsd),
+          ...(safeName ? { package_name: safeName } : {}),
+        },
+      });
+
+      return new Response(
+        JSON.stringify({
+          clientSecret: paymentIntent.client_secret,
+          paymentIntentId: paymentIntent.id,
+        }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 },
+      );
+    }
+
     const {
       token_budget: rawTokens,
       depth: legacyDepth,

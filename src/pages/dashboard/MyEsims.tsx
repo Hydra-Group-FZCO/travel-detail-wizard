@@ -101,7 +101,7 @@ const MyEsims = () => {
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
-                  <span>€{order.price_paid_eur.toFixed(2)}</span>
+                  <span>${order.price_paid_eur.toFixed(2)} USD</span>
                   <span>{new Date(order.created_at).toLocaleDateString()}</span>
                   {order.iccid && <span className="font-mono text-xs">ICCID: {order.iccid}</span>}
                 </div>

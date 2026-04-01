@@ -125,7 +125,8 @@ serve(async (req) => {
           .insert({
             user_id: user.id,
             package_code: meta.package_code,
-            price_paid_eur: parseFloat(meta.price_eur || "0"),
+            // Column name is legacy; value is USD for new eSIM checkouts
+            price_paid_eur: parseFloat(meta.price_usd || meta.price_eur || "0"),
             status: "paid",
             stripe_payment_id: stripePaymentId,
           })

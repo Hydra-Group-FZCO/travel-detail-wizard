@@ -56,25 +56,27 @@ serve(async (req) => {
     };
 
     if (type === "esim") {
-      // Dynamic pricing for eSIMs
-      const { package_code, package_name, price_eur } = metadata || {};
-      if (!package_code || !price_eur) throw new Error("Missing eSIM package data");
+      const { package_code, package_name, price_usd } = metadata || {};
+      if (!package_code || price_usd == null || Number.isNaN(Number(price_usd))) {
+        throw new Error("Missing eSIM package data");
+      }
+      const usd = Number(price_usd);
 
       lineItems = [
         {
           price_data: {
-            currency: "eur",
+            currency: "usd",
             product_data: {
               name: `eSIM: ${package_name || package_code}`,
               description: `eSIM data plan – ${package_code}`,
             },
-            unit_amount: Math.round(price_eur * 100),
+            unit_amount: Math.round(usd * 100),
           },
           quantity: 1,
         },
       ];
       sessionMetadata.package_code = package_code;
-      sessionMetadata.price_eur = String(price_eur);
+      sessionMetadata.price_usd = String(usd);
     } else if (type === "itinerary") {
       lineItems = [{ price: PRICES.itinerary, quantity: 1 }];
       // Store itinerary data in metadata for fulfillment

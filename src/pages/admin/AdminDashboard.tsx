@@ -133,7 +133,7 @@ const AdminDashboard = () => {
     { label: "Orders Today", value: kpi.ordersToday.toString(), icon: ShoppingCart, color: "hsl(280,60%,55%)" },
     { label: "Orders This Week", value: kpi.ordersWeek.toString(), icon: ShoppingCart, color: "hsl(200,60%,55%)" },
     { label: "Orders This Month", value: kpi.ordersMonth.toString(), icon: ShoppingCart, color: "hsl(160,60%,45%)" },
-    { label: "eSIM Revenue", value: `€${kpi.esimRevenue.toFixed(2)}`, icon: Wifi, color: "hsl(207,94%,29%)" },
+    { label: "eSIM Revenue (USD)", value: `$${kpi.esimRevenue.toFixed(2)}`, icon: Wifi, color: "hsl(207,94%,29%)" },
   ];
 
   const pieData = [
@@ -192,7 +192,11 @@ const AdminDashboard = () => {
                   ))}
                 </Pie>
                 <Tooltip
-                  formatter={(value: number) => `€${value.toFixed(2)}`}
+                  formatter={(value: number, _n: string, item: { payload?: { name?: string } }) =>
+                    item.payload?.name === "eSIMs"
+                      ? `$${value.toFixed(2)}`
+                      : `€${value.toFixed(2)}`
+                  }
                   contentStyle={{ background: "hsl(220,20%,14%)", border: "1px solid hsl(220,20%,22%)", borderRadius: "8px", color: "white" }}
                 />
               </PieChart>
@@ -204,7 +208,8 @@ const AdminDashboard = () => {
             {pieData.map((d, i) => (
               <div key={d.name} className="flex items-center gap-1.5 text-xs text-[hsl(220,10%,60%)]">
                 <div className="w-2.5 h-2.5 rounded-full" style={{ background: COLORS[i % COLORS.length] }} />
-                {d.name}: €{d.value.toFixed(0)}
+                {d.name}
+                {d.name === "eSIMs" ? `: $${d.value.toFixed(0)}` : `: €${d.value.toFixed(0)}`}
               </div>
             ))}
           </div>
@@ -238,7 +243,11 @@ const AdminDashboard = () => {
                         </Badge>
                       </td>
                       <td className="py-2.5 pr-3 text-sm text-[hsl(220,14%,85%)] max-w-[200px] truncate">{order.name}</td>
-                      <td className="py-2.5 pr-3 text-sm font-medium text-white">€{Number(order.amount).toFixed(2)}</td>
+                      <td className="py-2.5 pr-3 text-sm font-medium text-white">
+                        {order.type === "eSIM"
+                          ? `$${Number(order.amount).toFixed(2)}`
+                          : `€${Number(order.amount).toFixed(2)}`}
+                      </td>
                       <td className="py-2.5 pr-3">
                         <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
                           order.status === "completed" || order.status === "Confirmed"

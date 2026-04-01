@@ -10,12 +10,6 @@ import { localizedPath, useLanguage } from "@/i18n";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
-import {
-  DEFAULT_TOKEN_BUDGET,
-  clampTokens,
-  depthTierFromTokens,
-  usdFromTokens,
-} from "@/lib/guideTokenPricing";
 
 const publishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY as string | undefined;
 
@@ -23,62 +17,92 @@ function formatUsd(n: number): string {
   return new Intl.NumberFormat(undefined, { style: "currency", currency: "USD" }).format(n);
 }
 
-const GuidePayment = () => {
+type EsimPackageRow = {
+  package_code: string;
+  name: string;
+  price_retail_eur: number;
+};
+
+const EsimPayment = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const lang = useLanguage();
   const { user, loading: authLoading } = useAuth();
 
-  const destination = searchParams.get("destination") ?? "";
-  const language = searchParams.get("language") ?? "en";
-  const season = searchParams.get("season") ?? "unknown";
-  const focusRaw = searchParams.get("focus") ?? "[]";
-  const tokensRaw = searchParams.get("tokens");
+  const packageCode = (searchParams.get("package_code") ?? "").trim();
 
-  let focusAreas: string[] = [];
-  try {
-    const parsed = JSON.parse(focusRaw);
-    if (Array.isArray(parsed)) focusAreas = parsed.filter((x) => typeof x === "string");
-  } catch {
-    focusAreas = [];
-  }
-
-  const tokenBudget = useMemo(() => {
-    const n = tokensRaw != null ? parseInt(tokensRaw, 10) : NaN;
-    if (!Number.isFinite(n)) return DEFAULT_TOKEN_BUDGET;
-    return clampTokens(n);
-  }, [tokensRaw]);
-
-  const depthLabel = depthTierFromTokens(tokenBudget);
+  const [pkg, setPkg] = useState<EsimPackageRow | null>(null);
+  const [loadingPkg, setLoadingPkg] = useState(true);
+  const [pkgError, setPkgError] = useState<string | null>(null);
 
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
   const [initError, setInitError] = useState<string | null>(null);
 
-  const amountUsd = usdFromTokens(tokenBudget);
-  const paramsValid = destination.length > 1 && focusAreas.length > 0;
+  const paramsValid = packageCode.length > 0;
 
   const stripePromise = useMemo(
     () => (publishableKey ? loadStripe(publishableKey) : null),
     []
   );
 
-  const guidesPath = localizedPath("/travel-guides", lang);
-  const paymentSuccessUrl = `${window.location.origin}${localizedPath("/payment-success", lang)}?type=guide`;
+  const esimsPath = localizedPath("/esims", lang);
+  const paymentSuccessUrl = useMemo(
+    () => `${window.location.origin}${localizedPath("/payment-success", lang)}?type=esim`,
+    [lang]
+  );
+
+  const amountUsd = pkg?.price_retail_eur ?? 0;
+
+  useEffect(() => {
+    if (!paramsValid) {
+      setLoadingPkg(false);
+      setPkgError(null);
+      setPkg(null);
+      return;
+    }
+
+    let cancelled = false;
+    setLoadingPkg(true);
+    setPkgError(null);
+
+    (async () => {
+      const { data, error } = await supabase
+        .from("esim_packages_cache")
+        .select("package_code, name, price_retail_eur")
+        .eq("package_code", packageCode)
+        .maybeSingle();
+
+      if (cancelled) return;
+
+      if (error) {
+        setPkgError(error.message);
+        setPkg(null);
+      } else if (!data || !data.price_retail_eur || data.price_retail_eur <= 0) {
+        setPkgError("This plan is not available.");
+        setPkg(null);
+      } else {
+        setPkg(data as EsimPackageRow);
+        setPkgError(null);
+      }
+      setLoadingPkg(false);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [packageCode, paramsValid]);
 
   const createPaymentIntent = async () => {
-    if (!user || !paramsValid) return;
+    if (!user || !paramsValid || !pkg) return;
 
     setCreating(true);
     setInitError(null);
     try {
       const { data, error } = await supabase.functions.invoke("create-payment-intent", {
         body: {
-          destination,
-          token_budget: tokenBudget,
-          language,
-          season,
-          focus_areas: focusAreas,
+          type: "esim",
+          package_code: packageCode,
         },
       });
       if (error) throw error;
@@ -96,7 +120,7 @@ const GuidePayment = () => {
 
   useEffect(() => {
     if (authLoading || !user) return;
-    if (!paramsValid) setInitError("Missing destination or focus areas. Go back to travel guides and try again.");
+    if (!paramsValid) setInitError("Missing package. Return to the eSIM store and pick a plan.");
   }, [authLoading, user, paramsValid]);
 
   if (!publishableKey) {
@@ -109,7 +133,7 @@ const GuidePayment = () => {
     );
   }
 
-  if (authLoading) {
+  if (authLoading || (paramsValid && loadingPkg)) {
     return (
       <PageLayout>
         <div className="flex justify-center py-24">
@@ -136,8 +160,8 @@ const GuidePayment = () => {
     <PageLayout>
       <section className="pt-28 pb-10 md:pt-32 md:pb-14 bg-secondary">
         <div className="container max-w-xl mx-auto px-4 text-center">
-          <h1 className="text-2xl font-semibold">Pay for your AI guide</h1>
-          <p className="text-sm text-muted-foreground mt-2">Secure payment · price follows your token choice ($9–500 USD)</p>
+          <h1 className="text-2xl font-semibold">Pay for your eSIM</h1>
+          <p className="text-sm text-muted-foreground mt-2">Secure card payment · priced in USD</p>
         </div>
       </section>
 
@@ -146,26 +170,31 @@ const GuidePayment = () => {
           <div className="w-full rounded-xl border border-border bg-card p-6 md:p-8 shadow-sm space-y-6">
             {!paramsValid && (
               <p className="text-sm text-destructive">
-                Invalid or incomplete order.{" "}
-                <Link to={guidesPath} className="underline text-primary">
-                  Return to travel guides
+                Invalid checkout link.{" "}
+                <Link to={esimsPath} className="underline text-primary">
+                  Browse eSIM plans
                 </Link>
               </p>
             )}
 
-            {paramsValid && (
+            {paramsValid && pkgError && (
+              <p className="text-sm text-destructive">
+                {pkgError}{" "}
+                <Link to={esimsPath} className="underline text-primary">
+                  Back to store
+                </Link>
+              </p>
+            )}
+
+            {paramsValid && pkg && !pkgError && (
               <div className="rounded-lg border border-border bg-muted/30 p-4 space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Destination</span>
-                  <span className="font-medium text-right">{destination}</span>
-                </div>
                 <div className="flex justify-between gap-4">
-                  <span className="text-muted-foreground">AI tokens</span>
-                  <span className="font-medium text-right tabular-nums">{tokenBudget.toLocaleString()}</span>
+                  <span className="text-muted-foreground">Plan</span>
+                  <span className="font-medium text-right">{pkg.name}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Detail tier</span>
-                  <span className="font-medium capitalize">{depthLabel}</span>
+                  <span className="text-muted-foreground">Package code</span>
+                  <span className="font-mono text-xs text-right">{pkg.package_code}</span>
                 </div>
                 <div className="flex justify-between items-baseline pt-2 border-t border-border">
                   <span className="font-medium">Total</span>
@@ -176,7 +205,7 @@ const GuidePayment = () => {
 
             {initError && <p className="text-sm text-destructive">{initError}</p>}
 
-            {paramsValid && !clientSecret && (
+            {paramsValid && pkg && !pkgError && !clientSecret && (
               <div className="flex flex-col gap-3">
                 <Button onClick={createPaymentIntent} disabled={creating} className="w-full">
                   {creating ? (
@@ -189,17 +218,18 @@ const GuidePayment = () => {
                   )}
                 </Button>
                 <Button variant="ghost" className="w-full" asChild>
-                  <Link to={guidesPath}>Cancel</Link>
+                  <Link to={esimsPath}>Cancel</Link>
                 </Button>
               </div>
             )}
 
-            {clientSecret && stripePromise && (
+            {clientSecret && stripePromise && pkg && (
               <>
                 <div className="space-y-2 pt-2 border-t border-border">
                   <h2 className="text-base font-semibold">Complete payment</h2>
                   <p className="text-xs text-muted-foreground">
-                    Amount due: <span className="font-semibold text-foreground">{formatUsd(amountUsd)}</span> USD
+                    Amount due:{" "}
+                    <span className="font-semibold text-foreground">{formatUsd(amountUsd)}</span> USD
                   </p>
                 </div>
                 <Elements
@@ -219,7 +249,9 @@ const GuidePayment = () => {
                     returnUrl={paymentSuccessUrl}
                     payLabel={formatUsd(amountUsd)}
                     onPaid={(paymentIntentId) => {
-                      navigate(`${localizedPath("/payment-success", lang)}?payment_intent_id=${encodeURIComponent(paymentIntentId)}&type=guide`);
+                      navigate(
+                        `${localizedPath("/payment-success", lang)}?payment_intent_id=${encodeURIComponent(paymentIntentId)}&type=esim`
+                      );
                     }}
                   />
                 </Elements>
@@ -232,4 +264,4 @@ const GuidePayment = () => {
   );
 };
 
-export default GuidePayment;
+export default EsimPayment;

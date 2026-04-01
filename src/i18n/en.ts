@@ -247,7 +247,7 @@ export const en: Translations = {
   esims: {
     badge: "eSIM Store",
     heroTitle: "Stay Connected Worldwide",
-    heroSubtitle: "Instant data plans for 190+ countries. No physical SIM needed · activate your eSIM in minutes.",
+    heroSubtitle: "Instant data plans for 190+ countries. No physical SIM needed · activate your eSIM in minutes. Prices in USD.",
     searchPlaceholder: "Search by country...",
     regionAll: "All",
     regionEurope: "🌍 Europe",

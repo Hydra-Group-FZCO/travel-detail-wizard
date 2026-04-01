@@ -49,6 +49,7 @@ import TravelGuides from "./pages/TravelGuides";
 import GuideView from "./pages/GuideView";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import GuidePayment from "./pages/GuidePayment";
+import EsimPayment from "./pages/EsimPayment";
 
 const queryClient = new QueryClient();
 
@@ -109,6 +110,7 @@ const AppRoutes = () => {
         <Route path="/travel-guides" element={<TravelGuides />} />
         <Route path="/travel-guides/view/:id" element={<GuideView />} />
         <Route path="/guide-payment" element={<ProtectedRoute><GuidePayment /></ProtectedRoute>} />
+        <Route path="/esim-payment" element={<ProtectedRoute><EsimPayment /></ProtectedRoute>} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
 
         {/* Localized routes */}
@@ -131,6 +133,7 @@ const AppRoutes = () => {
             <Route path="travel-guides" element={<TravelGuides />} />
             <Route path="travel-guides/view/:id" element={<GuideView />} />
             <Route path="guide-payment" element={<ProtectedRoute><GuidePayment /></ProtectedRoute>} />
+            <Route path="esim-payment" element={<ProtectedRoute><EsimPayment /></ProtectedRoute>} />
             <Route path="payment-success" element={<PaymentSuccess />} />
           </Route>
         ))}
