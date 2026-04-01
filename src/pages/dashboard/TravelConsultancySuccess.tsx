@@ -64,7 +64,7 @@ const TravelConsultancySuccess = () => {
             <CheckCircle className="w-16 h-16 text-green-500 mx-auto" />
             <h1 className="text-2xl font-bold">Payment Successful</h1>
             <p className="text-muted-foreground">
-              In less than 24h you will receive an email from one of our team experts to start the process.
+              Within 24 hours you will hear from your travel assistant by email to get started on your documents and next steps.
             </p>
             <Button onClick={() => navigate("/dashboard")}>Back to Dashboard</Button>
           </>
@@ -75,7 +75,7 @@ const TravelConsultancySuccess = () => {
             <h1 className="text-2xl font-bold">Payment Issue</h1>
             <p className="text-muted-foreground">{errorMsg}</p>
             <Button variant="outline" onClick={() => navigate("/dashboard/consultancy")}>
-              Try again
+              Back to Travel Assistant
             </Button>
           </>
         )}

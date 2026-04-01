@@ -18,14 +18,15 @@ const TravelConsultancy = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Travel Consultancy</h1>
-        <p className="text-sm text-muted-foreground mt-2">
-          Contract our team to design your travel process. Choose delivery speed and continue to secure card payment.
+        <h1 className="text-2xl font-bold text-foreground">Travel Assistant</h1>
+        <p className="text-sm text-muted-foreground mt-2 max-w-2xl leading-relaxed">
+          Book a real specialist who walks you through the paperwork and steps you need before you travel—visas, authorisations,
+          forms, and deadlines—so nothing is left to guesswork. Pick how soon you need to be ready, then pay securely by card.
         </p>
       </div>
 
       <div className="rounded-xl border border-border bg-card p-5 space-y-4 w-full">
-        <h2 className="text-base font-semibold">Travelers</h2>
+        <h2 className="text-base font-semibold">Who is traveling</h2>
         <div className="space-y-2">
           <span className="text-sm text-muted-foreground">Destination</span>
           <Select value={destination} onValueChange={(v: "Aruba" | "Canada" | "United Kingdom") => setDestination(v)}>

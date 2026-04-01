@@ -61,9 +61,9 @@ const TravelConsultancyPayment = () => {
   if (!plan || !payload) {
     return (
       <div className="space-y-4">
-        <p className="text-sm text-destructive">Missing consultancy selection.</p>
+        <p className="text-sm text-destructive">Missing travel assistant selection.</p>
         <Button asChild>
-          <Link to="/dashboard/consultancy">Back to consultancy plans</Link>
+          <Link to="/dashboard/consultancy">Back to Travel Assistant</Link>
         </Button>
       </div>
     );
@@ -72,13 +72,13 @@ const TravelConsultancyPayment = () => {
   return (
     <div className="max-w-xl mx-auto space-y-6">
       <div className="text-center">
-        <h1 className="text-2xl font-bold text-foreground">Consultancy Payment</h1>
+        <h1 className="text-2xl font-bold text-foreground">Travel Assistant — Payment</h1>
         <p className="text-sm text-muted-foreground mt-2">{plan.title}</p>
       </div>
 
       <div className="rounded-xl border border-border bg-card p-6 space-y-4">
         <div className="flex justify-between">
-          <span className="text-muted-foreground">Service</span>
+          <span className="text-muted-foreground">Assistant plan</span>
           <span className="font-medium">{plan.title}</span>
         </div>
         <div className="flex justify-between">
@@ -114,7 +114,7 @@ const TravelConsultancyPayment = () => {
             )}
           </Button>
           <Button variant="ghost" asChild>
-            <Link to="/dashboard/consultancy">Cancel</Link>
+            <Link to="/dashboard/consultancy">Back to Travel Assistant</Link>
           </Button>
         </div>
       ) : (
