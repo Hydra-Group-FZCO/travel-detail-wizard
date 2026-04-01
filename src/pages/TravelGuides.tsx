@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { SampleGuidePreview } from "@/components/SampleItineraryPreview";
@@ -34,6 +34,8 @@ import {
   clampTokens,
   usdFromTokens,
 } from "@/lib/guideTokenPricing";
+import { loadDestinationIndex } from "@/lib/destinationSuggestions";
+import { useDestinationSuggestions } from "@/lib/useDestinationSuggestions";
 
 function formatUsd(n: number): string {
   return new Intl.NumberFormat(undefined, { style: "currency", currency: "USD" }).format(n);
@@ -365,7 +367,10 @@ const TravelGuides = () => {
   const [showForm, setShowForm] = useState(!!searchParams.get("dest"));
   const [step, setStep] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [destination, setDestination] = useState(searchParams.get("dest") || "");
+  const initialDest = searchParams.get("dest") || "";
+  const [destination, setDestination] = useState(initialDest);
+  const [destSearch, setDestSearch] = useState(initialDest);
+  const [showDestSuggestions, setShowDestSuggestions] = useState(false);
   const [focusAreas, setFocusAreas] = useState<string[]>([]);
   const [tokenBudget, setTokenBudget] = useState(DEFAULT_TOKEN_BUDGET);
   const [language, setLanguage] = useState<string>(uiLang);
@@ -380,12 +385,27 @@ const TravelGuides = () => {
     });
   }, [search, regionFilter]);
 
+  const destinationSuggestions = useDestinationSuggestions(destSearch);
+
+  const destFromUrl = searchParams.get("dest") ?? "";
+  useEffect(() => {
+    setDestination(destFromUrl);
+    setDestSearch(destFromUrl);
+  }, [destFromUrl]);
+
+  useEffect(() => {
+    if (showForm && step === 0) void loadDestinationIndex();
+  }, [showForm, step]);
+
   const toggleFocus = (id: string) => {
     setFocusAreas((prev) => (prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]));
   };
 
   const openForm = (dest?: string) => {
-    if (dest) setDestination(dest);
+    if (dest !== undefined) {
+      setDestination(dest);
+      setDestSearch(dest);
+    }
     setShowForm(true);
     setStep(0);
   };
@@ -466,9 +486,41 @@ const TravelGuides = () => {
               <Card>
                 <CardContent className="p-6 space-y-4">
                   <h2 className="text-2xl font-bold text-foreground">{copy.form.destinationTitle}</h2>
-                  <div className="relative">
-                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <Input value={destination} onChange={(e) => setDestination(e.target.value)} placeholder={copy.form.destinationPlaceholder} className="pl-10 text-lg" />
+                  <div className="space-y-2 relative">
+                    <div className="relative">
+                      <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground z-10" />
+                      <Input
+                        value={destSearch || destination}
+                        onChange={(e) => {
+                          const v = e.target.value;
+                          setDestSearch(v);
+                          setDestination(v);
+                          setShowDestSuggestions(true);
+                        }}
+                        onFocus={() => setShowDestSuggestions(true)}
+                        placeholder={copy.form.destinationPlaceholder}
+                        className="pl-10 text-lg"
+                        autoComplete="off"
+                      />
+                    </div>
+                    {showDestSuggestions && destSearch && destinationSuggestions.length > 0 && (
+                      <div className="absolute z-20 left-0 right-0 bg-popover border rounded-lg shadow-lg mt-1">
+                        {destinationSuggestions.map((item) => (
+                          <button
+                            key={item}
+                            type="button"
+                            className="w-full px-4 py-2.5 text-left hover:bg-muted text-sm transition-colors"
+                            onClick={() => {
+                              setDestination(item);
+                              setDestSearch(item);
+                              setShowDestSuggestions(false);
+                            }}
+                          >
+                            {item}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -659,7 +711,11 @@ const TravelGuides = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {filteredDestinations.map((dest) => (
-              <Card key={dest.name} className="overflow-hidden group cursor-pointer hover:shadow-lg transition-all" onClick={() => openForm(dest.name)}>
+              <Card
+                key={dest.name}
+                className="overflow-hidden group cursor-pointer hover:shadow-lg transition-all"
+                onClick={() => openForm(`${dest.name}, ${dest.country}`)}
+              >
                 <div className="relative h-40 overflow-hidden">
                   <img src={dest.image} alt={dest.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
                   <Badge className="absolute top-2 right-2 bg-primary text-primary-foreground text-xs">{copy.card.from}</Badge>

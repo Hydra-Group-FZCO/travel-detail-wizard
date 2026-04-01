@@ -37,6 +37,8 @@ serve(async (req) => {
     const body = await req.json();
     const session_id = body?.session_id as string | undefined;
     const payment_intent_id = body?.payment_intent_id as string | undefined;
+    const requestedType = body?.type as string | undefined;
+    const itineraryPayload = body?.itinerary_payload as Record<string, unknown> | undefined;
 
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
       apiVersion: "2025-08-27.basil",
@@ -56,6 +58,16 @@ serve(async (req) => {
       }
       stripePaymentId = pi.id;
       paymentIntentAmountCents = pi.amount ?? null;
+      const piCustomer = typeof pi.customer === "string" ? pi.customer : pi.customer?.id ?? null;
+      const { data: prof } = await supabaseAdmin
+        .from("profiles")
+        .select("stripe_customer_id")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      const expectedCustomer = prof?.stripe_customer_id?.trim();
+      if (!piCustomer || !expectedCustomer || piCustomer !== expectedCustomer) {
+        throw new Error("Payment does not belong to this user");
+      }
 
       const { data: prebakedGuide } = await supabaseAdmin
         .from("travel_guides")
@@ -64,16 +76,6 @@ serve(async (req) => {
         .maybeSingle();
 
       if (prebakedGuide) {
-        const piCustomer = typeof pi.customer === "string" ? pi.customer : pi.customer?.id ?? null;
-        const { data: prof } = await supabaseAdmin
-          .from("profiles")
-          .select("stripe_customer_id")
-          .eq("user_id", user.id)
-          .maybeSingle();
-        const expectedCustomer = prof?.stripe_customer_id?.trim();
-        if (!piCustomer || !expectedCustomer || piCustomer !== expectedCustomer) {
-          throw new Error("Payment does not belong to this user");
-        }
         if (prebakedGuide.user_id !== user.id) {
           throw new Error("Payment does not belong to this user");
         }
@@ -105,12 +107,13 @@ serve(async (req) => {
       throw new Error("Missing session_id or payment_intent_id");
     }
 
-    if (meta.user_id !== user.id) {
+    if (meta.user_id && meta.user_id !== user.id) {
       throw new Error("Payment does not belong to this user");
     }
 
-    const type = meta.type;
-    let result: Record<string, unknown> = { status: "paid", type };
+    const type = meta.type || requestedType;
+    if (!type) throw new Error("Missing payment type");
+    const result: Record<string, unknown> = { status: "paid", type };
 
     if (type === "esim") {
       const { data: existing } = await supabaseAdmin
@@ -146,24 +149,74 @@ serve(async (req) => {
         .maybeSingle();
 
       if (!existing) {
+        const metaUsdItin = meta.price_usd ? parseFloat(meta.price_usd) : NaN;
+        let pricePaidItin = Number.isFinite(metaUsdItin) ? metaUsdItin : null;
+        if (pricePaidItin == null && paymentIntentAmountCents != null) {
+          pricePaidItin = paymentIntentAmountCents / 100;
+        }
+        if (pricePaidItin == null || !Number.isFinite(pricePaidItin)) pricePaidItin = 15;
+
+        const safeArray = (value: unknown): unknown[] => (Array.isArray(value) ? value : []);
+        const parseMetaArray = (value: string | undefined): unknown[] => {
+          if (!value) return [];
+          try {
+            const parsed = JSON.parse(value);
+            return Array.isArray(parsed) ? parsed : [];
+          } catch {
+            return [];
+          }
+        };
+
+        const destination =
+          (meta.destination && meta.destination.trim()) ||
+          (typeof itineraryPayload?.destination === "string" ? itineraryPayload.destination.trim() : "");
+        const startDate =
+          (meta.start_date && meta.start_date.trim()) ||
+          (typeof itineraryPayload?.start_date === "string" ? itineraryPayload.start_date.trim() : "");
+        const endDate =
+          (meta.end_date && meta.end_date.trim()) ||
+          (typeof itineraryPayload?.end_date === "string" ? itineraryPayload.end_date.trim() : "");
+        const numDaysFromPayload =
+          typeof itineraryPayload?.num_days === "number"
+            ? itineraryPayload.num_days
+            : parseInt(String(itineraryPayload?.num_days ?? "0"), 10);
+        const numDays = parseInt(meta.num_days || String(numDaysFromPayload || 1), 10);
+        if (!destination || !startDate || !endDate || !Number.isFinite(numDays) || numDays < 1) {
+          throw new Error("Missing itinerary trip details");
+        }
+
         const insertData: Record<string, unknown> = {
           user_id: user.id,
-          destination: meta.destination,
-          departure_city: meta.departure_city || null,
-          start_date: meta.start_date,
-          end_date: meta.end_date,
-          num_days: parseInt(meta.num_days || "1"),
-          trip_type: meta.trip_type || "couple",
-          travelers_adults: parseInt(meta.travelers_adults || "2"),
-          travelers_children: parseInt(meta.travelers_children || "0"),
-          children_ages: meta.children_ages ? JSON.parse(meta.children_ages) : [],
-          interests: meta.interests ? JSON.parse(meta.interests) : [],
-          budget_level: meta.budget_level || "mid-range",
-          language: meta.language || "en",
-          extras: meta.extras ? JSON.parse(meta.extras) : [],
+          destination,
+          departure_city:
+            meta.departure_city ||
+            (typeof itineraryPayload?.departure_city === "string" ? itineraryPayload.departure_city : null),
+          start_date: startDate,
+          end_date: endDate,
+          num_days: numDays,
+          trip_type:
+            meta.trip_type ||
+            (typeof itineraryPayload?.trip_type === "string" ? itineraryPayload.trip_type : "couple"),
+          travelers_adults: parseInt(
+            meta.travelers_adults ||
+              String(typeof itineraryPayload?.travelers_adults === "number" ? itineraryPayload.travelers_adults : 2),
+            10
+          ),
+          travelers_children: parseInt(
+            meta.travelers_children ||
+              String(typeof itineraryPayload?.travelers_children === "number" ? itineraryPayload.travelers_children : 0),
+            10
+          ),
+          children_ages: (meta.children_ages ? parseMetaArray(meta.children_ages) : safeArray(itineraryPayload?.children_ages)) as number[],
+          interests: (meta.interests ? parseMetaArray(meta.interests) : safeArray(itineraryPayload?.interests)) as string[],
+          budget_level:
+            meta.budget_level ||
+            (typeof itineraryPayload?.budget_level === "string" ? itineraryPayload.budget_level : "mid-range"),
+          language: meta.language || (typeof itineraryPayload?.language === "string" ? itineraryPayload.language : "en"),
+          extras: (meta.extras ? parseMetaArray(meta.extras) : safeArray(itineraryPayload?.extras)) as string[],
           status: "pending",
           stripe_payment_id: stripePaymentId,
-          price_paid: 15,
+          price_paid: pricePaidItin,
         };
 
         const { data: itinerary, error } = await supabaseAdmin

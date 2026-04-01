@@ -194,6 +194,50 @@ serve(async (req) => {
       );
     }
 
+    if (body.type === "itinerary") {
+      const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
+        apiVersion: "2025-08-27.basil",
+      });
+
+      /** Fixed USD amount (Stripe Product/Price for itinerary was retired). */
+      const priceUsd = 15;
+      const amountCents = priceUsd * 100;
+
+      const { data: profile, error: profileError } = await supabaseAdmin
+        .from("profiles")
+        .select("stripe_customer_id, full_name, phone, country, street")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      if (profileError) throw profileError;
+      if (!profile) throw new Error("Profile not found for user");
+
+      const customerId = await resolveOrCreateStripeCustomer(
+        stripe,
+        supabaseAdmin,
+        user.id,
+        user.email,
+        profile.stripe_customer_id,
+        profile as ProfileBilling,
+      );
+
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: amountCents,
+        currency: "usd",
+        customer: customerId,
+        payment_method_types: ["card"]
+      });
+
+      return new Response(
+        JSON.stringify({
+          clientSecret: paymentIntent.client_secret,
+          paymentIntentId: paymentIntent.id,
+          amountUsd: priceUsd,
+        }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 },
+      );
+    }
+
     const {
       token_budget: rawTokens,
       depth: legacyDepth,

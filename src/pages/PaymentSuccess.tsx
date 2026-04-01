@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import PageLayout from "@/components/PageLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { localizedPath, useLanguage } from "@/i18n";
+import { ITINERARY_CHECKOUT_STORAGE_KEY, type ItineraryCheckoutPayload } from "@/lib/itineraryCheckoutStorage";
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
@@ -31,14 +32,29 @@ const PaymentSuccess = () => {
 
     const verify = async () => {
       try {
+        let itineraryPayload: ItineraryCheckoutPayload | null = null;
+        if (type === "itinerary") {
+          try {
+            const raw = sessionStorage.getItem(ITINERARY_CHECKOUT_STORAGE_KEY);
+            if (raw) itineraryPayload = JSON.parse(raw) as ItineraryCheckoutPayload;
+          } catch {
+            itineraryPayload = null;
+          }
+        }
+
         const { data, error } = await supabase.functions.invoke("verify-payment", {
           body: paymentIntentId
-            ? { payment_intent_id: paymentIntentId }
-            : { session_id: sessionId },
+            ? {
+                payment_intent_id: paymentIntentId,
+                type,
+                itinerary_payload: itineraryPayload,
+              }
+            : { session_id: sessionId, type },
         });
 
         if (error) throw error;
         if (data.status === "paid") {
+          if (type === "itinerary") sessionStorage.removeItem(ITINERARY_CHECKOUT_STORAGE_KEY);
           setStatus("success");
           setRecordId(data.record_id || data.order_id || null);
         } else {
