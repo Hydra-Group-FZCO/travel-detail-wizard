@@ -2,14 +2,37 @@
 
 export const GUIDE_TOKEN_MIN = 15_000;
 export const GUIDE_TOKEN_MAX = 450_000;
+/** @deprecated */
 export const GUIDE_TOKEN_STEP = 5_000;
+
+export const GUIDE_TIER_TOKENS = {
+  essential: 15_000,
+  complete: 232_500,
+  ultimate: 450_000,
+} as const;
+
+const GUIDE_TIER_ORDER = [
+  GUIDE_TIER_TOKENS.essential,
+  GUIDE_TIER_TOKENS.complete,
+  GUIDE_TIER_TOKENS.ultimate,
+] as const;
 
 const USD_MIN = 9;
 const USD_MAX = 500;
 
 export function clampTokens(n: number): number {
-  const stepped = Math.round(n / GUIDE_TOKEN_STEP) * GUIDE_TOKEN_STEP;
-  return Math.max(GUIDE_TOKEN_MIN, Math.min(GUIDE_TOKEN_MAX, stepped));
+  const r = Math.round(Number(n));
+  if (!Number.isFinite(r)) return GUIDE_TIER_TOKENS.complete;
+  let best = GUIDE_TIER_ORDER[0];
+  let bestDist = Infinity;
+  for (const t of GUIDE_TIER_ORDER) {
+    const d = Math.abs(r - t);
+    if (d < bestDist) {
+      bestDist = d;
+      best = t;
+    }
+  }
+  return best;
 }
 
 export function usdFromTokens(tokens: number): number {
@@ -26,26 +49,15 @@ export function centsFromTokens(tokens: number): number {
 
 export function depthTierFromTokens(tokens: number): "essential" | "complete" | "ultimate" {
   const t = clampTokens(tokens);
-  const span = GUIDE_TOKEN_MAX - GUIDE_TOKEN_MIN;
-  const third = span / 3;
-  if (t < GUIDE_TOKEN_MIN + third) return "essential";
-  if (t < GUIDE_TOKEN_MIN + 2 * third) return "complete";
+  if (t === GUIDE_TIER_TOKENS.essential) return "essential";
+  if (t === GUIDE_TIER_TOKENS.complete) return "complete";
   return "ultimate";
 }
 
-const LEGACY_DEPTH_CENTS: Record<string, number> = {
-  essential: 900,
-  complete: 1500,
-  ultimate: 2500,
-};
-
-/** Legacy Checkout: map old depth → token budget that yields same Stripe amount. */
+/** Requests that only send `depth` map to the fixed tier token budgets. */
 export function tokensFromLegacyDepth(depth: string): number {
-  const cents = LEGACY_DEPTH_CENTS[depth];
-  if (!cents) return clampTokens(GUIDE_TOKEN_MIN);
-  const targetUsd = cents / 100;
-  const spanTok = GUIDE_TOKEN_MAX - GUIDE_TOKEN_MIN;
-  const spanUsd = USD_MAX - USD_MIN;
-  const raw = GUIDE_TOKEN_MIN + ((targetUsd - USD_MIN) / spanUsd) * spanTok;
-  return clampTokens(raw);
+  const d = String(depth).toLowerCase();
+  if (d === "complete") return GUIDE_TIER_TOKENS.complete;
+  if (d === "ultimate") return GUIDE_TIER_TOKENS.ultimate;
+  return GUIDE_TIER_TOKENS.essential;
 }

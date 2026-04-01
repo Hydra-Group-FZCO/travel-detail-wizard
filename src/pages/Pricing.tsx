@@ -2,40 +2,10 @@ import { Link } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
 import LegalLanguageNotice from "@/components/LegalLanguageNotice";
 import { useLanguage, localizedPath } from "@/i18n";
-import {
-  GUIDE_TOKEN_MIN,
-  GUIDE_TOKEN_MAX,
-  GUIDE_TOKEN_STEP,
-  clampTokens,
-  usdFromTokens,
-} from "@/lib/guideTokenPricing";
+import { GUIDE_TIER_TOKENS, usdFromTokens } from "@/lib/guideTokenPricing";
 
 function formatUsd(n: number): string {
   return new Intl.NumberFormat(undefined, { style: "currency", currency: "USD" }).format(n);
-}
-
-const spanTok = GUIDE_TOKEN_MAX - GUIDE_TOKEN_MIN;
-const thirdTok = spanTok / 3;
-const guideTierTokens = {
-  essential: {
-    min: GUIDE_TOKEN_MIN,
-    max: clampTokens(GUIDE_TOKEN_MIN + thirdTok - GUIDE_TOKEN_STEP),
-  },
-  complete: {
-    min: clampTokens(GUIDE_TOKEN_MIN + thirdTok),
-    max: clampTokens(GUIDE_TOKEN_MIN + 2 * thirdTok - GUIDE_TOKEN_STEP),
-  },
-  ultimate: {
-    min: clampTokens(GUIDE_TOKEN_MIN + 2 * thirdTok),
-    max: GUIDE_TOKEN_MAX,
-  },
-} as const;
-
-function guidePriceRange(minT: number, maxT: number): string {
-  const lo = usdFromTokens(minT);
-  const hi = usdFromTokens(maxT);
-  if (lo === hi) return formatUsd(lo);
-  return `${formatUsd(lo)}–${formatUsd(hi)}`;
 }
 
 const Pricing = () => {
@@ -78,39 +48,28 @@ const Pricing = () => {
             <div>
               <h2 className="text-lg font-bold mb-3">AI Travel Guides</h2>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                Pricing is tied to how much of the model context you allocate: you pick a token budget from{" "}
-                {GUIDE_TOKEN_MIN.toLocaleString()} to {GUIDE_TOKEN_MAX.toLocaleString()} (steps of {GUIDE_TOKEN_STEP.toLocaleString()}). Larger budgets produce longer, denser guides. The amount you pay scales linearly with that budget, from {formatUsd(usdFromTokens(GUIDE_TOKEN_MIN))} to{" "}
-                {formatUsd(usdFromTokens(GUIDE_TOKEN_MAX))}. At checkout, Essential, Complete, and Ultimate are the lower, middle, and upper third of that range (they also match how we label depth for generation).
+                Three fixed plans. Each plan maps to an AI generation budget (tokens); higher tiers allocate more context so the guide can be longer and more detailed.
               </p>
               <div className="space-y-4">
                 <div className="bg-secondary rounded-xl p-5">
                   <p className="font-bold text-foreground text-sm">Essential</p>
                   <p className="text-sm text-muted-foreground mt-1">Concise guide focused on key highlights.</p>
-                  <p className="text-xs text-muted-foreground mt-2 tabular-nums">
-                    {guideTierTokens.essential.min.toLocaleString()}–{guideTierTokens.essential.max.toLocaleString()} tokens
-                  </p>
-                  <p className="text-base font-bold text-foreground mt-1">
-                    {guidePriceRange(guideTierTokens.essential.min, guideTierTokens.essential.max)}
+                  <p className="text-base font-bold text-foreground mt-2">
+                    {formatUsd(usdFromTokens(GUIDE_TIER_TOKENS.essential))}
                   </p>
                 </div>
                 <div className="bg-secondary rounded-xl p-5">
                   <p className="font-bold text-foreground text-sm">Complete</p>
                   <p className="text-sm text-muted-foreground mt-1">Deeper destination coverage—neighborhoods, practical tips, and more.</p>
-                  <p className="text-xs text-muted-foreground mt-2 tabular-nums">
-                    {guideTierTokens.complete.min.toLocaleString()}–{guideTierTokens.complete.max.toLocaleString()} tokens
-                  </p>
-                  <p className="text-base font-bold text-foreground mt-1">
-                    {guidePriceRange(guideTierTokens.complete.min, guideTierTokens.complete.max)}
+                  <p className="text-base font-bold text-foreground mt-2">
+                    {formatUsd(usdFromTokens(GUIDE_TIER_TOKENS.complete))}
                   </p>
                 </div>
                 <div className="bg-secondary rounded-xl p-5">
                   <p className="font-bold text-foreground text-sm">Ultimate</p>
-                  <p className="text-sm text-muted-foreground mt-1">Maximum detail—the fullest guide we offer at the top of the token range.</p>
-                  <p className="text-xs text-muted-foreground mt-2 tabular-nums">
-                    {guideTierTokens.ultimate.min.toLocaleString()}–{guideTierTokens.ultimate.max.toLocaleString()} tokens
-                  </p>
-                  <p className="text-base font-bold text-foreground mt-1">
-                    {guidePriceRange(guideTierTokens.ultimate.min, guideTierTokens.ultimate.max)}
+                  <p className="text-sm text-muted-foreground mt-1">Maximum detail—the fullest guide we offer in this product line.</p>
+                  <p className="text-base font-bold text-foreground mt-2">
+                    {formatUsd(usdFromTokens(GUIDE_TIER_TOKENS.ultimate))}
                   </p>
                 </div>
               </div>
@@ -118,7 +77,7 @@ const Pricing = () => {
                 to={localizedPath("/travel-guides", lang)}
                 className="inline-block text-sm text-primary hover:underline font-medium mt-4"
               >
-                Configure token budget &rarr;
+                Choose a plan &rarr;
               </Link>
             </div>
 

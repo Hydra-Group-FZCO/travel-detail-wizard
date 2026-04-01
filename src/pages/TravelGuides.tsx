@@ -25,12 +25,9 @@ import {
   BookOpen,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Slider } from "@/components/ui/slider";
 import {
   DEFAULT_TOKEN_BUDGET,
-  GUIDE_TOKEN_MAX,
-  GUIDE_TOKEN_MIN,
-  GUIDE_TOKEN_STEP,
+  GUIDE_TIER_TOKENS,
   clampTokens,
   usdFromTokens,
 } from "@/lib/guideTokenPricing";
@@ -39,6 +36,13 @@ import { useDestinationSuggestions } from "@/lib/useDestinationSuggestions";
 
 function formatUsd(n: number): string {
   return new Intl.NumberFormat(undefined, { style: "currency", currency: "USD" }).format(n);
+}
+
+function fillGuidePrices(
+  s: string,
+  p: { lo: string; mid: string; hi: string },
+): string {
+  return s.replace(/\{\{lo\}\}/g, p.lo).replace(/\{\{mid\}\}/g, p.mid).replace(/\{\{hi\}\}/g, p.hi);
 }
 
 interface DestinationCard {
@@ -94,7 +98,7 @@ const GUIDE_UI = {
     heroTitle: "Your personalized travel guide,",
     heroAccent: "generated in seconds",
     heroSubtitle: "Everything you need to know about your destination, in your language",
-    heroCta: "Get my guide → $9–500 USD",
+    heroCta: "Get my guide → from {{lo}}",
     searchPlaceholder: "Search destinations...",
     regions: { all: "All Regions", europe: "🌍 Europe", asia: "🌏 Asia", americas: "🌎 Americas", middleEast: "🕌 Middle East", africa: "🌍 Africa", oceania: "🌊 Oceania" },
     focusAreas: {
@@ -110,26 +114,30 @@ const GUIDE_UI = {
       luxury: "👑 Luxury Travel",
     },
     seasons: { spring: "🌸 Spring", summer: "☀️ Summer", autumn: "🍂 Autumn", winter: "❄️ Winter", unknown: "🤷 I don't know yet" },
-    steps: { destination: "Destination", focus: "Focus", detail: "AI budget", language: "Language", season: "Season" },
+    steps: { destination: "Destination", focus: "Focus", detail: "Plan", language: "Language", season: "Season" },
     form: {
       backToCatalog: "Back to catalog",
       destinationTitle: "Which destination?",
       destinationPlaceholder: "e.g. Tokyo, Japan",
       focusTitle: "What's your focus?",
       focusSubtitle: "Select all that interest you",
-      depthTitle: "AI detail & price",
-      tokenSubtitle: "Choose how many AI tokens to spend — higher values produce longer, richer guides. Price updates between $9 and $500 USD.",
-      tokensLabel: "Token budget",
-      usdLabel: "Price",
+      depthTitle: "Choose your plan",
+      tierSubtitle: "Three fixed tiers — higher plans allocate more context so the guide can be longer and richer.",
+      tokensApproxLabel: "tokens (generation budget)",
       languageTitle: "Guide language",
       seasonTitle: "When are you traveling?",
+      tiers: {
+        essential: { name: "Essential", desc: "Concise guide focused on key highlights." },
+        complete: { name: "Complete", desc: "Deeper coverage — neighborhoods, practical tips, and more." },
+        ultimate: { name: "Ultimate", desc: "Maximum detail — our fullest guide for this product." },
+      },
       back: "Back",
       next: "Next",
       creating: "Creating...",
       generate: "Generate guide",
-      catalogPricing: "Custom length · $9–500 USD · you choose tokens",
+      catalogPricing: "3 plans · {{lo}}, {{mid}}, or {{hi}}",
     },
-    card: { from: "$9–500", button: "Generate guide" },
+    card: { from: "From {{lo}}", button: "Generate guide" },
     empty: { title: "No destinations found. Generate a guide for any destination!", button: "Custom destination guide" },
     auth: { title: "Please log in", description: "You need an account to generate guides." },
     error: { title: "Error", description: "Failed to create guide" },
@@ -139,7 +147,7 @@ const GUIDE_UI = {
     heroTitle: "Tu guía de viaje personalizada,",
     heroAccent: "generada en segundos",
     heroSubtitle: "Todo lo que necesitas saber sobre tu destino, en tu idioma",
-    heroCta: "Quiero mi guía → 9–500 USD",
+    heroCta: "Quiero mi guía → desde {{lo}}",
     searchPlaceholder: "Buscar destinos...",
     regions: { all: "Todas las regiones", europe: "🌍 Europa", asia: "🌏 Asia", americas: "🌎 Américas", middleEast: "🕌 Oriente Medio", africa: "🌍 África", oceania: "🌊 Oceanía" },
     focusAreas: {
@@ -155,26 +163,30 @@ const GUIDE_UI = {
       luxury: "👑 Viaje de lujo",
     },
     seasons: { spring: "🌸 Primavera", summer: "☀️ Verano", autumn: "🍂 Otoño", winter: "❄️ Invierno", unknown: "🤷 Aún no lo sé" },
-    steps: { destination: "Destino", focus: "Enfoque", detail: "Presupuesto IA", language: "Idioma", season: "Temporada" },
+    steps: { destination: "Destino", focus: "Enfoque", detail: "Plan", language: "Idioma", season: "Temporada" },
     form: {
       backToCatalog: "Volver al catálogo",
       destinationTitle: "¿Qué destino?",
       destinationPlaceholder: "ej. Tokio, Japón",
       focusTitle: "¿Qué te interesa?",
       focusSubtitle: "Selecciona todo lo que te interese",
-      depthTitle: "Detalle IA y precio",
-      tokenSubtitle: "Elige cuántos tokens de IA usar: más tokens = guía más larga y completa. Precio entre 9 y 500 USD.",
-      tokensLabel: "Presupuesto de tokens",
-      usdLabel: "Precio",
+      depthTitle: "Elige tu plan",
+      tierSubtitle: "Tres niveles fijos: planes superiores asignan más contexto para una guía más larga y completa.",
+      tokensApproxLabel: "tokens (presupuesto de generación)",
       languageTitle: "Idioma de la guía",
       seasonTitle: "¿Cuándo viajas?",
+      tiers: {
+        essential: { name: "Esencial", desc: "Guía concisa centrada en lo imprescindible." },
+        complete: { name: "Completa", desc: "Más profundidad: barrios, consejos prácticos y más." },
+        ultimate: { name: "Máxima", desc: "Máximo detalle: nuestra guía más completa." },
+      },
       back: "Atrás",
       next: "Siguiente",
       creating: "Creando...",
       generate: "Generar guía",
-      catalogPricing: "Duración a medida · 9–500 USD · tú eliges los tokens",
+      catalogPricing: "3 planes · {{lo}}, {{mid}} o {{hi}}",
     },
-    card: { from: "9–500 USD", button: "Generar guía" },
+    card: { from: "Desde {{lo}}", button: "Generar guía" },
     empty: { title: "No se encontraron destinos. ¡Genera una guía para cualquier destino!", button: "Guía para destino personalizado" },
     auth: { title: "Inicia sesión", description: "Necesitas una cuenta para generar guías." },
     error: { title: "Error", description: "No se pudo crear la guía" },
@@ -184,7 +196,7 @@ const GUIDE_UI = {
     heroTitle: "Votre guide de voyage personnalisé,",
     heroAccent: "généré en quelques secondes",
     heroSubtitle: "Tout ce que vous devez savoir sur votre destination, dans votre langue",
-    heroCta: "Obtenir mon guide → 9–500 USD",
+    heroCta: "Obtenir mon guide → à partir de {{lo}}",
     searchPlaceholder: "Rechercher des destinations...",
     regions: { all: "Toutes les régions", europe: "🌍 Europe", asia: "🌏 Asie", americas: "🌎 Amériques", middleEast: "🕌 Moyen-Orient", africa: "🌍 Afrique", oceania: "🌊 Océanie" },
     focusAreas: {
@@ -200,26 +212,30 @@ const GUIDE_UI = {
       luxury: "👑 Voyage de luxe",
     },
     seasons: { spring: "🌸 Printemps", summer: "☀️ Été", autumn: "🍂 Automne", winter: "❄️ Hiver", unknown: "🤷 Je ne sais pas encore" },
-    steps: { destination: "Destination", focus: "Focus", detail: "Budget IA", language: "Langue", season: "Saison" },
+    steps: { destination: "Destination", focus: "Focus", detail: "Formule", language: "Langue", season: "Saison" },
     form: {
       backToCatalog: "Retour au catalogue",
       destinationTitle: "Quelle destination ?",
       destinationPlaceholder: "ex. Tokyo, Japon",
       focusTitle: "Qu'est-ce qui vous intéresse ?",
       focusSubtitle: "Sélectionnez tout ce qui vous intéresse",
-      depthTitle: "Niveau IA et prix",
-      tokenSubtitle: "Choisissez le nombre de tokens IA : plus il est élevé, plus le guide est long et riche. Prix entre 9 et 500 USD.",
-      tokensLabel: "Budget tokens",
-      usdLabel: "Prix",
+      depthTitle: "Choisissez votre formule",
+      tierSubtitle: "Trois formules fixes — les niveaux supérieurs allouent plus de contexte pour un guide plus long et riche.",
+      tokensApproxLabel: "tokens (budget de génération)",
       languageTitle: "Langue du guide",
       seasonTitle: "Quand voyagez-vous ?",
+      tiers: {
+        essential: { name: "Essentiel", desc: "Guide concis axé sur l'essentiel." },
+        complete: { name: "Complet", desc: "Approfondi : quartiers, conseils pratiques et plus." },
+        ultimate: { name: "Ultime", desc: "Maximum de détails — notre guide le plus complet." },
+      },
       back: "Retour",
       next: "Suivant",
       creating: "Création...",
       generate: "Générer le guide",
-      catalogPricing: "Longueur sur mesure · 9–500 USD · vous choisissez les tokens",
+      catalogPricing: "3 formules · {{lo}}, {{mid}} ou {{hi}}",
     },
-    card: { from: "9–500 USD", button: "Générer le guide" },
+    card: { from: "À partir de {{lo}}", button: "Générer le guide" },
     empty: { title: "Aucune destination trouvée. Générez un guide pour n'importe quelle destination !", button: "Guide pour destination personnalisée" },
     auth: { title: "Veuillez vous connecter", description: "Vous avez besoin d'un compte pour générer des guides." },
     error: { title: "Erreur", description: "Impossible de créer le guide" },
@@ -229,7 +245,7 @@ const GUIDE_UI = {
     heroTitle: "La tua guida di viaggio personalizzata,",
     heroAccent: "generata in pochi secondi",
     heroSubtitle: "Tutto ciò che devi sapere sulla tua destinazione, nella tua lingua",
-    heroCta: "Ottieni la mia guida → 9–500 USD",
+    heroCta: "Ottieni la mia guida → da {{lo}}",
     searchPlaceholder: "Cerca destinazioni...",
     regions: { all: "Tutte le regioni", europe: "🌍 Europa", asia: "🌏 Asia", americas: "🌎 Americhe", middleEast: "🕌 Medio Oriente", africa: "🌍 Africa", oceania: "🌊 Oceania" },
     focusAreas: {
@@ -245,26 +261,30 @@ const GUIDE_UI = {
       luxury: "👑 Viaggio di lusso",
     },
     seasons: { spring: "🌸 Primavera", summer: "☀️ Estate", autumn: "🍂 Autunno", winter: "❄️ Inverno", unknown: "🤷 Non lo so ancora" },
-    steps: { destination: "Destinazione", focus: "Focus", detail: "Budget IA", language: "Lingua", season: "Stagione" },
+    steps: { destination: "Destinazione", focus: "Focus", detail: "Piano", language: "Lingua", season: "Stagione" },
     form: {
       backToCatalog: "Torna al catalogo",
       destinationTitle: "Quale destinazione?",
       destinationPlaceholder: "es. Tokyo, Giappone",
       focusTitle: "Cosa ti interessa?",
       focusSubtitle: "Seleziona tutto ciò che ti interessa",
-      depthTitle: "Dettaglio IA e prezzo",
-      tokenSubtitle: "Scegli quanti token IA usare: più token = guida più lunga e ricca. Prezzo tra 9 e 500 USD.",
-      tokensLabel: "Budget token",
-      usdLabel: "Prezzo",
+      depthTitle: "Scegli il piano",
+      tierSubtitle: "Tre piani fissi — i livelli superiori allocano più contesto per una guida più lunga e ricca.",
+      tokensApproxLabel: "token (budget di generazione)",
       languageTitle: "Lingua della guida",
       seasonTitle: "Quando viaggi?",
+      tiers: {
+        essential: { name: "Essenziale", desc: "Guida concisa sui punti salienti." },
+        complete: { name: "Completa", desc: "Più approfondita: quartieri, consigli pratici e altro." },
+        ultimate: { name: "Massima", desc: "Massimo dettaglio — la guida più completa." },
+      },
       back: "Indietro",
       next: "Avanti",
       creating: "Creazione...",
       generate: "Genera guida",
-      catalogPricing: "Lunghezza su misura · 9–500 USD · scegli i token",
+      catalogPricing: "3 piani · {{lo}}, {{mid}} o {{hi}}",
     },
-    card: { from: "9–500 USD", button: "Genera guida" },
+    card: { from: "Da {{lo}}", button: "Genera guida" },
     empty: { title: "Nessuna destinazione trovata. Genera una guida per qualsiasi destinazione!", button: "Guida per destinazione personalizzata" },
     auth: { title: "Accedi", description: "Hai bisogno di un account per generare guide." },
     error: { title: "Errore", description: "Impossibile creare la guida" },
@@ -274,7 +294,7 @@ const GUIDE_UI = {
     heroTitle: "Dein persönlicher Reiseführer,",
     heroAccent: "in Sekunden erstellt",
     heroSubtitle: "Alles, was du über dein Reiseziel wissen musst, in deiner Sprache",
-    heroCta: "Meinen Guide holen → 9–500 USD",
+    heroCta: "Meinen Guide holen → ab {{lo}}",
     searchPlaceholder: "Reiseziele suchen...",
     regions: { all: "Alle Regionen", europe: "🌍 Europa", asia: "🌏 Asien", americas: "🌎 Amerika", middleEast: "🕌 Naher Osten", africa: "🌍 Afrika", oceania: "🌊 Ozeanien" },
     focusAreas: {
@@ -290,26 +310,30 @@ const GUIDE_UI = {
       luxury: "👑 Luxusreise",
     },
     seasons: { spring: "🌸 Frühling", summer: "☀️ Sommer", autumn: "🍂 Herbst", winter: "❄️ Winter", unknown: "🤷 Ich weiß es noch nicht" },
-    steps: { destination: "Ziel", focus: "Fokus", detail: "KI-Budget", language: "Sprache", season: "Saison" },
+    steps: { destination: "Ziel", focus: "Fokus", detail: "Paket", language: "Sprache", season: "Saison" },
     form: {
       backToCatalog: "Zurück zum Katalog",
       destinationTitle: "Welches Reiseziel?",
       destinationPlaceholder: "z. B. Tokio, Japan",
       focusTitle: "Was interessiert dich?",
       focusSubtitle: "Wähle alles aus, was dich interessiert",
-      depthTitle: "KI-Umfang & Preis",
-      tokenSubtitle: "Wähle, wie viele KI-Tokens genutzt werden: mehr Tokens = längerer, reichhaltiger Guide. Preis zwischen 9 und 500 USD.",
-      tokensLabel: "Token-Budget",
-      usdLabel: "Preis",
+      depthTitle: "Paket wählen",
+      tierSubtitle: "Drei feste Pakete — höhere Pakete geben mehr Kontext für einen längeren, reichhaltigeren Guide.",
+      tokensApproxLabel: "Tokens (Generierungs-Budget)",
       languageTitle: "Sprache des Guides",
       seasonTitle: "Wann reist du?",
+      tiers: {
+        essential: { name: "Essential", desc: "Kompakter Guide mit den wichtigsten Highlights." },
+        complete: { name: "Complete", desc: "Mehr Tiefe: Viertel, praktische Tipps und mehr." },
+        ultimate: { name: "Ultimate", desc: "Maximaler Umfang — unser ausführlichster Guide." },
+      },
       back: "Zurück",
       next: "Weiter",
       creating: "Wird erstellt...",
       generate: "Guide erstellen",
-      catalogPricing: "Individuelle Länge · 9–500 USD · du wählst die Tokens",
+      catalogPricing: "3 Pakete · {{lo}}, {{mid}} oder {{hi}}",
     },
-    card: { from: "9–500 USD", button: "Guide erstellen" },
+    card: { from: "Ab {{lo}}", button: "Guide erstellen" },
     empty: { title: "Keine Reiseziele gefunden. Erstelle einen Guide für jedes beliebige Ziel!", button: "Guide für individuelles Reiseziel" },
     auth: { title: "Bitte einloggen", description: "Du brauchst ein Konto, um Guides zu erstellen." },
     error: { title: "Fehler", description: "Guide konnte nicht erstellt werden" },
@@ -322,6 +346,15 @@ const TravelGuides = () => {
   const [searchParams] = useSearchParams();
   const uiLang = useLanguage();
   const copy = GUIDE_UI[uiLang] ?? GUIDE_UI.en;
+
+  const guideTierUsdLabels = useMemo(
+    () => ({
+      lo: formatUsd(usdFromTokens(GUIDE_TIER_TOKENS.essential)),
+      mid: formatUsd(usdFromTokens(GUIDE_TIER_TOKENS.complete)),
+      hi: formatUsd(usdFromTokens(GUIDE_TIER_TOKENS.ultimate)),
+    }),
+    [],
+  );
 
   const regions = [
     { value: "all", label: copy.regions.all },
@@ -372,7 +405,7 @@ const TravelGuides = () => {
   const [destSearch, setDestSearch] = useState(initialDest);
   const [showDestSuggestions, setShowDestSuggestions] = useState(false);
   const [focusAreas, setFocusAreas] = useState<string[]>([]);
-  const [tokenBudget, setTokenBudget] = useState(DEFAULT_TOKEN_BUDGET);
+  const [tokenBudget, setTokenBudget] = useState<number>(DEFAULT_TOKEN_BUDGET);
   const [language, setLanguage] = useState<string>(uiLang);
   const [season, setSeason] = useState("unknown");
   const [digitalConsent, setDigitalConsent] = useState(false);
@@ -551,31 +584,37 @@ const TravelGuides = () => {
                 <CardContent className="p-6 space-y-6">
                   <div>
                     <h2 className="text-2xl font-bold text-foreground">{copy.form.depthTitle}</h2>
-                    <p className="text-muted-foreground text-sm mt-2 leading-relaxed">{copy.form.tokenSubtitle}</p>
+                    <p className="text-muted-foreground text-sm mt-2 leading-relaxed">{copy.form.tierSubtitle}</p>
                   </div>
-                  <div className="rounded-xl border border-border bg-muted/30 px-4 py-5 space-y-4">
-                    <div className="flex flex-wrap items-baseline justify-between gap-3">
-                      <div>
-                        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{copy.form.tokensLabel}</p>
-                        <p className="text-2xl font-semibold tabular-nums text-foreground">{tokenBudget.toLocaleString()}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{copy.form.usdLabel}</p>
-                        <p className="text-2xl font-semibold tabular-nums text-primary">{formatUsd(usdFromTokens(tokenBudget))}</p>
-                      </div>
-                    </div>
-                    <Slider
-                      value={[tokenBudget]}
-                      min={GUIDE_TOKEN_MIN}
-                      max={GUIDE_TOKEN_MAX}
-                      step={GUIDE_TOKEN_STEP}
-                      onValueChange={(v) => setTokenBudget(clampTokens(v[0] ?? DEFAULT_TOKEN_BUDGET))}
-                      className="py-1"
-                    />
-                    <div className="flex justify-between text-xs text-muted-foreground tabular-nums">
-                      <span>{GUIDE_TOKEN_MIN.toLocaleString()} → {formatUsd(usdFromTokens(GUIDE_TOKEN_MIN))}</span>
-                      <span>{GUIDE_TOKEN_MAX.toLocaleString()} → {formatUsd(usdFromTokens(GUIDE_TOKEN_MAX))}</span>
-                    </div>
+                  <div className="grid gap-3">
+                    {(
+                      [
+                        { id: "essential" as const, tokens: GUIDE_TIER_TOKENS.essential },
+                        { id: "complete" as const, tokens: GUIDE_TIER_TOKENS.complete },
+                        { id: "ultimate" as const, tokens: GUIDE_TIER_TOKENS.ultimate },
+                      ] as const
+                    ).map(({ id, tokens }) => (
+                      <button
+                        key={id}
+                        type="button"
+                        onClick={() => setTokenBudget(tokens)}
+                        className={cn(
+                          "rounded-xl border px-4 py-4 text-left transition-all",
+                          tokenBudget === tokens
+                            ? "border-primary bg-primary/10 ring-2 ring-primary/20"
+                            : "border-border bg-muted/20 hover:border-primary/40"
+                        )}
+                      >
+                        <div className="flex flex-wrap items-baseline justify-between gap-2">
+                          <p className="font-bold text-foreground">{copy.form.tiers[id].name}</p>
+                          <p className="text-lg font-semibold tabular-nums text-primary">{formatUsd(usdFromTokens(tokens))}</p>
+                        </div>
+                        <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{copy.form.tiers[id].desc}</p>
+                        <p className="text-xs text-muted-foreground mt-2 tabular-nums">
+                          {tokens.toLocaleString()} {copy.form.tokensApproxLabel}
+                        </p>
+                      </button>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
@@ -676,7 +715,7 @@ const TravelGuides = () => {
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">{copy.heroSubtitle}</p>
           <Button variant="cta" size="lg" onClick={() => openForm()}>
-            <Sparkles className="w-4 h-4 mr-2" /> {copy.heroCta}
+            <Sparkles className="w-4 h-4 mr-2" /> {fillGuidePrices(copy.heroCta, guideTierUsdLabels)}
           </Button>
         </div>
       </section>
@@ -705,7 +744,7 @@ const TravelGuides = () => {
 
           <div className="flex gap-3 mb-8 justify-center flex-wrap">
             <Badge variant="outline" className="px-3 py-1.5">
-              {copy.form.catalogPricing}
+              {fillGuidePrices(copy.form.catalogPricing, guideTierUsdLabels)}
             </Badge>
           </div>
 
@@ -718,7 +757,9 @@ const TravelGuides = () => {
               >
                 <div className="relative h-40 overflow-hidden">
                   <img src={dest.image} alt={dest.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
-                  <Badge className="absolute top-2 right-2 bg-primary text-primary-foreground text-xs">{copy.card.from}</Badge>
+                  <Badge className="absolute top-2 right-2 bg-primary text-primary-foreground text-xs">
+                    {fillGuidePrices(copy.card.from, guideTierUsdLabels)}
+                  </Badge>
                 </div>
                 <CardContent className="p-3">
                   <div className="flex items-center justify-between">

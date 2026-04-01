@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { tokensFromLegacyDepth } from "../_shared/guide_token_pricing.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -58,11 +59,9 @@ serve(async (req) => {
     const tokenBudget =
       typeof guide.token_budget === "number" && guide.token_budget > 0
         ? guide.token_budget
-        : guide.depth === "ultimate"
-          ? 450_000
-          : guide.depth === "complete"
-            ? 232_500
-            : 15_000;
+        : tokensFromLegacyDepth(
+            typeof guide.depth === "string" ? guide.depth : "essential",
+          );
 
     const lengthByTokens =
       tokenBudget < 120_000

@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import {
   DEFAULT_TOKEN_BUDGET,
+  GUIDE_TIER_TOKENS,
   clampTokens,
   depthTierFromTokens,
   usdFromTokens,
@@ -57,6 +58,13 @@ const GuidePayment = () => {
 
   const amountUsd = usdFromTokens(tokenBudget);
   const paramsValid = destination.length > 1 && focusAreas.length > 0;
+
+  const tierPricesSubtitle = useMemo(() => {
+    const lo = formatUsd(usdFromTokens(GUIDE_TIER_TOKENS.essential));
+    const mid = formatUsd(usdFromTokens(GUIDE_TIER_TOKENS.complete));
+    const hi = formatUsd(usdFromTokens(GUIDE_TIER_TOKENS.ultimate));
+    return `Secure payment · Essential, Complete, or Ultimate (${lo}, ${mid}, or ${hi})`;
+  }, []);
 
   const stripePromise = useMemo(
     () => (publishableKey ? loadStripe(publishableKey) : null),
@@ -137,7 +145,7 @@ const GuidePayment = () => {
       <section className="pt-28 pb-10 md:pt-32 md:pb-14 bg-secondary">
         <div className="container max-w-xl mx-auto px-4 text-center">
           <h1 className="text-2xl font-semibold">Pay for your AI guide</h1>
-          <p className="text-sm text-muted-foreground mt-2">Secure payment · price follows your token choice ($9–500 USD)</p>
+          <p className="text-sm text-muted-foreground mt-2">{tierPricesSubtitle}</p>
         </div>
       </section>
 
@@ -159,13 +167,13 @@ const GuidePayment = () => {
                   <span className="text-muted-foreground">Destination</span>
                   <span className="font-medium text-right">{destination}</span>
                 </div>
-                <div className="flex justify-between gap-4">
-                  <span className="text-muted-foreground">AI tokens</span>
-                  <span className="font-medium text-right tabular-nums">{tokenBudget.toLocaleString()}</span>
-                </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Detail tier</span>
+                  <span className="text-muted-foreground">Plan</span>
                   <span className="font-medium capitalize">{depthLabel}</span>
+                </div>
+                <div className="flex justify-between gap-4">
+                  <span className="text-muted-foreground">Generation budget</span>
+                  <span className="font-medium text-right tabular-nums">{tokenBudget.toLocaleString()} tokens</span>
                 </div>
                 <div className="flex justify-between items-baseline pt-2 border-t border-border">
                   <span className="font-medium">Total</span>
