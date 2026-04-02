@@ -27,6 +27,12 @@ type EsimPackage = {
   operator: string | null;
 };
 
+const ESIM_PRICE_MULTIPLIER = 5;
+
+function multipliedPriceUsd(baseEur: number): number {
+  return Math.round(baseEur * ESIM_PRICE_MULTIPLIER * 100) / 100;
+}
+
 const regionCountries: Record<string, string[]> = {
   europe: ["GB", "FR", "DE", "ES", "IT", "PT", "NL", "BE", "CH", "AT", "GR", "PL", "CZ", "SE", "NO", "DK", "FI", "IE", "HR", "RO", "BG", "HU", "SK", "SI", "LT", "LV", "EE", "MT", "CY", "LU", "IS"],
   asia: ["CN", "JP", "KR", "IN", "TH", "VN", "MY", "SG", "ID", "PH", "TW", "HK", "MO", "LA", "KH", "MM", "BD", "LK", "NP", "PK", "MN", "KZ", "UZ"],
@@ -277,7 +283,7 @@ const Esims = () => {
                               </div>
                               <div className="flex items-center justify-between">
                                 <span className="text-2xl font-bold text-foreground">
-                                  ${pkg.price_retail_eur.toFixed(2)} USD
+                                  ${multipliedPriceUsd(pkg.price_retail_eur).toFixed(2)} USD
                                 </span>
                                 <Button size="sm" className="rounded-full" onClick={(e) => { e.stopPropagation(); handleBuyClick(pkg); }}>
                                   {t.esims.buyNow}
@@ -342,7 +348,7 @@ const Esims = () => {
                   )}
                   <div className="border-t border-border pt-3 flex justify-between items-center">
                     <span className="font-semibold">Total</span>
-                    <span className="text-2xl font-bold text-primary">${selectedPkg.price_retail_eur.toFixed(2)}</span>
+                    <span className="text-2xl font-bold text-primary">${multipliedPriceUsd(selectedPkg.price_retail_eur).toFixed(2)}</span>
                   </div>
                 </div>
               </div>
@@ -360,7 +366,7 @@ const Esims = () => {
                 <div className="flex gap-2 justify-end w-full">
                   <Button variant="outline" onClick={() => setSelectedPkg(null)}>Cancel</Button>
                   <Button onClick={goToCardPayment} disabled={!esimConsent}>
-                    Continue to payment · ${selectedPkg.price_retail_eur.toFixed(2)}
+                    Continue to payment · ${multipliedPriceUsd(selectedPkg.price_retail_eur).toFixed(2)}
                   </Button>
                 </div>
               </DialogFooter>

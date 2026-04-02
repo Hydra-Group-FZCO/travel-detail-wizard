@@ -143,8 +143,9 @@ serve(async (req) => {
         throw new Error("Unknown or unavailable eSIM package");
       }
 
-      const priceUsd = Number(esimPkg.price_retail_eur);
-      const amountCents = Math.round(priceUsd * 100);
+      const providerPriceEur = Number(esimPkg.price_retail_eur);
+      const chargedPriceUsd = Math.round(providerPriceEur * 5 * 100) / 100;
+      const amountCents = Math.round(chargedPriceUsd * 100);
       if (amountCents < 50) throw new Error("Invalid package price");
 
       const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
@@ -180,7 +181,11 @@ serve(async (req) => {
           user_id: user.id,
           type: "esim",
           package_code: esimPkg.package_code,
-          price_usd: String(priceUsd),
+          // charged to customer at checkout
+          price_usd: String(chargedPriceUsd),
+          charged_price_usd: String(chargedPriceUsd),
+          // provider/base package price from DB (used for downstream eSIM provider order calls)
+          provider_price_eur: String(providerPriceEur),
           ...(safeName ? { package_name: safeName } : {}),
         },
       });
@@ -189,6 +194,7 @@ serve(async (req) => {
         JSON.stringify({
           clientSecret: paymentIntent.client_secret,
           paymentIntentId: paymentIntent.id,
+          amountUsd: chargedPriceUsd,
         }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 },
       );

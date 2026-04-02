@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Wifi, QrCode, RefreshCw, ChevronDown, Smartphone } from "lucide-react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { Wifi, QrCode, RefreshCw, Smartphone, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -13,7 +13,9 @@ import { useToast } from "@/hooks/use-toast";
 type EsimOrder = {
   id: string;
   package_code: string;
+  package_name?: string | null;
   order_no: string | null;
+  stripe_payment_id: string | null;
   iccid: string | null;
   qr_code_url: string | null;
   activation_code: string | null;
@@ -34,26 +36,117 @@ const MyEsims = () => {
   const { toast } = useToast();
   const [orders, setOrders] = useState<EsimOrder[]>([]);
   const [loading, setLoading] = useState(true);
+  const [queryingOrderIds, setQueryingOrderIds] = useState<Record<string, boolean>>({});
+  const [creatingOrderIds, setCreatingOrderIds] = useState<Record<string, boolean>>({});
+  const autoLookupAttemptedRef = useRef<Set<string>>(new Set());
+  const autoCreateAttemptedRef = useRef<Set<string>>(new Set());
 
-  useEffect(() => {
-    if (user) loadOrders();
-  }, [user]);
-
-  const loadOrders = async () => {
+  const loadOrders = useCallback(async () => {
+    if (!user) return;
     setLoading(true);
     const { data, error } = await supabase
       .from("esim_orders")
       .select("*")
-      .eq("user_id", user!.id)
+      .eq("user_id", user.id)
       .order("created_at", { ascending: false });
 
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
     } else {
-      setOrders(data || []);
+      const rows = data ?? [];
+      const codes = [...new Set(rows.map((r) => r.package_code))];
+      const nameByCode: Record<string, string> = {};
+      if (codes.length > 0) {
+        const { data: pkgs, error: pkgErr } = await supabase
+          .from("esim_packages_cache")
+          .select("package_code, name")
+          .in("package_code", codes);
+        if (!pkgErr && pkgs) {
+          for (const p of pkgs) {
+            nameByCode[p.package_code] = p.name;
+          }
+        }
+      }
+      setOrders(
+        rows.map((row) => ({
+          ...row,
+          package_name: nameByCode[row.package_code] ?? null,
+        })),
+      );
     }
     setLoading(false);
-  };
+  }, [toast, user]);
+
+  useEffect(() => {
+    if (user) void loadOrders();
+  }, [user, loadOrders]);
+
+  const lookupOrder = useCallback(async (order: EsimOrder, force = false) => {
+    if (!order.order_no) return;
+    if (!force && autoLookupAttemptedRef.current.has(order.id)) return;
+
+    autoLookupAttemptedRef.current.add(order.id);
+    setQueryingOrderIds((prev) => ({ ...prev, [order.id]: true }));
+    try {
+      const { error } = await supabase.functions.invoke("esim-query", {
+        body: { orderNo: order.order_no },
+      });
+      if (error) throw error;
+      await loadOrders();
+    } catch (error) {
+      toast({
+        title: "Could not refresh eSIM",
+        description: error instanceof Error ? error.message : "Try again in a moment.",
+        variant: "destructive",
+      });
+    } finally {
+      setQueryingOrderIds((prev) => ({ ...prev, [order.id]: false }));
+    }
+  }, [loadOrders, toast]);
+
+  const createProviderOrder = useCallback(async (order: EsimOrder, force = false) => {
+    if (order.order_no) return;
+    if (!order.stripe_payment_id) return;
+    if (!force && autoCreateAttemptedRef.current.has(order.id)) return;
+
+    autoCreateAttemptedRef.current.add(order.id);
+    setCreatingOrderIds((prev) => ({ ...prev, [order.id]: true }));
+    try {
+      const { error } = await supabase.functions.invoke("esim-order", {
+        body: {
+          packageCode: order.package_code,
+          amount: 1,
+          stripe_payment_id: order.stripe_payment_id,
+        },
+      });
+      if (error) throw error;
+      await loadOrders();
+    } catch (error) {
+      toast({
+        title: "Could not create eSIM order",
+        description: error instanceof Error ? error.message : "Try again in a moment.",
+        variant: "destructive",
+      });
+    } finally {
+      setCreatingOrderIds((prev) => ({ ...prev, [order.id]: false }));
+    }
+  }, [loadOrders, toast]);
+
+  useEffect(() => {
+    if (!orders.length) return;
+    const pendingProviderOrders = orders.filter((order) => !order.order_no && !!order.stripe_payment_id);
+    pendingProviderOrders.forEach((order) => {
+      void createProviderOrder(order);
+    });
+  }, [orders, createProviderOrder]);
+
+  useEffect(() => {
+    if (!orders.length) return;
+    const pendingQrOrders = orders.filter((order) => !order.qr_code_url && !!order.order_no);
+    pendingQrOrders.forEach((order) => {
+      void lookupOrder(order);
+    });
+  }, [orders, lookupOrder]);
 
   if (loading) {
     return (
@@ -93,7 +186,9 @@ const MyEsims = () => {
             <Card key={order.id}>
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-base">{order.package_code}</CardTitle>
+                  <CardTitle className="text-base">
+                    {order.package_name?.trim() || order.package_code}
+                  </CardTitle>
                   <Badge variant="outline" className={statusColors[order.status] || ""}>
                     {order.status}
                   </Badge>
@@ -107,6 +202,28 @@ const MyEsims = () => {
                 </div>
 
                 <div className="flex gap-2">
+                  {!order.qr_code_url && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      disabled={Boolean(queryingOrderIds[order.id]) || Boolean(creatingOrderIds[order.id])}
+                      onClick={() => void (order.order_no ? lookupOrder(order, true) : createProviderOrder(order, true))}
+                    >
+                      {creatingOrderIds[order.id] ? (
+                        <>
+                          <Loader2 size={14} className="mr-1 animate-spin" /> Creating eSIM...
+                        </>
+                      ) : queryingOrderIds[order.id] ? (
+                        <>
+                          <Loader2 size={14} className="mr-1 animate-spin" /> Loading QR...
+                        </>
+                      ) : (
+                        <>
+                          <RefreshCw size={14} className="mr-1" /> {order.order_no ? "Refresh QR" : "Create eSIM"}
+                        </>
+                      )}
+                    </Button>
+                  )}
                   {order.qr_code_url && (
                     <Dialog>
                       <DialogTrigger asChild>

@@ -68,7 +68,7 @@ const PaymentSuccess = () => {
     };
 
     verify();
-  }, [sessionId, paymentIntentId]);
+  }, [sessionId, paymentIntentId, type]);
 
   const getRedirectPath = () => {
     if (type === "esim") return "/dashboard/esims";

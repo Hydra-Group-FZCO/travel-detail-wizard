@@ -123,14 +123,18 @@ serve(async (req) => {
         .eq("stripe_payment_id", stripePaymentId)
         .maybeSingle();
 
+      let orderId: string;
+
       if (!existing) {
         const { data: order, error } = await supabaseAdmin
           .from("esim_orders")
           .insert({
             user_id: user.id,
             package_code: meta.package_code,
-            // Column name is legacy; value is USD for new eSIM checkouts
-            price_paid_eur: parseFloat(meta.price_usd || meta.price_eur || "0"),
+            // Column name is legacy; store the actual amount paid by the customer.
+            price_paid_eur:
+              parseFloat(meta.charged_price_usd || meta.price_usd || meta.price_eur || "") ||
+              (paymentIntentAmountCents != null ? paymentIntentAmountCents / 100 : 0),
             status: "paid",
             stripe_payment_id: stripePaymentId,
           })
@@ -138,10 +142,13 @@ serve(async (req) => {
           .single();
 
         if (error) throw error;
-        result.order_id = order.id;
+        orderId = order.id;
       } else {
-        result.order_id = existing.id;
+        orderId = existing.id;
       }
+      // Provider order is created after payment success on frontend.
+
+      result.order_id = orderId;
     } else if (type === "itinerary") {
       const { data: existing } = await supabaseAdmin
         .from("itineraries")

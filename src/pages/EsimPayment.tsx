@@ -10,6 +10,7 @@ import { localizedPath, useLanguage } from "@/i18n";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { ESIM_CHECKOUT_STORAGE_KEY } from "@/lib/esimCheckoutStorage";
 
 const publishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY as string | undefined;
 
@@ -52,7 +53,7 @@ const EsimPayment = () => {
     [lang]
   );
 
-  const amountUsd = pkg?.price_retail_eur ?? 0;
+  const amountUsd = pkg ? Math.round(pkg.price_retail_eur * 5 * 100) / 100 : 0;
 
   useEffect(() => {
     if (!paramsValid) {
@@ -108,6 +109,13 @@ const EsimPayment = () => {
       if (error) throw error;
       if (data?.error) throw new Error(typeof data.error === "string" ? data.error : "Could not start payment.");
       if (!data?.clientSecret) throw new Error("Missing payment session.");
+      sessionStorage.setItem(
+        ESIM_CHECKOUT_STORAGE_KEY,
+        JSON.stringify({
+          package_code: packageCode,
+          amount: 1,
+        }),
+      );
       setClientSecret(data.clientSecret);
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Could not start payment.";
