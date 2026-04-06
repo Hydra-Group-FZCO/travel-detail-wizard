@@ -15,6 +15,7 @@ import Cookies from "./pages/Cookies";
 import Help from "./pages/Help";
 import VisaDetail from "./pages/VisaDetail";
 import NotFound from "./pages/NotFound";
+import Visas from "./pages/Visas";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -69,7 +70,7 @@ const App = () => (
             <Route path="/contacto" element={<Contact />} />
 
             {/* Placeholder routes */}
-            <Route path="/visados" element={<NotFound />} />
+            <Route path="/visados" element={<Visas />} />
             <Route path="/visado/:slug" element={<VisaDetail />} />
             <Route path="/ayuda" element={<Help />} />
             <Route path="/condiciones" element={<Terms />} />
