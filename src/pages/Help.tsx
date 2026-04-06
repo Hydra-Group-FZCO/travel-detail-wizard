@@ -1,6 +1,6 @@
 import PageLayout from "@/components/PageLayout";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { HelpCircle, CreditCard, FileText, Passport } from "lucide-react";
+import { HelpCircle, CreditCard, FileText, BookOpen } from "lucide-react";
 
 const faqCategories = [
   {
