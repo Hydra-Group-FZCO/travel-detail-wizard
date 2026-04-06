@@ -49,8 +49,28 @@ export function useTranslations(): Translations {
   return translations[lang];
 }
 
-export function useLanguage() {
+/** Returns just the language code string (backward compatible) */
+export function useLanguage(): Language {
+  const { lang } = useContext(LanguageContext);
+  return lang;
+}
+
+/** Returns { lang, setLang } for the language switcher */
+export function useLanguageContext() {
   return useContext(LanguageContext);
+}
+
+export function getLanguageFromPath(pathname: string): Language {
+  const segment = pathname.split("/")[1];
+  if (supportedLanguages.includes(segment as Language) && segment !== "es") {
+    return segment as Language;
+  }
+  return "es";
+}
+
+export function localizedPath(path: string, lang: Language): string {
+  if (lang === "es") return path;
+  return `/${lang}${path === "/" ? "" : path}`;
 }
 
 export { type Language, type Translations } from "./types";
