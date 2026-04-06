@@ -70,7 +70,7 @@ const App = () => (
             <Route path="/contacto" element={<Contact />} />
 
             {/* Placeholder routes */}
-            <Route path="/visados" element={<NotFound />} />
+            <Route path="/visados" element={<Visas />} />
             <Route path="/visado/:slug" element={<VisaDetail />} />
             <Route path="/ayuda" element={<Help />} />
             <Route path="/condiciones" element={<Terms />} />
