@@ -24,7 +24,7 @@ const USD_MAX = 500;
 export function clampTokens(n: number): number {
   const r = Math.round(Number(n));
   if (!Number.isFinite(r)) return GUIDE_TIER_TOKENS.complete;
-  let best = GUIDE_TIER_ORDER[0];
+  let best: number = GUIDE_TIER_ORDER[0];
   let bestDist = Infinity;
   for (const t of GUIDE_TIER_ORDER) {
     const d = Math.abs(r - t);
