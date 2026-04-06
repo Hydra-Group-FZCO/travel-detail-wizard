@@ -1,35 +1,24 @@
-## Plan de implementación por fases
+## Plan de Internacionalización
 
-### Fase 1 — Fundación (esta iteración)
-- Nueva paleta de colores (azul profundo + naranja)
-- Nuevo layout: Header, Footer, Home page completa
-- Páginas: Sobre Nosotros, Contacto
-- Widget WhatsApp flotante
-- Banner de cookies
+### Fase A — Infraestructura i18n
+1. Reescribir `src/i18n/types.ts` con todas las claves necesarias para las páginas actuales (Home, About, Contact, Terms, Privacy, Cookies, Help, VisaDetail, Header, Footer)
+2. Actualizar `src/i18n/index.ts` para integrar el selector de idioma con rutas (`/en/`, `/es/`, `/fr/`, `/de/`, `/it/`)
+3. Añadir selector de idioma al Header
 
-### Fase 2 — Páginas legales
-- Condiciones del Servicio (texto legal completo)
-- Política de Privacidad (texto legal completo)
-- Política de Cookies
+### Fase B — Archivos de traducción
+4. Crear los 5 archivos de idioma (es.ts, en.ts, fr.ts, it.ts, de.ts) con TODAS las traducciones
 
-### Fase 3 — Sistema de visados
-- Base de datos de países con banderas
-- Selector inteligente de visados (nacionalidad + destino)
-- Template de página individual de visado
-- Visados populares (grid de tarjetas)
+### Fase C — Adaptar páginas
+5. Actualizar todas las páginas para usar `useTranslations()` en lugar de texto hardcoded:
+   - Header.tsx, Footer.tsx
+   - Index.tsx (Home)
+   - About.tsx, Contact.tsx
+   - Terms.tsx, Privacy.tsx, Cookies.tsx
+   - Help.tsx
+   - VisaDetail.tsx
+6. Actualizar App.tsx con rutas prefijadas por idioma
 
-### Fase 4 — Centro de ayuda + Blog
-- FAQ / Centro de ayuda con categorías
-- Sección blog (placeholder)
-
-### Fase 5 — Sistema de solicitudes
-- Wizard multi-paso de solicitud
-- Panel de usuario (mis solicitudes, tracking)
-- Sistema de notificaciones
-
-### Notas
-- Se eliminarán las páginas actuales (experiencias, eSIMs, guías AI, etc.)
-- Se mantiene la infraestructura de Supabase (auth, profiles, roles)
-- Se crearán nuevas tablas para visados y solicitudes en fases posteriores
-
-**¿Apruebas este plan para empezar con la Fase 1?**
+### Resultado
+- Español como idioma por defecto (sin prefijo)
+- Resto de idiomas con prefijo: `/en/`, `/fr/`, `/de/`, `/it/`
+- Selector de idioma con banderas en el Header
