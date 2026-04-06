@@ -15,6 +15,7 @@ import Cookies from "./pages/Cookies";
 import Help from "./pages/Help";
 import VisaDetail from "./pages/VisaDetail";
 import NotFound from "./pages/NotFound";
+import Visas from "./pages/Visas";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
