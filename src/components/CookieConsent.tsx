@@ -41,37 +41,37 @@ const CookieConsent = () => {
         <div className="bg-card border border-border rounded-xl shadow-elevated p-5 max-w-2xl">
           {!showManage ? (
             <>
-              <p className="text-sm text-foreground font-medium mb-1">We use cookies</p>
+              <p className="text-sm text-foreground font-medium mb-1">Usamos cookies</p>
               <p className="text-xs text-muted-foreground leading-relaxed mb-4">
-                We use essential cookies to make our site work. With your consent, we may also use analytics and marketing cookies. Read our{" "}
-                <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link>.
+                Utilizamos cookies esenciales para el funcionamiento de nuestro sitio. Con su consentimiento, también podemos usar cookies analíticas y de marketing. Lea nuestra{" "}
+                <Link to="/privacidad" className="text-primary hover:underline">Política de Privacidad</Link>.
               </p>
               <div className="flex flex-wrap gap-2">
-                <Button size="sm" onClick={() => accept("all")}>Accept All</Button>
-                <Button size="sm" variant="outline" onClick={() => setShowManage(true)}>Manage Preferences</Button>
-                <Button size="sm" variant="ghost" onClick={() => accept("essential")}>Reject Non-Essential</Button>
+                <Button size="sm" onClick={() => accept("all")} className="bg-accent text-accent-foreground hover:bg-accent/90">Aceptar todas</Button>
+                <Button size="sm" variant="outline" onClick={() => setShowManage(true)}>Gestionar preferencias</Button>
+                <Button size="sm" variant="ghost" onClick={() => accept("essential")}>Rechazar no esenciales</Button>
               </div>
             </>
           ) : (
             <>
-              <p className="text-sm text-foreground font-medium mb-3">Cookie Preferences</p>
+              <p className="text-sm text-foreground font-medium mb-3">Preferencias de cookies</p>
               <div className="space-y-3 mb-4">
                 <label className="flex items-center gap-3 text-sm">
                   <input type="checkbox" checked disabled className="accent-primary" />
-                  <span><strong>Essential</strong> – required for the website to function</span>
+                  <span><strong>Esenciales</strong> – necesarias para el funcionamiento del sitio</span>
                 </label>
                 <label className="flex items-center gap-3 text-sm cursor-pointer">
                   <input type="checkbox" checked={analytics} onChange={e => setAnalytics(e.target.checked)} className="accent-primary" />
-                  <span><strong>Analytics</strong> – help us understand how visitors use our site</span>
+                  <span><strong>Analíticas</strong> – nos ayudan a mejorar el sitio</span>
                 </label>
                 <label className="flex items-center gap-3 text-sm cursor-pointer">
                   <input type="checkbox" checked={marketing} onChange={e => setMarketing(e.target.checked)} className="accent-primary" />
-                  <span><strong>Marketing</strong> – used for affiliate tracking</span>
+                  <span><strong>Marketing</strong> – publicidad personalizada</span>
                 </label>
               </div>
               <div className="flex gap-2">
-                <Button size="sm" onClick={savePreferences}>Save Preferences</Button>
-                <Button size="sm" variant="ghost" onClick={() => setShowManage(false)}>Back</Button>
+                <Button size="sm" onClick={savePreferences} className="bg-accent text-accent-foreground hover:bg-accent/90">Guardar preferencias</Button>
+                <Button size="sm" variant="ghost" onClick={() => setShowManage(false)}>Volver</Button>
               </div>
             </>
           )}

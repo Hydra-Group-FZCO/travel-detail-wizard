@@ -33,7 +33,7 @@ async function bokunSign(
     ["sign"]
   );
   const sig = await crypto.subtle.sign("HMAC", cryptoKey, data);
-  return base64Encode(new Uint8Array(sig));
+  return base64Encode(new Uint8Array(sig) as unknown as ArrayBuffer);
 }
 
 async function bokunFetch(
@@ -106,7 +106,7 @@ serve(async (req) => {
       }
     } catch (e) {
       console.error("Error fetching from Bókun:", e);
-      return new Response(JSON.stringify({ error: e.message, synced: 0 }), {
+      return new Response(JSON.stringify({ error: (e as Error).message, synced: 0 }), {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
@@ -180,7 +180,7 @@ serve(async (req) => {
         }
         synced++;
       } catch (e) {
-        errors.push(e.message);
+        errors.push((e as Error).message);
       }
     }
 
@@ -192,7 +192,7 @@ serve(async (req) => {
     );
   } catch (e) {
     console.error("sync-bokun-bookings error:", e);
-    return new Response(JSON.stringify({ error: e.message }), {
+    return new Response(JSON.stringify({ error: (e as Error).message }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
