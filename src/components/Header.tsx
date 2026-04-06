@@ -3,18 +3,21 @@ import { useState } from "react";
 import { Menu, X, User } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "@/i18n";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Header = () => {
   const { user, role, loading } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
+  const t = useTranslations();
 
   const navLinks = [
-    { to: "/", label: "Inicio" },
-    { to: "/visados", label: "Visados" },
-    { to: "/sobre-nosotros", label: "Sobre nosotros" },
-    { to: "/contacto", label: "Contacto" },
+    { to: "/", label: t.nav.home },
+    { to: "/visados", label: t.nav.visas },
+    { to: "/sobre-nosotros", label: t.nav.about },
+    { to: "/contacto", label: t.nav.contact },
   ];
 
   const isActive = (to: string) => location.pathname === to;
@@ -46,6 +49,8 @@ const Header = () => {
               </Link>
             ))}
 
+            <LanguageSwitcher variant={isHome ? "light" : "dark"} />
+
             {loading ? (
               <div className="w-24 h-9 rounded-full bg-muted animate-pulse ml-2" />
             ) : user ? (
@@ -56,7 +61,7 @@ const Header = () => {
                 }`}
               >
                 <User size={14} />
-                {role === "admin" ? "Admin" : "Mi cuenta"}
+                {role === "admin" ? t.nav.admin : t.nav.myAccount}
               </Link>
             ) : (
               <div className="flex items-center gap-2 ml-2">
@@ -66,10 +71,10 @@ const Header = () => {
                     isHome ? "text-primary-foreground/80 hover:text-primary-foreground" : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  Iniciar sesión
+                  {t.nav.login}
                 </Link>
                 <Button variant="default" size="sm" className="rounded-full bg-accent text-accent-foreground hover:bg-accent/90" asChild>
-                  <Link to="/visados">Solicitar visado</Link>
+                  <Link to="/visados">{t.nav.applyVisa}</Link>
                 </Button>
               </div>
             )}
@@ -100,20 +105,23 @@ const Header = () => {
                   {link.label}
                 </Link>
               ))}
+              <div className="px-4 py-2">
+                <LanguageSwitcher />
+              </div>
               <div className="border-t border-border mt-2 pt-2 flex flex-col gap-1">
                 {!loading && !user && (
                   <>
                     <Link to="/login" onClick={() => setMobileOpen(false)} className="block px-4 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted">
-                      Iniciar sesión
+                      {t.nav.login}
                     </Link>
                     <Link to="/visados" onClick={() => setMobileOpen(false)} className="block px-4 py-3 rounded-lg text-sm font-medium bg-accent text-accent-foreground text-center">
-                      Solicitar visado
+                      {t.nav.applyVisa}
                     </Link>
                   </>
                 )}
                 {!loading && user && (
                   <Link to={role === "admin" ? "/admin" : "/dashboard"} onClick={() => setMobileOpen(false)} className="block px-4 py-3 rounded-lg text-sm font-medium bg-primary text-primary-foreground text-center">
-                    {role === "admin" ? "Admin" : "Mi cuenta"}
+                    {role === "admin" ? t.nav.admin : t.nav.myAccount}
                   </Link>
                 )}
               </div>
