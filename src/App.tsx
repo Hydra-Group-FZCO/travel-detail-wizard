@@ -68,11 +68,11 @@ const App = () => (
 
             {/* Placeholder routes */}
             <Route path="/visados" element={<NotFound />} />
-            <Route path="/visado/:slug" element={<NotFound />} />
-            <Route path="/ayuda" element={<NotFound />} />
-            <Route path="/condiciones" element={<NotFound />} />
-            <Route path="/privacidad" element={<NotFound />} />
-            <Route path="/cookies" element={<NotFound />} />
+            <Route path="/visado/:slug" element={<VisaDetail />} />
+            <Route path="/ayuda" element={<Help />} />
+            <Route path="/condiciones" element={<Terms />} />
+            <Route path="/privacidad" element={<Privacy />} />
+            <Route path="/cookies" element={<Cookies />} />
             <Route path="/reembolsos" element={<NotFound />} />
 
             <Route path="*" element={<NotFound />} />
