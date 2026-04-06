@@ -33,7 +33,7 @@ async function bokunSign(
     ["sign"]
   );
   const sig = await crypto.subtle.sign("HMAC", cryptoKey, data);
-  return base64Encode(new Uint8Array(sig));
+  return base64Encode(new Uint8Array(sig) as unknown as ArrayBuffer);
 }
 
 async function bokunFetch(
