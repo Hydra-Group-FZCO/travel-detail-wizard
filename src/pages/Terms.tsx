@@ -1,233 +1,135 @@
 import PageLayout from "@/components/PageLayout";
-import LegalLanguageNotice from "@/components/LegalLanguageNotice";
 
 const Terms = () => {
   return (
     <PageLayout>
       <section className="pt-28 pb-12 md:pt-32 md:pb-16 bg-secondary">
-        <div className="container-grid">
-          <h1>Terms & Conditions</h1>
-          <p className="text-muted-foreground text-sm mt-2">Last updated: March 2026</p>
+        <div className="container mx-auto px-4 max-w-4xl">
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground">Condiciones del Servicio</h1>
+          <p className="text-muted-foreground text-sm mt-2">Última actualización: abril 2026</p>
         </div>
       </section>
 
-      <section className="section-spacing">
-        <div className="container-grid">
-          <div className="max-w-3xl space-y-8">
-            <LegalLanguageNotice />
-            <p className="text-sm leading-relaxed">
-              These Terms and Conditions govern your use of digitalmoonkey.travel and all purchases made through our platform.
-            </p>
+      <section className="py-12 md:py-16">
+        <div className="container mx-auto px-4 max-w-3xl space-y-10 text-sm leading-relaxed">
 
-            <div className="bg-secondary rounded-xl p-6 space-y-1 text-sm">
-              <p className="font-bold text-foreground">Digital Moonkey Limited</p>
-              <p className="text-muted-foreground">Registered in England & Wales</p>
-              <p className="text-muted-foreground">Company No. 15716386</p>
-              <p className="text-muted-foreground">71-75 Shelton Street, Covent Garden, London, WC2H 9JQ</p>
-              <p className="text-muted-foreground">Email: hello@digitalmoonkey.travel</p>
-            </div>
+          <div className="bg-accent/10 border border-accent/20 rounded-xl p-5 text-sm text-muted-foreground">
+            <p className="font-semibold text-foreground mb-1">Aviso importante</p>
+            <p>Este documento está redactado en español con fines informativos. En caso de discrepancia, prevalecerá la versión en inglés.</p>
+          </div>
 
-            <div className="space-y-6">
-              {/* 1. Acceptance of Terms */}
-              <div>
-                <h2 className="text-lg font-bold mb-3">1. Acceptance of Terms</h2>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  By accessing or using digitalmoonkey.travel, you agree to be bound by these Terms and Conditions. If you do not agree, please do not use our platform.
-                </p>
-              </div>
-
-              {/* 2. Important Notice – Nature of Our Services */}
-              <div>
-                <h2 className="text-lg font-bold mb-3">2. Important Notice – Nature of Our Services</h2>
-                <div className="space-y-3 text-sm leading-relaxed text-muted-foreground">
-                  <p>
-                    Digital Moonkey Limited is a private service provider. We are NOT a government agency, embassy, consulate, immigration authority, or official body of any country.
-                  </p>
-                  <p>
-                    Our services include personal assistance and support for travellers, AI-powered travel planning tools, curated travel experiences from selected third-party operators, eSIM connectivity from third-party providers, and corporate travel compliance services.
-                  </p>
-                  <p>
-                    We do not issue, approve, grant, or guarantee the issuance of any visa, travel authorisation, entry permit, or official document. The outcome of any application depends entirely on the relevant official authority.
-                  </p>
-                  <p>
-                    Our service fees are entirely separate from any official government fees, application fees, or processing fees that may be required by the relevant authority. You may apply directly through official government channels without using our services, which may be available at no cost or at a lower cost.
-                  </p>
-                  <p>
-                    By using our platform, you confirm that you understand and accept the nature of our services as described above.
-                  </p>
-                </div>
-              </div>
-
-              {/* 3. Our Services */}
-              <div>
-                <h2 className="text-lg font-bold mb-3">3. Our Services</h2>
-                <p className="text-sm leading-relaxed text-muted-foreground mb-3">Digital Moonkey Limited provides the following services:</p>
-                <div className="space-y-3 text-sm text-muted-foreground">
-                  <p><strong className="text-foreground">a) eSIM Data Plans</strong> · digital eSIM cards for international data connectivity, delivered electronically via QR code.</p>
-                  <p><strong className="text-foreground">b) AI Travel Itineraries</strong> · personalised day-by-day travel itineraries generated by artificial intelligence, delivered as digital documents.</p>
-                  <p><strong className="text-foreground">c) AI Travel Guides</strong> · comprehensive destination guides generated by artificial intelligence, delivered as digital PDF documents.</p>
-                  <p><strong className="text-foreground">d) Travel Experiences</strong> · curated tours, day trips and activities provided by independent local operators and partners. Digital Moonkey Limited processes the booking and payment as merchant of record. The experience itself is delivered and fulfilled by the operator listed on each experience page, not by Digital Moonkey. Operator cancellation policies are displayed on each listing.</p>
-                  <p><strong className="text-foreground">e) Travel Authorisation Assistance (ESTA/eVisa)</strong> · assistance service for travel authorisation applications. We are an independent assistance service and are not affiliated with any government agency. Official applications can be made directly at government websites free of charge or at lower cost.</p>
-                </div>
-              </div>
-
-              {/* 4. Pricing */}
-              <div>
-                <h2 className="text-lg font-bold mb-3">4. Pricing</h2>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  All prices are displayed in Euros (EUR) and include applicable VAT where required. Prices are subject to change without notice. The price displayed at checkout is the final price you will pay.
-                </p>
-              </div>
-
-              {/* 5. Payment */}
-              <div>
-                <h2 className="text-lg font-bold mb-3">5. Payment</h2>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  All payments are processed securely by Stripe. We accept major credit and debit cards, Apple Pay and Google Pay. Digital Moonkey Limited is the merchant of record for all transactions. Your card statement will show a charge from Digital Moonkey Limited.
-                </p>
-              </div>
-
-              {/* 6. Digital Products · Delivery */}
-              <div>
-                <h2 className="text-lg font-bold mb-3">6. Digital Products · Delivery</h2>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <p><strong className="text-foreground">eSIM products:</strong> delivered via QR code to your registered email address within minutes of payment confirmation. Delivery may take up to 24 hours in exceptional cases.</p>
-                  <p><strong className="text-foreground">AI Itineraries and Travel Guides:</strong> generated and delivered within your account and by email immediately after payment, typically within 60 seconds.</p>
-                  <p><strong className="text-foreground">Travel Authorisation Assistance:</strong> processing times vary depending on the type of authorisation and destination government processing times. We will keep you informed by email.</p>
-                </div>
-              </div>
-
-              {/* 7. Cancellations and Refunds */}
-              <div>
-                <h2 className="text-lg font-bold mb-3">7. Cancellations and Refunds</h2>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  Please refer to our full <a href="/refunds" className="text-primary hover:underline">Refund Policy</a> at digitalmoonkey.travel/refunds
-                </p>
-              </div>
-
-              {/* 8. Consumer Cancellation Rights */}
-              <div>
-                <h2 className="text-lg font-bold mb-3">8. Consumer Cancellation Rights</h2>
-                <div className="space-y-3 text-sm leading-relaxed text-muted-foreground">
-                  <p>
-                    If you are a consumer based in the UK or European Union, you have the right to cancel certain purchases within 14 days of the order confirmation date without giving any reason (the "Cooling-Off Period"), subject to the following exceptions under the Consumer Contracts Regulations 2013:
-                  </p>
-                  <p>
-                    <strong className="text-foreground">Digital content (AI Itineraries, AI Travel Guides):</strong> your cancellation right is lost once the digital content has been generated and delivered, provided you were informed of this before purchase and expressly consented to immediate delivery.
-                  </p>
-                  <p>
-                    <strong className="text-foreground">eSIM products:</strong> your cancellation right is lost once the eSIM QR code has been delivered, as this constitutes digital content supplied in a non-tangible form.
-                  </p>
-                  <p>
-                    <strong className="text-foreground">Travel Experiences:</strong> cancellation terms are determined by the operator's cancellation policy as displayed on each experience listing before purchase.
-                  </p>
-                  <p>
-                    <strong className="text-foreground">Travel Authorisation Assistance:</strong> if you request that we begin processing your application during the cooling-off period, you acknowledge that your cancellation right may be reduced in proportion to the service already performed.
-                  </p>
-                  <p>
-                    For all cancellation rights and refund amounts, see our full <a href="/refunds" className="text-primary hover:underline">Refund Policy</a> at digitalmoonkey.travel/refunds.
-                  </p>
-                </div>
-              </div>
-
-              {/* 9. Travel Authorisation Disclaimer */}
-              <div>
-                <h2 className="text-lg font-bold mb-3">9. Travel Authorisation Disclaimer</h2>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  Our travel authorisation assistance service (ESTA, eVisa and similar) is an independent assistance service. We are not a government agency or affiliated with any government. The applicable government fees are included in our service fee. Customers can apply directly through official government portals. We make no guarantee of approval as decisions rest solely with the relevant government authority.
-                </p>
-              </div>
-
-              {/* 10. eSIM Compatibility */}
-              <div>
-                <h2 className="text-lg font-bold mb-3">10. eSIM Compatibility</h2>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  eSIM products require an eSIM-compatible and unlocked device. It is the customer's responsibility to verify device compatibility before purchase. We provide a compatibility checker on the product page. Non-compatible device purchases are non-refundable unless we are at fault.
-                </p>
-              </div>
-
-              {/* 11. AI-Generated Content */}
-              <div>
-                <h2 className="text-lg font-bold mb-3">11. AI-Generated Content</h2>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  Our AI itineraries and travel guides are generated using artificial intelligence. While we strive for accuracy, information such as opening hours, prices and availability of places mentioned may change. Always verify critical information independently before travel. We accept no liability for decisions made solely based on AI-generated content.
-                </p>
-              </div>
-
-              {/* 12. Intellectual Property */}
-              <div>
-                <h2 className="text-lg font-bold mb-3">12. Intellectual Property</h2>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  All content on digitalmoonkey.travel, including but not limited to text, graphics, logos and AI-generated content sold through our platform, is the property of Digital Moonkey Limited or its licensors. You may not reproduce, distribute or create derivative works without our express written permission.
-                </p>
-              </div>
-
-              {/* 13. Limitation of Liability */}
-              <div>
-                <h2 className="text-lg font-bold mb-3">13. Limitation of Liability</h2>
-                <div className="space-y-3 text-sm leading-relaxed text-muted-foreground">
-                  <p>
-                    To the maximum extent permitted by applicable law, Digital Moonkey Limited shall not be liable for any indirect, incidental, special or consequential damages arising from your use of our services. Our total liability shall not exceed the amount paid by you for the specific service giving rise to the claim.
-                  </p>
-                  <p>
-                    Nothing in these Terms excludes or limits our liability for: (a) death or personal injury caused by our negligence; (b) fraud or fraudulent misrepresentation; or (c) any other liability that cannot be excluded or limited by applicable law.
-                  </p>
-                </div>
-              </div>
-
-              {/* 14. Third-Party Services and Partners */}
-              <div>
-                <h2 className="text-lg font-bold mb-3">14. Third-Party Services and Partners</h2>
-                <div className="space-y-3 text-sm leading-relaxed text-muted-foreground">
-                  <p>Certain services on our platform are provided by or depend on third-party partners:</p>
-                  <p>
-                    <strong className="text-foreground">Travel Experiences</strong> are delivered by independent local operators accessed through our booking platform. Digital Moonkey processes the payment but does not deliver the experience. The operator is responsible for the quality, safety, and delivery of each experience.
-                  </p>
-                  <p>
-                    <strong className="text-foreground">eSIM products</strong> are provided by third-party eSIM providers. Digital Moonkey facilitates the purchase and delivery of the eSIM QR code but does not operate the mobile network.
-                  </p>
-                  <p>
-                    <strong className="text-foreground">AI-generated content</strong> (itineraries, guides) is produced using artificial intelligence. While we strive for accuracy, we do not guarantee that all information is current or complete. Always verify critical travel information independently.
-                  </p>
-                  <p>
-                    Each third-party provider may have their own terms and conditions. We encourage you to review the relevant provider's terms where indicated on the product page. Digital Moonkey is not liable for the acts, omissions, or failures of third-party providers, except to the extent required by applicable law.
-                  </p>
-                </div>
-              </div>
-
-              {/* 15. Data Protection */}
-              <div>
-                <h2 className="text-lg font-bold mb-3">15. Data Protection</h2>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  Your personal data is processed in accordance with our <a href="/privacy" className="text-primary hover:underline">Privacy Policy</a> at digitalmoonkey.travel/privacy and in compliance with UK GDPR.
-                </p>
-              </div>
-
-              {/* 16. Governing Law */}
-              <div>
-                <h2 className="text-lg font-bold mb-3">16. Governing Law</h2>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  These Terms are governed by the laws of England and Wales. Any disputes shall be subject to the exclusive jurisdiction of the courts of England and Wales.
-                </p>
-              </div>
-
-              {/* 17. Changes to Terms */}
-              <div>
-                <h2 className="text-lg font-bold mb-3">17. Changes to Terms</h2>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  We reserve the right to modify these Terms at any time. Changes will be posted on this page with an updated date. Continued use of our platform constitutes acceptance of the revised Terms.
-                </p>
-              </div>
-
-              {/* 18. Contact */}
-              <div>
-                <h2 className="text-lg font-bold mb-3">18. Contact</h2>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  For any queries regarding these Terms, contact us at: <a href="mailto:hello@digitalmoonkey.travel" className="text-primary hover:underline">hello@digitalmoonkey.travel</a>
-                </p>
-              </div>
+          <div>
+            <h2 className="text-lg font-bold mb-3 text-foreground">1. Introducción y aceptación del contrato</h2>
+            <div className="space-y-3 text-muted-foreground">
+              <p>Estas Condiciones del Servicio constituyen un acuerdo legal vinculante entre usted ("el Usuario") y Digital Moonkey Ltd ("la Empresa"), una sociedad registrada en Inglaterra y Gales con número de empresa 15716386, con domicilio social en 71-75 Shelton Street, Covent Garden, London, WC2H 9JQ, Reino Unido.</p>
+              <p>Al acceder o utilizar nuestros servicios, usted acepta quedar vinculado por estas Condiciones, nuestra Política de Privacidad y nuestra Política de Cookies.</p>
             </div>
           </div>
+
+          <div>
+            <h2 className="text-lg font-bold mb-3 text-foreground">2. Cuentas de usuario</h2>
+            <p className="text-muted-foreground">Para utilizar determinados servicios, deberá crear una cuenta proporcionando información veraz. Usted es responsable de la confidencialidad de su contraseña y de todas las actividades bajo su cuenta. Notifique cualquier uso no autorizado a admin@digitalmoonkey.travel.</p>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-bold mb-3 text-foreground">3. Relación con el usuario</h2>
+            <div className="space-y-3 text-muted-foreground">
+              <p>Digital Moonkey actúa como <strong className="text-foreground">intermediario de servicios de visado</strong>. NO somos una entidad gubernamental, embajada ni consulado. NO garantizamos la aprobación de ningún visado. Los tiempos de procesamiento son estimaciones.</p>
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-bold mb-3 text-foreground">4. Privacidad y seguridad</h2>
+            <p className="text-muted-foreground">El tratamiento de sus datos personales se rige por nuestra <a href="/privacidad" className="text-primary hover:underline">Política de Privacidad</a>. Cumplimos con el UK GDPR y la Data Protection Act 2018.</p>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-bold mb-3 text-foreground">5. Derechos del usuario</h2>
+            <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
+              <li>Acceder a los servicios contratados.</li>
+              <li>Solicitar información sobre el estado de su solicitud.</li>
+              <li>Cancelar o modificar solicitudes según nuestra política de reembolso.</li>
+              <li>Ejercer derechos de protección de datos.</li>
+              <li>Presentar reclamación ante la ICO del Reino Unido.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-bold mb-3 text-foreground">6. Derechos de Digital Moonkey</h2>
+            <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
+              <li><strong className="text-foreground">Propiedad intelectual:</strong> Todo el contenido es propiedad de Digital Moonkey Ltd.</li>
+              <li><strong className="text-foreground">Modificación de servicios y precios.</strong></li>
+              <li><strong className="text-foreground">Rechazo de solicitudes fraudulentas.</strong></li>
+              <li><strong className="text-foreground">Monitorización del uso</strong> para cumplimiento y prevención de fraude.</li>
+              <li><strong className="text-foreground">Uso de datos anonimizados</strong> para mejora del servicio.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-bold mb-3 text-foreground">7. Requisitos de uso</h2>
+            <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
+              <li>Ser mayor de 18 años.</li>
+              <li>Proporcionar información veraz y completa.</li>
+              <li>No utilizar el servicio con fines fraudulentos.</li>
+              <li>No realizar scraping ni automatización.</li>
+              <li>Verificar documentos de viaje antes del viaje.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-bold mb-3 text-foreground">8. Enlaces a terceros</h2>
+            <p className="text-muted-foreground">Digital Moonkey no es responsable del contenido ni las prácticas de sitios de terceros enlazados desde nuestro sitio web.</p>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-bold mb-3 text-foreground">9. Condiciones comerciales</h2>
+            <p className="text-muted-foreground">Precios en <strong className="text-foreground">USD</strong>. Tasas gubernamentales se cobran por separado. Métodos de pago: Visa, Mastercard, PayPal, Apple Pay. Pagos procesados por Stripe (PCI DSS Nivel 1). No almacenamos datos de tarjetas.</p>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-bold mb-3 text-foreground">10. Política de reembolso</h2>
+            <div className="space-y-3 text-muted-foreground">
+              <p><strong className="text-foreground">Reembolso completo:</strong> cancelación antes de iniciar la tramitación o error técnico nuestro.</p>
+              <p><strong className="text-foreground">Reembolso parcial:</strong> cancelación después de iniciar pero antes del envío a autoridades.</p>
+              <p><strong className="text-foreground">Sin reembolso:</strong> denegación por información incorrecta del usuario, solicitud ya enviada, tasas gubernamentales abonadas.</p>
+              <p>Contacte admin@digitalmoonkey.travel con su número de pedido. Plazo: 14 días laborables.</p>
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-bold mb-3 text-foreground">11. Suspensión y terminación</h2>
+            <p className="text-muted-foreground">Podemos suspender o cancelar su cuenta por infracciones, información falsa, actividades ilegales o sospecha de fraude.</p>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-bold mb-3 text-foreground">12. Limitación de responsabilidad</h2>
+            <div className="space-y-3 text-muted-foreground">
+              <p>Responsabilidad total limitada al importe pagado. No responsables de decisiones gubernamentales ni retrasos por fuerza mayor.</p>
+              <p>Nada excluye responsabilidad por negligencia causante de muerte/lesiones, fraude, ni responsabilidad no excluible por ley.</p>
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-bold mb-3 text-foreground">13. Indemnización</h2>
+            <p className="text-muted-foreground">Usted se compromete a indemnizar a Digital Moonkey Ltd frente a reclamaciones derivadas de su uso del servicio o información incorrecta proporcionada.</p>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-bold mb-3 text-foreground">14. Ley aplicable y jurisdicción</h2>
+            <p className="text-muted-foreground">Leyes de Inglaterra y Gales. Jurisdicción exclusiva: tribunales de Londres, Reino Unido.</p>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-bold mb-3 text-foreground">15. Contacto</h2>
+            <div className="bg-secondary rounded-xl p-6 mt-2 space-y-1 text-sm">
+              <p className="font-bold text-foreground">Digital Moonkey Ltd</p>
+              <p className="text-muted-foreground">Company No. 15716386</p>
+              <p className="text-muted-foreground">71-75 Shelton Street, Covent Garden, London, WC2H 9JQ, UK</p>
+              <p className="text-muted-foreground">Email: <a href="mailto:admin@digitalmoonkey.travel" className="text-primary hover:underline">admin@digitalmoonkey.travel</a></p>
+              <p className="text-muted-foreground">Teléfono: <a href="tel:+376338383" className="text-primary hover:underline">+376 338 383</a></p>
+            </div>
+          </div>
+
         </div>
       </section>
     </PageLayout>

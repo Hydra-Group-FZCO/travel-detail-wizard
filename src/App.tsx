@@ -8,6 +8,11 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
+import Cookies from "./pages/Cookies";
+import Help from "./pages/Help";
+import VisaDetail from "./pages/VisaDetail";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -63,11 +68,11 @@ const App = () => (
 
             {/* Placeholder routes */}
             <Route path="/visados" element={<NotFound />} />
-            <Route path="/visado/:slug" element={<NotFound />} />
-            <Route path="/ayuda" element={<NotFound />} />
-            <Route path="/condiciones" element={<NotFound />} />
-            <Route path="/privacidad" element={<NotFound />} />
-            <Route path="/cookies" element={<NotFound />} />
+            <Route path="/visado/:slug" element={<VisaDetail />} />
+            <Route path="/ayuda" element={<Help />} />
+            <Route path="/condiciones" element={<Terms />} />
+            <Route path="/privacidad" element={<Privacy />} />
+            <Route path="/cookies" element={<Cookies />} />
             <Route path="/reembolsos" element={<NotFound />} />
 
             <Route path="*" element={<NotFound />} />
