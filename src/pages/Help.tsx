@@ -35,7 +35,7 @@ const faqCategories = [
   },
   {
     title: "Sobre documentos",
-    icon: Passport,
+    icon: BookOpen,
     items: [
       { q: "¿Qué documentos necesito?", a: "Los documentos requeridos varían según el tipo de visado y el país de destino. En general, necesitará: pasaporte vigente, fotografía tipo pasaporte, itinerario de viaje y, en algunos casos, comprobante de alojamiento y medios económicos. Le indicaremos los requisitos exactos al iniciar su solicitud." },
       { q: "¿Qué requisitos tiene la foto de pasaporte?", a: "La foto debe ser reciente (menos de 6 meses), con fondo blanco, rostro centrado y sin accesorios que oculten el rostro. Los requisitos exactos de tamaño y formato varían según el país. Nuestro sistema le guiará con los requisitos específicos." },
