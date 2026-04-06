@@ -160,6 +160,8 @@ export interface Translations {
     notice: string;
     noticeLabel: string;
   };
+  // Allow legacy keys from old pages (esims, services, experiences, etc.)
+  [key: string]: any;
 }
 
 export const languageNames: Record<Language, string> = {

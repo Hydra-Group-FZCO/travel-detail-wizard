@@ -1,4 +1,4 @@
-import { useLanguage, supportedLanguages } from "@/i18n";
+import { useLanguageContext, supportedLanguages } from "@/i18n";
 import { languageFlags, languageNames, type Language } from "@/i18n/types";
 import { useState, useRef, useEffect } from "react";
 import { Globe } from "lucide-react";
@@ -8,7 +8,7 @@ interface Props {
 }
 
 const LanguageSwitcher = ({ variant = "dark" }: Props) => {
-  const { lang, setLang } = useLanguage();
+  const { lang, setLang } = useLanguageContext();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
