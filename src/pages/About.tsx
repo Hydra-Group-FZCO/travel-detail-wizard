@@ -78,10 +78,16 @@ const About = () => {
         <div className="container-grid max-w-3xl">
           <motion.div variants={fadeUp} className="space-y-6">
             <p className="text-base text-muted-foreground leading-relaxed">
-              Digital Moonkey Ltd was founded in 2024 by Pedro, Tomás, and Gerard — three entrepreneurs with complementary skills and a shared vision for building world-class digital products.
+              Digital Moonkey Ltd was founded in 2024 by Pedro, Tomás, and Gerard — three entrepreneurs with complementary skills and a shared vision for building world-class digital products, with a particular focus on the travel and hospitality industry.
+            </p>
+            <p className="text-base text-muted-foreground leading-relaxed">
+              Our domain — <span className="text-primary font-semibold">digitalmoonkey.travel</span> — reflects our core specialisation. While we serve clients across multiple sectors, travel technology is where we started and where we continue to innovate. From visa processing platforms like eVisa Apply to booking engines and AI-powered trip planners, we understand the unique challenges travel businesses face.
             </p>
             <p className="text-base text-muted-foreground leading-relaxed">
               Based in London and with operations across Europe and the Middle East, we've rapidly grown from a small development studio into a diversified technology group with seven active ventures spanning fintech, travel, food services, accounting, and advisory.
+            </p>
+            <p className="text-base text-muted-foreground leading-relaxed">
+              We're currently working on one of our most ambitious projects to date: a <strong className="text-foreground">next-generation Property Management System (PMS)</strong> for a major international hotel chain. While we can't reveal the client's identity due to NDA obligations, this project showcases our ability to deliver enterprise-grade hospitality technology at scale.
             </p>
             <p className="text-base text-muted-foreground leading-relaxed">
               Our approach is hands-on: we don't just build products for clients — we build, launch, and operate our own companies. This gives us a unique founder's perspective on every project we take on.
