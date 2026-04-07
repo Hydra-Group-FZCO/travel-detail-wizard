@@ -20,7 +20,7 @@ const services = [
   {
     icon: Code,
     title: "Software Development",
-    desc: "End-to-end custom software solutions — from web and mobile applications to complex enterprise platforms. We build scalable, secure, and high-performance systems tailored to your business needs.",
+    desc: "End-to-end custom software solutions with a strong focus on the travel and hospitality industry — from booking engines and PMS platforms to enterprise systems. We build scalable, secure, and high-performance systems.",
     tags: ["React", "Node.js", "Python", "TypeScript", "AWS", "Docker"],
   },
   {
@@ -97,7 +97,7 @@ const Index = () => {
               <span className="gradient-text">Digital Business</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl leading-relaxed">
-              Digital Moonkey is a technology company creating innovative solutions in software development, artificial intelligence, digital marketing, and cybersecurity.
+              Digital Moonkey is a technology company specialising in travel industry software, AI, digital marketing, and cybersecurity. Our .travel domain reflects our DNA — we build the platforms that power modern travel businesses.
             </p>
             <div className="flex flex-wrap gap-4">
               <Button asChild size="lg" className="rounded-full bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground font-semibold text-base px-8">
