@@ -2,27 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 215 28% 17%;
+    --background: 222 47% 4%;
+    --foreground: 210 40% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 215 28% 17%;
+    --card: 217 33% 12%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 215 28% 17%;
+    --popover: 217 33% 12%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 216 77% 23%;
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 215 28% 17%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 25 95% 53%;
+    --accent: 263 70% 50%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -31,47 +33,11 @@
     --success: 142 71% 45%;
     --success-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 216 77% 23%;
+    --border: 217 33% 20%;
+    --input: 217 33% 20%;
+    --ring: 217 91% 60%;
 
-    --radius: 0.5rem;
-
-    /* Custom tokens */
-    --hero-overlay: 216 60% 10%;
-    --trust-bar-bg: 216 70% 16%;
-    --trust-bar-fg: 0 0% 100%;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 215 16% 26%;
-    --sidebar-primary: 216 77% 23%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 40% 96%;
-    --sidebar-accent-foreground: 215 28% 17%;
-    --sidebar-border: 214 32% 91%;
-    --sidebar-ring: 216 77% 23%;
-  }
-
-  .dark {
-    --background: 222 47% 6%;
-    --foreground: 210 40% 96%;
-    --card: 222 47% 10%;
-    --card-foreground: 210 40% 96%;
-    --popover: 222 47% 10%;
-    --popover-foreground: 210 40% 96%;
-    --primary: 216 77% 35%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 222 47% 14%;
-    --secondary-foreground: 210 40% 96%;
-    --muted: 222 47% 14%;
-    --muted-foreground: 215 16% 60%;
-    --accent: 25 95% 55%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 222 30% 18%;
-    --input: 222 30% 18%;
-    --ring: 216 77% 35%;
+    --radius: 0.75rem;
   }
 }
 
@@ -87,22 +53,24 @@
 
   h1, h2, h3, h4 {
     color: hsl(var(--foreground));
+    font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
     font-weight: 700;
-    line-height: 1.2;
+    line-height: 1.1;
   }
 
   h1 {
-    font-size: clamp(2rem, 5vw, 3.25rem);
-    letter-spacing: -0.02em;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    letter-spacing: -0.03em;
   }
 
   h2 {
-    font-size: clamp(1.5rem, 3.5vw, 2.25rem);
-    letter-spacing: -0.01em;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    letter-spacing: -0.02em;
   }
 
   h3 {
-    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    letter-spacing: -0.01em;
   }
 
   p {
@@ -113,20 +81,48 @@
 
 @layer components {
   .section-spacing {
-    @apply py-16 md:py-24;
+    @apply py-20 md:py-32;
   }
 
   .container-grid {
     @apply container mx-auto px-5 max-w-7xl;
   }
 
-  .hero-overlay {
-    background: linear-gradient(
-      to bottom,
-      hsla(var(--hero-overlay) / 0.3) 0%,
-      hsla(var(--hero-overlay) / 0.55) 50%,
-      hsla(var(--hero-overlay) / 0.75) 100%
-    );
+  .glass-card {
+    background: hsla(var(--card) / 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid hsla(var(--border) / 0.5);
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+  }
+
+  .gradient-border {
+    position: relative;
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 30px -5px hsla(var(--primary) / 0.3);
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 30px -5px hsla(var(--accent) / 0.3);
   }
 }
 
