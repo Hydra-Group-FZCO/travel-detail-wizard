@@ -1,63 +1,76 @@
 import { Link } from "react-router-dom";
-import { useTranslations } from "@/i18n";
+
+const ventures = [
+  { name: "MoonCollect", url: "https://mooncollect.com" },
+  { name: "Escudo Fiscal", url: "https://www.escudofiscal.es" },
+  { name: "GPT Hydra", url: "https://gpthydra.com" },
+  { name: "Taste2Home", url: "https://taste2home.com" },
+  { name: "Britania Books", url: "https://britaniabooks.com" },
+  { name: "Sterling Firm", url: "https://sterlingfirm.com" },
+  { name: "eVisa Apply", url: "https://evisaapply.com" },
+];
 
 const Footer = () => {
-  const t = useTranslations();
-
   return (
-    <footer className="bg-primary text-primary-foreground">
-      <div className="container-grid py-14">
+    <footer className="border-t border-border/50 bg-background">
+      <div className="container-grid py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+          {/* Brand */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2.5 mb-4">
               <span className="text-2xl">🐒</span>
-              <span className="font-bold text-lg">Digital Moonkey</span>
+              <span className="font-display font-bold text-lg text-foreground">Digital Moonkey</span>
             </div>
-            <p className="text-sm text-primary-foreground/70 leading-relaxed max-w-sm">{t.footer.desc}</p>
-            <div className="mt-4 text-xs text-primary-foreground/50 space-y-0.5">
-              <p>{t.footer.reg}</p>
-              <p>{t.footer.addr}</p>
-            </div>
-          </div>
-
-          <div>
-            <h4 className="text-sm font-bold mb-4 text-primary-foreground">{t.footer.companyTitle}</h4>
-            <div className="flex flex-col gap-2.5">
-              <Link to="/sobre-nosotros" className="text-sm text-primary-foreground/70 hover:text-primary-foreground transition-colors">{t.footer.aboutUs}</Link>
-              <Link to="/contacto" className="text-sm text-primary-foreground/70 hover:text-primary-foreground transition-colors">{t.footer.contactUs}</Link>
-              <Link to="/ayuda" className="text-sm text-primary-foreground/70 hover:text-primary-foreground transition-colors">{t.footer.helpCenter}</Link>
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-sm mb-4">
+              A technology company creating innovative solutions in software development, artificial intelligence, digital marketing, and cybersecurity.
+            </p>
+            <div className="flex gap-3 text-muted-foreground">
+              <a href="mailto:hello@digitalmoonkey.travel" className="text-xs hover:text-primary transition-colors">hello@digitalmoonkey.travel</a>
             </div>
           </div>
 
+          {/* Company */}
           <div>
-            <h4 className="text-sm font-bold mb-4 text-primary-foreground">{t.footer.servicesTitle}</h4>
+            <h4 className="text-sm font-bold mb-4 text-foreground">Company</h4>
             <div className="flex flex-col gap-2.5">
-              <Link to="/visados" className="text-sm text-primary-foreground/70 hover:text-primary-foreground transition-colors">{t.footer.eVisas}</Link>
-              <span className="text-sm text-primary-foreground/70">{t.footer.eta}</span>
-              <span className="text-sm text-primary-foreground/70">{t.footer.photos}</span>
+              <Link to="/about" className="text-sm text-muted-foreground hover:text-primary transition-colors">About</Link>
+              <Link to="/services" className="text-sm text-muted-foreground hover:text-primary transition-colors">Services</Link>
+              <Link to="/ventures" className="text-sm text-muted-foreground hover:text-primary transition-colors">Ventures</Link>
+              <Link to="/contact" className="text-sm text-muted-foreground hover:text-primary transition-colors">Contact</Link>
             </div>
           </div>
 
+          {/* Ventures */}
           <div>
-            <h4 className="text-sm font-bold mb-4 text-primary-foreground">{t.footer.legalTitle}</h4>
+            <h4 className="text-sm font-bold mb-4 text-foreground">Ventures</h4>
             <div className="flex flex-col gap-2.5">
-              <Link to="/condiciones" className="text-sm text-primary-foreground/70 hover:text-primary-foreground transition-colors">{t.footer.terms}</Link>
-              <Link to="/privacidad" className="text-sm text-primary-foreground/70 hover:text-primary-foreground transition-colors">{t.footer.privacy}</Link>
-              <Link to="/cookies" className="text-sm text-primary-foreground/70 hover:text-primary-foreground transition-colors">{t.footer.cookies}</Link>
-              <Link to="/reembolsos" className="text-sm text-primary-foreground/70 hover:text-primary-foreground transition-colors">{t.footer.refund}</Link>
+              {ventures.map((v) => (
+                <a key={v.name} href={v.url} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  {v.name}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Legal */}
+          <div>
+            <h4 className="text-sm font-bold mb-4 text-foreground">Legal</h4>
+            <div className="flex flex-col gap-2.5">
+              <Link to="/terms" className="text-sm text-muted-foreground hover:text-primary transition-colors">Terms of Service</Link>
+              <Link to="/privacy" className="text-sm text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link>
+              <Link to="/cookies" className="text-sm text-muted-foreground hover:text-primary transition-colors">Cookie Policy</Link>
             </div>
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-primary-foreground/20">
+        <div className="mt-12 pt-6 border-t border-border/50">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <p className="text-xs text-primary-foreground/60 font-semibold">{t.footer.copyright}</p>
-            <div className="flex items-center gap-3 text-xs text-primary-foreground/50">
-              <span>Visa</span>
-              <span>Mastercard</span>
-              <span>PayPal</span>
-              <span>Apple Pay</span>
-            </div>
+            <p className="text-xs text-muted-foreground font-semibold">
+              © 2024–2026 Digital Moonkey Ltd. All rights reserved.
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Company No. 15716386 — Registered in England and Wales
+            </p>
           </div>
         </div>
       </div>
