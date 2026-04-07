@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Logo from "./Logo";
 
 const ventures = [
   { name: "MoonCollect", url: "https://mooncollect.com" },
@@ -17,9 +18,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2.5 mb-4">
-              <span className="text-2xl">🐒</span>
-              <span className="font-display font-bold text-lg text-foreground">Digital Moonkey</span>
+            <div className="mb-4">
+              <Logo size="sm" variant="icon" showText textClassName="text-foreground" />
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-sm mb-4">
               A technology company creating innovative solutions in software development, artificial intelligence, digital marketing, and cybersecurity.
