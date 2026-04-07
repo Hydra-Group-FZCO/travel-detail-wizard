@@ -20,7 +20,7 @@ const services = [
   {
     icon: Code,
     title: "Software Development",
-    desc: "End-to-end custom software solutions — from web and mobile applications to complex enterprise platforms. We build scalable, secure, and high-performance systems tailored to your business needs.",
+    desc: "End-to-end custom software solutions with a strong focus on the travel and hospitality industry — from booking engines and PMS platforms to enterprise systems. We build scalable, secure, and high-performance systems.",
     tags: ["React", "Node.js", "Python", "TypeScript", "AWS", "Docker"],
   },
   {
@@ -97,7 +97,7 @@ const Index = () => {
               <span className="gradient-text">Digital Business</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl leading-relaxed">
-              Digital Moonkey is a technology company creating innovative solutions in software development, artificial intelligence, digital marketing, and cybersecurity.
+              Digital Moonkey is a technology company specialising in travel industry software, AI, digital marketing, and cybersecurity. Our .travel domain reflects our DNA — we build the platforms that power modern travel businesses.
             </p>
             <div className="flex flex-wrap gap-4">
               <Button asChild size="lg" className="rounded-full bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground font-semibold text-base px-8">
@@ -140,7 +140,42 @@ const Index = () => {
         </div>
       </Section>
 
-      {/* Stats */}
+      {/* Travel Tech Spotlight */}
+      <Section className="section-spacing bg-gradient-to-b from-secondary/30 to-transparent">
+        <div className="container-grid">
+          <motion.div variants={fadeUp} className="max-w-4xl mx-auto">
+            <div className="glass-card rounded-2xl p-8 md:p-12 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+              <div className="relative z-10">
+                <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold mb-4 tracking-widest uppercase">Travel Tech Focus</span>
+                <h2 className="mb-4">Why .travel? Because It's in Our DNA</h2>
+                <p className="text-muted-foreground leading-relaxed mb-6">
+                  Digital Moonkey was born at the intersection of technology and travel. We specialise in building digital products for travel companies — from visa processing platforms and booking engines to AI-powered trip planners. Our domain, <span className="text-primary font-semibold">digitalmoonkey.travel</span>, isn't just an address — it's a statement of who we are.
+                </p>
+                <div className="glass-card rounded-xl p-6 border-l-4 border-primary">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center shrink-0 mt-1">
+                      <Code className="w-5 h-5 text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold mb-2">🏨 PMS for a Major Hotel Chain — Currently in Development</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        We're currently building a next-generation <strong className="text-foreground">Property Management System (PMS)</strong> for a well-known international hotel chain. The project encompasses reservation management, guest experience, housekeeping operations, revenue analytics, and multi-property dashboards — all powered by AI. Due to NDA obligations, we cannot disclose the client's name at this stage.
+                      </p>
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {["PMS", "Hotel Tech", "AI Analytics", "Multi-Property", "Cloud Native"].map((tag) => (
+                          <span key={tag} className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-secondary text-muted-foreground">{tag}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </Section>
+
       <Section className="py-16 border-y border-border/30">
         <div className="container-grid">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
