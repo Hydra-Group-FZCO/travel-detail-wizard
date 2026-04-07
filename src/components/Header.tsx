@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import Logo from "./Logo";
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -35,10 +36,7 @@ const Header = () => {
       <nav className="container-grid">
         <div className="flex items-center justify-between h-16 md:h-20">
           <Link to="/" className="flex items-center gap-2.5 group">
-            <span className="text-2xl">🐒</span>
-            <span className="font-display font-bold text-lg tracking-tight text-foreground group-hover:text-primary transition-colors">
-              Digital Moonkey
-            </span>
+            <Logo size="sm" variant="icon" showText textClassName="text-foreground group-hover:text-primary transition-colors" />
           </Link>
 
           {/* Desktop Nav */}

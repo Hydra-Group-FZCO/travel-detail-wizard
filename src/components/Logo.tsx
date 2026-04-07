@@ -18,12 +18,12 @@ const Logo = ({ size = "sm", showText = false, textClassName = "text-foreground"
   <div className="flex items-center gap-2.5">
     <img
       src={variant === "icon" ? "/favicon.ico" : monkeyLogo}
-      alt="Digital Moonkey Travel"
+      alt="Digital Moonkey"
       className={`${sizes[size]} object-contain`}
     />
     {showText && (
       <span className={`font-bold text-lg tracking-tight ${textClassName}`}>
-        Digital Moonkey Travel
+        Digital Moonkey
       </span>
     )}
   </div>
