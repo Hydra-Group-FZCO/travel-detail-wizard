@@ -1,202 +1,264 @@
-import { useState } from "react";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import PageLayout from "@/components/PageLayout";
-import CountrySelector from "@/components/CountrySelector";
-import { popularVisas, type Country } from "@/data/visaCountries";
-import { useTranslations } from "@/i18n";
-import {
-  Star, ShieldCheck, Clock, Globe, Headphones,
-  Search, FileText, Download, Check, X as XIcon,
-  ChevronRight
-} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import AnimatedCounter from "@/components/AnimatedCounter";
+import VentureCard from "@/components/VentureCard";
+import { Code, Brain, Megaphone, Shield, Zap, Users, Globe, Clock, ChevronRight } from "lucide-react";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
+
+const stagger = {
+  visible: { transition: { staggerChildren: 0.1 } },
+};
+
+const services = [
+  {
+    icon: Code,
+    title: "Software Development",
+    desc: "End-to-end custom software solutions — from web and mobile applications to complex enterprise platforms. We build scalable, secure, and high-performance systems tailored to your business needs.",
+    tags: ["React", "Node.js", "Python", "TypeScript", "AWS", "Docker"],
+  },
+  {
+    icon: Brain,
+    title: "Artificial Intelligence",
+    desc: "We design and deploy AI-powered solutions that transform business operations. From natural language processing to computer vision and predictive analytics, we turn data into actionable intelligence.",
+    tags: ["LLM Integration", "NLP", "Computer Vision", "Predictive Analytics"],
+  },
+  {
+    icon: Megaphone,
+    title: "Digital Marketing",
+    desc: "Data-driven marketing strategies that deliver measurable results. We combine creative excellence with analytics to build brands, drive traffic, and convert customers at scale.",
+    tags: ["SEO/SEM", "Social Media", "Content Strategy", "Performance Marketing"],
+  },
+  {
+    icon: Shield,
+    title: "Cybersecurity",
+    desc: "Protect your digital assets with enterprise-grade security. We provide comprehensive security audits, penetration testing, vulnerability assessments, and ongoing monitoring.",
+    tags: ["Security Audits", "Pen Testing", "Compliance", "Monitoring"],
+  },
+];
+
+const ventures = [
+  { name: "MoonCollect", url: "https://mooncollect.com", category: "FinTech / Payments", color: "#3B82F6", desc: "Enterprise payment orchestration platform for high-volume merchants. Intelligent PSP routing, real-time transaction screening, and smart risk analysis.", metrics: "€50M+ processed monthly • 30+ countries" },
+  { name: "Escudo Fiscal", url: "https://www.escudofiscal.es", category: "Tax Advisory", color: "#F59E0B", desc: "Specialized tax advisory firm in Spain and internationally. Expert fiscal planning for crypto assets, expats/impats, wealth protection.", metrics: "15+ years experience • Crypto & Expat specialists" },
+  { name: "GPT Hydra", url: "https://gpthydra.com", category: "AI & Consulting", color: "#8B5CF6", desc: "Dubai-based multidisciplinary consultancy providing comprehensive 360° solutions in IT, AI, financial markets, and investment advisory.", metrics: "Dubai Silicon Oasis • HNW clients" },
+  { name: "Taste2Home", url: "https://taste2home.com", category: "Food & Catering", color: "#F97316", desc: "Premium British catering service in London. Locally sourced ingredients, exceptional quality for weddings, corporate events, and private dining.", metrics: "London-based • Weddings & Corporate Events" },
+  { name: "Britania Books", url: "https://britaniabooks.com", category: "Accounting & Finance", color: "#10B981", desc: "Expert accounting and bookkeeping services for UK businesses. Company formation, tax filing, VAT returns, and ecommerce accounting.", metrics: "1,000+ clients • 99% on-time filing" },
+  { name: "Sterling Firm", url: "https://sterlingfirm.com", category: "Financial Services", color: "#64748B", desc: "Professional financial services and corporate advisory. Strategic financial planning, investment advisory, and business consulting.", metrics: "Corporate Advisory • Investment Strategy" },
+  { name: "eVisa Apply", url: "https://evisaapply.com", category: "Travel & Visas", color: "#14B8A6", desc: "Online visa and travel document processing platform. Fast, secure, and simplified visa applications for travelers worldwide.", metrics: "200+ countries • 95%+ approval rate" },
+];
+
+const testimonials = [
+  { quote: "Digital Moonkey transformed our payment infrastructure. Their technical expertise and commitment to excellence are unmatched.", author: "James Mitchell", role: "CEO, HAT Agency" },
+  { quote: "Working with the Digital Moonkey team was a game-changer for our business. They delivered a complete solution ahead of schedule.", author: "Emma Rodriguez", role: "CEO, Marketly" },
+  { quote: "Their AI solutions helped us automate 60% of our manual processes. The ROI was visible within the first month.", author: "Michael Torres", role: "Founder, CodeClaud" },
+];
+
+const techStack = ["React", "Vue.js", "Next.js", "Node.js", "Python", "TypeScript", "PostgreSQL", "MongoDB", "AWS", "Docker", "Kubernetes", "TensorFlow", "OpenAI", "Stripe", "Tailwind CSS"];
+
+function Section({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  return (
+    <motion.section
+      ref={ref}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      variants={stagger}
+      className={className}
+    >
+      {children}
+    </motion.section>
+  );
+}
 
 const Index = () => {
-  const [passport, setPassport] = useState<Country | null>(null);
-  const [destination, setDestination] = useState<Country | null>(null);
-  const t = useTranslations();
-
-  const trustIcons = [ShieldCheck, Clock, Star, Globe];
-  const stepIcons = [Search, FileText, Download];
-
   return (
     <PageLayout>
       {/* Hero */}
-      <section className="bg-primary text-primary-foreground py-16 md:py-24">
-        <div className="container-grid">
-          <div className="max-w-3xl mx-auto text-center mb-10">
-            <p className="text-accent text-sm font-semibold tracking-widest uppercase mb-4">{t.home.heroBadge}</p>
-            <h1 className="text-primary-foreground mb-5" style={{ fontSize: "clamp(2rem, 5vw, 3.2rem)" }}>
-              {t.home.heroTitle}<span className="text-accent">{t.home.heroAccent}</span>
+      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/30" />
+        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 left-1/4 w-72 h-72 bg-accent/10 rounded-full blur-3xl" />
+        <div className="container-grid relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="max-w-3xl"
+          >
+            <h1 className="mb-6">
+              We Build the Future of{" "}
+              <span className="gradient-text">Digital Business</span>
             </h1>
-            <p className="text-primary-foreground/75 text-base md:text-lg max-w-xl mx-auto">{t.home.heroSub}</p>
-          </div>
-
-          <div className="max-w-2xl mx-auto bg-primary-foreground/10 backdrop-blur-sm rounded-2xl p-6 border border-primary-foreground/20">
-            <div className="flex flex-col sm:flex-row gap-4 mb-4">
-              <CountrySelector label={t.home.passportLabel} value={passport} onChange={setPassport} placeholder={t.home.passportPh} />
-              <CountrySelector label={t.home.destLabel} value={destination} onChange={setDestination} placeholder={t.home.destPh} />
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl leading-relaxed">
+              Digital Moonkey is a technology company creating innovative solutions in software development, artificial intelligence, digital marketing, and cybersecurity.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Button asChild size="lg" className="rounded-full bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground font-semibold text-base px-8">
+                <Link to="/ventures">Explore Our Ventures</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="rounded-full font-semibold text-base px-8 border-border hover:bg-secondary">
+                <Link to="/contact">Get In Touch</Link>
+              </Button>
             </div>
-            <Button size="lg" className="w-full rounded-xl bg-accent text-accent-foreground hover:bg-accent/90 font-bold text-base" disabled={!passport || !destination}>
-              {t.home.checkVisa}
-            </Button>
-          </div>
+          </motion.div>
+        </div>
+      </section>
 
-          <div className="flex items-center justify-center gap-6 flex-wrap mt-8">
-            {t.home.trustItems.map((label, i) => {
-              const Icon = trustIcons[i] || Globe;
+      {/* Services */}
+      <Section className="section-spacing">
+        <div className="container-grid">
+          <motion.div variants={fadeUp} className="text-center mb-16">
+            <p className="text-primary font-semibold text-sm mb-2 tracking-widest uppercase">What We Do</p>
+            <h2>Our Core Services</h2>
+          </motion.div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {services.map((s) => {
+              const Icon = s.icon;
               return (
-                <div key={label} className="flex items-center gap-2">
-                  <Icon className="w-4 h-4 text-accent" strokeWidth={1.5} />
-                  <span className="text-primary-foreground/70 text-xs font-medium">{label}</span>
-                </div>
+                <motion.div key={s.title} variants={fadeUp} className="glass-card rounded-2xl p-6 group hover:glow-blue transition-shadow duration-500">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                    <Icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold mb-3">{s.title}</h3>
+                  <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{s.desc}</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {s.tags.map((tag) => (
+                      <span key={tag} className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-secondary text-muted-foreground">{tag}</span>
+                    ))}
+                  </div>
+                </motion.div>
               );
             })}
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* Stats */}
-      <section className="py-12 border-b border-border">
+      <Section className="py-16 border-y border-border/30">
         <div className="container-grid">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {t.home.stats.map((s) => (
-              <div key={s.label}>
-                <p className="text-3xl md:text-4xl font-bold text-primary">{s.value}</p>
-                <p className="text-sm text-muted-foreground mt-1">{s.label}</p>
-              </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+            {[
+              { value: 7, suffix: "+", label: "Products & Ventures" },
+              { value: 5, suffix: "", label: "Countries" },
+              { value: 3, suffix: "", label: "Co-Founders, One Vision" },
+              { value: 24, suffix: "/7", label: "Support & Monitoring" },
+            ].map((s) => (
+              <motion.div key={s.label} variants={fadeUp}>
+                <div className="text-4xl md:text-5xl font-display font-bold text-foreground mb-1">
+                  <AnimatedCounter target={s.value} />{s.suffix}
+                </div>
+                <p className="text-sm text-muted-foreground">{s.label}</p>
+              </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </Section>
 
-      {/* Comparison */}
-      <section className="section-spacing">
+      {/* Ventures */}
+      <Section className="section-spacing">
         <div className="container-grid">
-          <h2 className="text-center mb-12">{t.home.whyTitle}</h2>
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="bg-destructive/5 border border-destructive/20 rounded-2xl p-6">
-              <h3 className="text-destructive font-bold mb-4 flex items-center gap-2">
-                <XIcon className="w-5 h-5" /> {t.home.withoutTitle}
-              </h3>
-              <ul className="space-y-3">
-                {t.home.withoutItems.map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm">
-                    <XIcon className="w-4 h-4 text-destructive mt-0.5 flex-shrink-0" />
-                    <span className="text-muted-foreground">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-success/5 border border-success/20 rounded-2xl p-6">
-              <h3 className="font-bold mb-4 flex items-center gap-2" style={{ color: "hsl(var(--success))" }}>
-                <Check className="w-5 h-5" /> {t.home.withTitle}
-              </h3>
-              <ul className="space-y-3">
-                {t.home.withItems.map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm">
-                    <Check className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: "hsl(var(--success))" }} />
-                    <span className="text-muted-foreground">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <motion.div variants={fadeUp} className="text-center mb-16">
+            <p className="text-primary font-semibold text-sm mb-2 tracking-widest uppercase">Our Ecosystem</p>
+            <h2 className="mb-4">A Growing Portfolio of Digital Ventures</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">Each brand in our ecosystem is built with the same commitment to excellence, innovation, and user experience.</p>
+          </motion.div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {ventures.map((v) => (
+              <motion.div key={v.name} variants={fadeUp}>
+                <VentureCard {...v} />
+              </motion.div>
+            ))}
           </div>
         </div>
-      </section>
+      </Section>
 
-      {/* 3 Steps */}
-      <section className="section-spacing bg-secondary">
-        <div className="container-grid text-center">
-          <h2 className="mb-4">{t.home.howTitle}</h2>
-          <p className="text-muted-foreground mb-12 max-w-lg mx-auto">{t.home.howSub}</p>
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {t.home.steps.map((step, i) => {
-              const Icon = stepIcons[i] || FileText;
+      {/* Why Us */}
+      <Section className="section-spacing bg-secondary/20">
+        <div className="container-grid">
+          <motion.div variants={fadeUp} className="text-center mb-16">
+            <h2>Why Companies Choose Digital Moonkey</h2>
+          </motion.div>
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {[
+              { icon: Zap, title: "End-to-End Execution", desc: "We don't just consult — we build, launch, and scale. From concept to production, our team handles every stage of the product lifecycle." },
+              { icon: Globe, title: "Cross-Industry Expertise", desc: "Our portfolio spans fintech, travel, food, accounting, and advisory services. This diverse experience gives us unique insights that benefit every project." },
+              { icon: Shield, title: "Security-First Mindset", desc: "Every product we build is designed with enterprise-grade security from day one. PCI-DSS compliance, penetration testing, and continuous monitoring are standard." },
+            ].map((p) => {
+              const Icon = p.icon;
               return (
-                <div key={step.title} className="text-center">
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 relative">
-                    <Icon className="w-7 h-7 text-primary" strokeWidth={1.5} />
-                    <span className="absolute -top-2 -right-2 w-6 h-6 bg-accent text-accent-foreground rounded-full text-xs font-bold flex items-center justify-center">{i + 1}</span>
+                <motion.div key={p.title} variants={fadeUp} className="glass-card rounded-2xl p-8 text-center">
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
+                    <Icon className="w-7 h-7 text-primary" />
                   </div>
-                  <h3 className="font-bold mb-2">{step.title}</h3>
-                  <p className="text-sm text-muted-foreground">{step.desc}</p>
-                </div>
+                  <h3 className="text-lg font-bold mb-3">{p.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
+                </motion.div>
               );
             })}
           </div>
         </div>
-      </section>
+      </Section>
 
-      {/* Popular Visas */}
-      <section className="section-spacing">
+      {/* Tech Stack */}
+      <Section className="py-16 border-y border-border/30 overflow-hidden">
         <div className="container-grid">
-          <h2 className="text-center mb-4">{t.home.popularTitle}</h2>
-          <p className="text-center text-muted-foreground mb-10">{t.home.popularSub}</p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {popularVisas.map((visa) => (
-              <Link to={`/visado/${visa.slug}`} key={visa.slug} className="group bg-card border border-border rounded-xl p-4 hover:shadow-hover hover:border-primary/30 transition-all duration-200">
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="text-3xl">{visa.flag}</span>
-                  <div>
-                    <h4 className="text-sm font-bold text-foreground">{visa.country}</h4>
-                    <p className="text-xs text-muted-foreground">{visa.visaType}</p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <p className="text-sm font-bold text-primary">{t.home.from} ${visa.priceFrom}</p>
-                  <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                </div>
-              </Link>
+          <motion.div variants={fadeUp} className="text-center mb-10">
+            <h2 className="text-xl font-bold">Built With Modern Technology</h2>
+          </motion.div>
+          <div className="flex flex-wrap justify-center gap-3">
+            {techStack.map((t) => (
+              <motion.span key={t} variants={fadeUp} className="px-4 py-2 rounded-full bg-secondary text-sm font-mono text-muted-foreground border border-border/50 hover:border-primary/50 hover:text-primary transition-colors cursor-default">
+                {t}
+              </motion.span>
             ))}
           </div>
         </div>
-      </section>
+      </Section>
 
-      {/* Reviews */}
-      <section className="section-spacing bg-secondary">
-        <div className="container-grid text-center">
-          <h2 className="mb-4">{t.home.reviewsTitle}</h2>
-          <p className="text-muted-foreground mb-10">{t.home.reviewsSub}</p>
-          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {t.home.reviews.map((r) => (
-              <div key={r.name} className="bg-card border border-border rounded-xl p-6 text-left">
-                <div className="flex gap-0.5 mb-3">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-accent fill-accent" />
-                  ))}
-                </div>
-                <p className="text-sm text-muted-foreground mb-4 leading-relaxed">"{r.text}"</p>
+      {/* Testimonials */}
+      <Section className="section-spacing">
+        <div className="container-grid">
+          <motion.div variants={fadeUp} className="text-center mb-16">
+            <p className="text-primary font-semibold text-sm mb-2 tracking-widest uppercase">Testimonials</p>
+            <h2>What Our Partners Say</h2>
+          </motion.div>
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {testimonials.map((t) => (
+              <motion.div key={t.author} variants={fadeUp} className="glass-card rounded-2xl p-6">
+                <p className="text-sm text-muted-foreground leading-relaxed mb-6 italic">"{t.quote}"</p>
                 <div>
-                  <p className="text-sm font-bold text-foreground">{r.name}</p>
-                  <p className="text-xs text-muted-foreground">{r.country}</p>
+                  <p className="text-sm font-bold text-foreground">{t.author}</p>
+                  <p className="text-xs text-muted-foreground">{t.role}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
-      </section>
-
-      {/* Newsletter */}
-      <section className="section-spacing">
-        <div className="container-grid text-center">
-          <h2 className="mb-4">{t.home.nlTitle}</h2>
-          <p className="text-muted-foreground mb-8 max-w-lg mx-auto">{t.home.nlSub}</p>
-          <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input type="email" placeholder={t.home.nlPh} className="flex-1 px-4 py-3 border border-border rounded-xl text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary/30" />
-            <Button className="rounded-xl bg-accent text-accent-foreground hover:bg-accent/90 font-bold">{t.home.nlBtn}</Button>
-          </div>
-        </div>
-      </section>
+      </Section>
 
       {/* CTA */}
-      <section className="bg-primary text-primary-foreground py-16">
-        <div className="container-grid text-center">
-          <h2 className="text-primary-foreground mb-4">{t.home.ctaTitle}</h2>
-          <p className="text-primary-foreground/70 mb-8 max-w-lg mx-auto">{t.home.ctaSub}</p>
-          <Button size="lg" className="rounded-xl bg-accent text-accent-foreground hover:bg-accent/90 font-bold text-base" asChild>
-            <Link to="/visados">{t.home.ctaBtn}</Link>
-          </Button>
+      <section className="section-spacing relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10" />
+        <div className="container-grid relative z-10 text-center">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+            <h2 className="mb-4">Ready to Build Something Great?</h2>
+            <p className="text-muted-foreground max-w-lg mx-auto mb-8">Let's discuss how Digital Moonkey can help bring your vision to life.</p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button asChild size="lg" className="rounded-full bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground font-semibold px-8">
+                <Link to="/contact">Schedule a Call</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="rounded-full font-semibold px-8">
+                <Link to="/contact">Send Us a Message <ChevronRight className="ml-1 w-4 h-4" /></Link>
+              </Button>
+            </div>
+          </motion.div>
         </div>
       </section>
     </PageLayout>

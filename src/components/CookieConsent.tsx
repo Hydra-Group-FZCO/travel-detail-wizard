@@ -1,81 +1,42 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { useTranslations } from "@/i18n";
-
-type CookiePreference = "all" | "essential" | null;
 
 const COOKIE_KEY = "dm_cookie_consent";
 
 const CookieConsent = () => {
   const [visible, setVisible] = useState(false);
-  const [showManage, setShowManage] = useState(false);
-  const [analytics, setAnalytics] = useState(false);
-  const [marketing, setMarketing] = useState(false);
-  const t = useTranslations();
 
   useEffect(() => {
     const stored = localStorage.getItem(COOKIE_KEY);
     if (!stored) setVisible(true);
   }, []);
 
-  const accept = (pref: CookiePreference) => {
-    if (pref === "all") {
-      localStorage.setItem(COOKIE_KEY, JSON.stringify({ essential: true, analytics: true, marketing: true }));
-    } else {
-      localStorage.setItem(COOKIE_KEY, JSON.stringify({ essential: true, analytics: false, marketing: false }));
-    }
+  const accept = () => {
+    localStorage.setItem(COOKIE_KEY, JSON.stringify({ essential: true, analytics: true, marketing: true }));
     setVisible(false);
   };
 
-  const savePreferences = () => {
-    localStorage.setItem(COOKIE_KEY, JSON.stringify({ essential: true, analytics, marketing }));
+  const decline = () => {
+    localStorage.setItem(COOKIE_KEY, JSON.stringify({ essential: true, analytics: false, marketing: false }));
     setVisible(false);
   };
 
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-[100] p-4 animate-fade-in">
-      <div className="container-grid">
-        <div className="bg-card border border-border rounded-xl shadow-elevated p-5 max-w-2xl">
-          {!showManage ? (
-            <>
-              <p className="text-sm text-foreground font-medium mb-1">{t.cookie.title}</p>
-              <p className="text-xs text-muted-foreground leading-relaxed mb-4">
-                {t.cookie.desc}{" "}
-                <Link to="/privacidad" className="text-primary hover:underline">{t.footer.privacy}</Link>.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <Button size="sm" onClick={() => accept("all")} className="bg-accent text-accent-foreground hover:bg-accent/90">{t.cookie.acceptAll}</Button>
-                <Button size="sm" variant="outline" onClick={() => setShowManage(true)}>{t.cookie.manage}</Button>
-                <Button size="sm" variant="ghost" onClick={() => accept("essential")}>{t.cookie.reject}</Button>
-              </div>
-            </>
-          ) : (
-            <>
-              <p className="text-sm text-foreground font-medium mb-3">{t.cookie.prefsTitle}</p>
-              <div className="space-y-3 mb-4">
-                <label className="flex items-center gap-3 text-sm">
-                  <input type="checkbox" checked disabled className="accent-primary" />
-                  <span><strong>{t.cookie.essential}</strong> – {t.cookie.essentialDesc}</span>
-                </label>
-                <label className="flex items-center gap-3 text-sm cursor-pointer">
-                  <input type="checkbox" checked={analytics} onChange={e => setAnalytics(e.target.checked)} className="accent-primary" />
-                  <span><strong>{t.cookie.analytics}</strong> – {t.cookie.analyticsDesc}</span>
-                </label>
-                <label className="flex items-center gap-3 text-sm cursor-pointer">
-                  <input type="checkbox" checked={marketing} onChange={e => setMarketing(e.target.checked)} className="accent-primary" />
-                  <span><strong>{t.cookie.marketing}</strong> – {t.cookie.marketingDesc}</span>
-                </label>
-              </div>
-              <div className="flex gap-2">
-                <Button size="sm" onClick={savePreferences} className="bg-accent text-accent-foreground hover:bg-accent/90">{t.cookie.save}</Button>
-                <Button size="sm" variant="ghost" onClick={() => setShowManage(false)}>{t.cookie.back}</Button>
-              </div>
-            </>
-          )}
-        </div>
+    <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-md z-50 glass-card rounded-2xl p-5 animate-fade-up">
+      <p className="text-sm text-muted-foreground mb-4">
+        We use cookies to enhance your browsing experience. By continuing to use this site, you agree to our{" "}
+        <Link to="/cookies" className="text-primary hover:underline">Cookie Policy</Link>.
+      </p>
+      <div className="flex gap-2">
+        <Button size="sm" onClick={accept} className="rounded-full bg-primary text-primary-foreground hover:opacity-90 flex-1">
+          Accept
+        </Button>
+        <Button size="sm" variant="outline" onClick={decline} className="rounded-full flex-1">
+          Decline
+        </Button>
       </div>
     </div>
   );

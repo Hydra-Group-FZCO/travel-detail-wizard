@@ -1,24 +1,21 @@
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import PageLayout from "@/components/PageLayout";
+import { Button } from "@/components/ui/button";
 
 const NotFound = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
-
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">404</h1>
-        <p className="mb-4 text-xl text-muted-foreground">Página no encontrada</p>
-        <p className="mb-6 text-sm text-muted-foreground">Esta sección estará disponible próximamente</p>
-        <a href="/" className="text-primary underline hover:text-primary/90">
-          Volver al inicio
-        </a>
-      </div>
-    </div>
+    <PageLayout>
+      <section className="section-spacing">
+        <div className="container-grid text-center">
+          <h1 className="text-8xl font-display font-bold gradient-text mb-4">404</h1>
+          <h2 className="mb-4">Page Not Found</h2>
+          <p className="text-muted-foreground mb-8">The page you are looking for does not exist or has been moved.</p>
+          <Button asChild className="rounded-full bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground font-semibold px-8">
+            <Link to="/">Back to Home</Link>
+          </Button>
+        </div>
+      </section>
+    </PageLayout>
   );
 };
 

@@ -1,34 +1,42 @@
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
-import { Menu, X, User } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
+import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useTranslations } from "@/i18n";
-import LanguageSwitcher from "./LanguageSwitcher";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Header = () => {
-  const { user, role, loading } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  const isHome = location.pathname === "/";
-  const t = useTranslations();
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navLinks = [
-    { to: "/", label: t.nav.home },
-    { to: "/visados", label: t.nav.visas },
-    { to: "/sobre-nosotros", label: t.nav.about },
-    { to: "/contacto", label: t.nav.contact },
+    { to: "/about", label: "About" },
+    { to: "/services", label: "Services" },
+    { to: "/ventures", label: "Ventures" },
+    { to: "/contact", label: "Contact" },
   ];
 
   const isActive = (to: string) => location.pathname === to;
 
   return (
-    <header className={`sticky top-0 z-50 ${isHome ? "bg-primary" : "bg-background border-b border-border"}`}>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-background/80 backdrop-blur-xl border-b border-border/50"
+          : "bg-transparent"
+      }`}
+    >
       <nav className="container-grid">
         <div className="flex items-center justify-between h-16 md:h-20">
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2.5 group">
             <span className="text-2xl">🐒</span>
-            <span className={`font-bold text-lg tracking-tight ${isHome ? "text-primary-foreground" : "text-foreground"}`}>
+            <span className="font-display font-bold text-lg tracking-tight text-foreground group-hover:text-primary transition-colors">
               Digital Moonkey
             </span>
           </Link>
@@ -39,50 +47,27 @@ const Header = () => {
               <Link
                 key={link.to}
                 to={link.to}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                   isActive(link.to)
-                    ? isHome ? "bg-primary-foreground/20 text-primary-foreground" : "bg-muted text-foreground"
-                    : isHome ? "text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10" : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    ? "text-primary bg-primary/10"
+                    : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                 }`}
               >
                 {link.label}
               </Link>
             ))}
-
-            <LanguageSwitcher variant={isHome ? "light" : "dark"} />
-
-            {loading ? (
-              <div className="w-24 h-9 rounded-full bg-muted animate-pulse ml-2" />
-            ) : user ? (
-              <Link
-                to={role === "admin" ? "/admin" : "/dashboard"}
-                className={`flex items-center gap-1.5 ml-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  isHome ? "bg-accent text-accent-foreground hover:bg-accent/90" : "bg-primary text-primary-foreground hover:bg-primary/90"
-                }`}
-              >
-                <User size={14} />
-                {role === "admin" ? t.nav.admin : t.nav.myAccount}
-              </Link>
-            ) : (
-              <div className="flex items-center gap-2 ml-2">
-                <Link
-                  to="/login"
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    isHome ? "text-primary-foreground/80 hover:text-primary-foreground" : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  {t.nav.login}
-                </Link>
-                <Button variant="default" size="sm" className="rounded-full bg-accent text-accent-foreground hover:bg-accent/90" asChild>
-                  <Link to="/visados">{t.nav.applyVisa}</Link>
-                </Button>
-              </div>
-            )}
+            <Button
+              asChild
+              size="sm"
+              className="ml-3 rounded-full bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground font-semibold"
+            >
+              <Link to="/contact">Let's Talk</Link>
+            </Button>
           </div>
 
           {/* Mobile Toggle */}
           <button
-            className={`md:hidden p-2 rounded-lg ${isHome ? "text-primary-foreground" : "text-foreground"}`}
+            className="md:hidden p-2 rounded-lg text-foreground"
             onClick={() => setMobileOpen(!mobileOpen)}
           >
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -90,44 +75,40 @@ const Header = () => {
         </div>
 
         {/* Mobile Menu */}
-        {mobileOpen && (
-          <div className="md:hidden pb-4 animate-fade-in">
-            <div className="bg-card rounded-xl border border-border shadow-elevated p-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  onClick={() => setMobileOpen(false)}
-                  className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                    isActive(link.to) ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <div className="px-4 py-2">
-                <LanguageSwitcher />
-              </div>
-              <div className="border-t border-border mt-2 pt-2 flex flex-col gap-1">
-                {!loading && !user && (
-                  <>
-                    <Link to="/login" onClick={() => setMobileOpen(false)} className="block px-4 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted">
-                      {t.nav.login}
-                    </Link>
-                    <Link to="/visados" onClick={() => setMobileOpen(false)} className="block px-4 py-3 rounded-lg text-sm font-medium bg-accent text-accent-foreground text-center">
-                      {t.nav.applyVisa}
-                    </Link>
-                  </>
-                )}
-                {!loading && user && (
-                  <Link to={role === "admin" ? "/admin" : "/dashboard"} onClick={() => setMobileOpen(false)} className="block px-4 py-3 rounded-lg text-sm font-medium bg-primary text-primary-foreground text-center">
-                    {role === "admin" ? t.nav.admin : t.nav.myAccount}
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="md:hidden pb-4"
+            >
+              <div className="glass-card rounded-2xl p-3 space-y-1">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    onClick={() => setMobileOpen(false)}
+                    className={`block px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                      isActive(link.to)
+                        ? "bg-primary/10 text-primary"
+                        : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                    }`}
+                  >
+                    {link.label}
                   </Link>
-                )}
+                ))}
+                <Link
+                  to="/contact"
+                  onClick={() => setMobileOpen(false)}
+                  className="block px-4 py-3 rounded-xl text-sm font-semibold bg-gradient-to-r from-primary to-accent text-primary-foreground text-center mt-2"
+                >
+                  Let's Talk
+                </Link>
               </div>
-            </div>
-          </div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
     </header>
   );

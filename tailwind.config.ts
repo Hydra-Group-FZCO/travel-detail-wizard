@@ -47,10 +47,6 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        "trust-bar": {
-          bg: "hsl(var(--trust-bar-bg))",
-          fg: "hsl(var(--trust-bar-fg))",
-        },
         success: "hsl(var(--success))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -65,6 +61,8 @@ export default {
       },
       fontFamily: {
         sans: ["'Inter'", "system-ui", "sans-serif"],
+        display: ["'Space Grotesk'", "'Inter'", "system-ui", "sans-serif"],
+        mono: ["'JetBrains Mono'", "monospace"],
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -74,9 +72,10 @@ export default {
         "2xl": "calc(var(--radius) + 8px)",
       },
       boxShadow: {
-        card: "0 2px 8px rgba(0,0,0,0.08)",
-        elevated: "0 4px 16px rgba(0,0,0,0.1)",
-        hover: "0 8px 30px rgba(0,0,0,0.12)",
+        card: "0 2px 8px rgba(0,0,0,0.3)",
+        elevated: "0 4px 16px rgba(0,0,0,0.4)",
+        hover: "0 8px 30px rgba(0,0,0,0.5)",
+        glow: "0 0 40px -10px hsla(217, 91%, 60%, 0.3)",
       },
       keyframes: {
         "accordion-down": {
@@ -95,12 +94,17 @@ export default {
           from: { opacity: "0" },
           to: { opacity: "1" },
         },
+        "float": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-up": "fade-up 0.7s ease-out forwards",
         "fade-in": "fade-in 0.5s ease-out forwards",
+        "float": "float 6s ease-in-out infinite",
       },
     },
   },
